@@ -346,12 +346,11 @@ export default function ToolPage() {
             ))}
           </ol>
         </div>
-        {/* 専門家相談アフィリエイト（A8.net申請後URLを差し替え） */}
+        {/* 専門家相談アフィリエイト（A8.net） */}
         <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
           <p className="text-sm font-black text-amber-900 mb-1">⚖️ 相続の専門家に相談する</p>
           <p className="text-xs text-amber-700 mb-4">相続税・遺産分割・相続放棄は専門家のサポートで安心して進められます。初回相談無料の事務所多数。</p>
           <div className="grid grid-cols-1 gap-3">
-            {/* TODO: Replace href with A8.net affiliate URL after approval */}
             <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
               <div>
@@ -360,7 +359,6 @@ export default function ToolPage() {
               </div>
               <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">無料相談 →</span>
             </a>
-            {/* TODO: Replace href with A8.net affiliate URL after approval */}
             <a href="https://zeirishi.mynavi.jp/column/inheritance/" target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
               <div>
@@ -369,7 +367,6 @@ export default function ToolPage() {
               </div>
               <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">費用診断 →</span>
             </a>
-            {/* TODO: Replace href with A8.net affiliate URL after approval */}
             <a href="https://www.legal-mall.com/s/souzoku" target="_blank" rel="noopener noreferrer sponsored"
               className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
               <div>
@@ -377,6 +374,15 @@ export default function ToolPage() {
                 <div className="text-xs text-slate-500 mt-0.5">遺産分割・相続登記に特化 • 近くの専門家を検索</div>
               </div>
               <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">専門家検索 →</span>
+            </a>
+            {/* A8.net: FPカフェ 無料FP相談 */}
+            <a href="https://px.a8.net/svt/ejp?a8mat=4AZIOF+2SMA0I+5ULO+5YZ75" target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              <div>
+                <div className="text-sm font-bold text-slate-800">FPカフェ — 無料FP相談</div>
+                <div className="text-xs text-slate-500 mt-0.5">相続・資産承継の無料ファイナンシャルプランナー相談</div>
+              </div>
+              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">無料でFP相談してみる →</span>
             </a>
           </div>
           <p className="text-xs text-slate-400 text-center mt-3">※ 広告・PR掲載（各社公式サイトに遷移します）</p>
