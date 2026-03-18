@@ -213,6 +213,17 @@ export default function ToolPage() {
                   {hasSpouse && simResult.taxable > 0 && <p className="text-xs text-slate-500">※ 配偶者の税額軽減（1/2）を適用した概算です</p>}
                   <p className="text-xs text-slate-400 mt-2">この計算は概算です。実際の相続税は財産の種類・評価方法・各種控除により異なります。税理士にご相談ください。</p>
                 </div>
+                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続税シミュレーター結果\n遺産総額: " + simResult.total.toLocaleString() + "万円\n相続税概算: " + (simResult.taxable > 0 ? simResult.tax.toLocaleString() + "万円" : "0円（非課税）") + "\n\nhttps://soukoku-ai.vercel.app\n#相続AI #相続税")} target="_blank" rel="noopener noreferrer" className="mt-4 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  この結果をXでシェアする
+                </a>
+                {simResult.taxable > 0 && (
+                  <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <p className="text-amber-800 font-bold text-sm mb-1">💡 相続税がかかります — 税理士への相談をお勧めします</p>
+                    <p className="text-amber-700 text-xs mb-3">相続税の節税・申告には専門家のサポートが不可欠です。税理士ドットコムで無料相談できます。</p>
+                    <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">税理士ドットコムで無料相談 →</a>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -238,6 +249,10 @@ export default function ToolPage() {
                     <span className={"text-sm font-bold " + (t.urgent ? "text-red-600" : "text-slate-600")}>{t.date}</span>
                   </div>
                 ))}
+                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続手続きタイムライン\n相続開始日: " + inheritanceDate + "\n最重要期限: 相続放棄は3ヶ月以内・相続税申告は10ヶ月以内\n\nhttps://soukoku-ai.vercel.app\n#相続AI #相続手続き")} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  タイムラインをXでシェアする
+                </a>
               </div>
             )}
           </div>
@@ -301,6 +316,10 @@ export default function ToolPage() {
                 <h3 className={"font-bold mb-3 " + (renResult.includes("不要") ? "text-green-800" : renResult.includes("検討") ? "text-red-800" : "text-amber-800")}>判定結果</h3>
                 <p className="text-sm whitespace-pre-line text-slate-700">{renResult}</p>
                 <p className="text-xs text-slate-400 mt-3">※ この判定はシミュレーションです。実際の判断は必ず専門家にご相談ください。</p>
+                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続放棄シミュレーター結果\nプラス資産: " + (posAssets || "0") + "万円 / マイナス資産: " + (negAssets || "0") + "万円\n判定: " + (renResult.includes("不要") ? "相続放棄は不要" : renResult.includes("検討") ? "相続放棄を検討推奨" : "要専門家相談") + "\n\nhttps://soukoku-ai.vercel.app\n#相続AI #相続放棄")} target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
+                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  判定結果をXでシェアする
+                </a>
               </div>
             )}
           </div>
