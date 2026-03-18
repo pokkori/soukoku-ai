@@ -330,6 +330,22 @@ export default function ToolPage() {
             )}
           </div>
         )}
+        {/* 次のアクション3選 */}
+        <div className="mt-6 bg-white border border-amber-200 rounded-xl p-4">
+          <p className="text-sm font-bold text-amber-800 mb-3">📋 次にやるべきこと3選</p>
+          <ol className="space-y-2">
+            {[
+              { icon: "📅", text: "相続発生日から3ヶ月以内に相続放棄の期限を確認・対応する" },
+              { icon: "📄", text: "法務局・税務署に提出が必要な書類リストを作成して準備する" },
+              { icon: "⚖️", text: "税理士ドットコムで相続専門の税理士に無料相談を申し込む" },
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
+                <span className="text-lg leading-none">{item.icon}</span>
+                <span>{i + 1}. {item.text}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
         <div className="mt-8 bg-slate-100 rounded-xl p-4">
           <p className="text-xs text-slate-500 text-center">※ 本ツールはAIによる情報提供を目的としており、法律・税務・財務に関する専門的アドバイスではありません。重要な判断は必ず弁護士・税理士等の有資格者にご相談ください。</p>
         </div>
