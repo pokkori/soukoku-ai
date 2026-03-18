@@ -346,7 +346,43 @@ export default function ToolPage() {
             ))}
           </ol>
         </div>
-        <div className="mt-8 bg-slate-100 rounded-xl p-4">
+        {/* 専門家相談アフィリエイト（A8.net申請後URLを差し替え） */}
+        <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
+          <p className="text-sm font-black text-amber-900 mb-1">⚖️ 相続の専門家に相談する</p>
+          <p className="text-xs text-amber-700 mb-4">相続税・遺産分割・相続放棄は専門家のサポートで安心して進められます。初回相談無料の事務所多数。</p>
+          <div className="grid grid-cols-1 gap-3">
+            {/* TODO: Replace href with A8.net affiliate URL after approval */}
+            <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              <div>
+                <div className="text-sm font-bold text-slate-800">弁護士ドットコム — 相続専門</div>
+                <div className="text-xs text-slate-500 mt-0.5">初回相談無料 • 全国対応 • 土日OK</div>
+              </div>
+              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">無料相談 →</span>
+            </a>
+            {/* TODO: Replace href with A8.net affiliate URL after approval */}
+            <a href="https://zeirishi.mynavi.jp/column/inheritance/" target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              <div>
+                <div className="text-sm font-bold text-slate-800">税理士ドットコム — 相続税申告</div>
+                <div className="text-xs text-slate-500 mt-0.5">相続税申告実績No.1 • 費用の目安を無料診断</div>
+              </div>
+              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">費用診断 →</span>
+            </a>
+            {/* TODO: Replace href with A8.net affiliate URL after approval */}
+            <a href="https://www.legal-mall.com/s/souzoku" target="_blank" rel="noopener noreferrer sponsored"
+              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              <div>
+                <div className="text-sm font-bold text-slate-800">ベンナビ相続 — 司法書士・弁護士</div>
+                <div className="text-xs text-slate-500 mt-0.5">遺産分割・相続登記に特化 • 近くの専門家を検索</div>
+              </div>
+              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">専門家検索 →</span>
+            </a>
+          </div>
+          <p className="text-xs text-slate-400 text-center mt-3">※ 広告・PR掲載（各社公式サイトに遷移します）</p>
+        </div>
+
+        <div className="mt-4 bg-slate-100 rounded-xl p-4">
           <p className="text-xs text-slate-500 text-center">※ 本ツールはAIによる情報提供を目的としており、法律・税務・財務に関する専門的アドバイスではありません。重要な判断は必ず弁護士・税理士等の有資格者にご相談ください。</p>
         </div>
       </div>
