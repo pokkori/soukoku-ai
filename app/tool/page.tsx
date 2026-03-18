@@ -287,6 +287,12 @@ export default function ToolPage() {
               <button onClick={handleDocGenerate} disabled={docLoading || !isPremium} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">
                 {docLoading ? "生成中..." : isPremium ? "協議書雛形を生成する" : "プレミアムプランで利用する"}
               </button>
+              {docLoading && (
+                <div className="text-center mt-2">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-2" />
+                  <p className="text-xs text-gray-400">⚖️ 遺産情報分析 → 📊 相続税計算 → 📋 手続き一覧生成</p>
+                </div>
+              )}
             </div>
             {docResult && (
               <div className="mt-6 bg-slate-50 rounded-xl p-5">
