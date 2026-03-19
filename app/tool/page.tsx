@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import KomojuButton from "@/components/KomojuButton";
 
@@ -28,13 +28,85 @@ function renderMarkdown(text: string): string {
   return result.join("\n");
 }
 
-type Tab = "simulator" | "timeline" | "document" | "renunciation";
+type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist";
+
+const CHECKLIST_ITEMS = [
+  {
+    phase: "⚡ 死亡直後（7日以内）",
+    color: "red",
+    items: [
+      { id: "c1", text: "死亡診断書の受け取り（医師から）" },
+      { id: "c2", text: "死亡届の提出（7日以内・市区町村役場）" },
+      { id: "c3", text: "火葬許可証の取得" },
+      { id: "c4", text: "遺言書の有無を確認（自筆・公正証書・法務局保管）" },
+      { id: "c5", text: "葬儀社・お寺との連絡・手続き" },
+    ],
+  },
+  {
+    phase: "📋 3ヶ月以内（最重要期限）",
+    color: "orange",
+    items: [
+      { id: "c6", text: "相続人の確定（戸籍謄本の取得・調査）" },
+      { id: "c7", text: "相続財産・負債の調査（銀行・不動産・保険・借金）" },
+      { id: "c8", text: "相続放棄・限定承認の検討（3ヶ月が期限）" },
+      { id: "c9", text: "必要なら家庭裁判所に相続放棄申述" },
+      { id: "c10", text: "故人の健康保険・年金の資格喪失手続き" },
+    ],
+  },
+  {
+    phase: "📄 4ヶ月以内",
+    color: "amber",
+    items: [
+      { id: "c11", text: "準確定申告（故人の所得税申告）— 税務署へ提出" },
+      { id: "c12", text: "故人の事業継続がある場合は廃業届または承継手続き" },
+    ],
+  },
+  {
+    phase: "🏦 10ヶ月以内（相続税申告期限）",
+    color: "indigo",
+    items: [
+      { id: "c13", text: "遺産分割協議の実施（相続人全員の合意）" },
+      { id: "c14", text: "遺産分割協議書の作成・署名・捺印" },
+      { id: "c15", text: "相続税申告書の作成・提出（税務署）" },
+      { id: "c16", text: "相続税の納付（10ヶ月が期限）" },
+      { id: "c17", text: "不動産の相続登記（法務局）" },
+      { id: "c18", text: "銀行口座の名義変更・解約" },
+      { id: "c19", text: "自動車・有価証券の名義変更" },
+      { id: "c20", text: "生命保険の保険金請求（3年が消滅時効）" },
+    ],
+  },
+  {
+    phase: "✅ その他の手続き",
+    color: "green",
+    items: [
+      { id: "c21", text: "クレジットカードの解約・未払い確認" },
+      { id: "c22", text: "携帯電話・定期購読サービスの解約" },
+      { id: "c23", text: "デジタル資産（SNS・ネット銀行）の整理" },
+      { id: "c24", text: "相続完了報告（税理士・弁護士への最終確認）" },
+    ],
+  },
+];
 
 export default function ToolPage() {
   const [activeTab, setActiveTab] = useState<Tab>("simulator");
   const [isPremium, setIsPremium] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [useCount, setUseCount] = useState(0);
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const saved = localStorage.getItem("soukoku_checklist");
+    if (saved) setCheckedItems(JSON.parse(saved));
+  }, []);
+
+  function toggleCheck(id: string) {
+    const next = { ...checkedItems, [id]: !checkedItems[id] };
+    setCheckedItems(next);
+    localStorage.setItem("soukoku_checklist", JSON.stringify(next));
+  }
+
+  const totalItems = CHECKLIST_ITEMS.reduce((sum, p) => sum + p.items.length, 0);
+  const doneItems = Object.values(checkedItems).filter(Boolean).length;
   const [estateTotal, setEstateTotal] = useState("");
   const [heirCount, setHeirCount] = useState("2");
   const [hasSpouse, setHasSpouse] = useState(true);
@@ -139,6 +211,7 @@ export default function ToolPage() {
   const tabs: { id: Tab; label: string; icon: string; free: boolean }[] = [
     { id: "simulator", label: "相続税試算", icon: "💴", free: true },
     { id: "timeline", label: "手続き期限", icon: "📅", free: true },
+    { id: "checklist", label: "チェックリスト", icon: "✅", free: true },
     { id: "document", label: "協議書雛形", icon: "📝", free: false },
     { id: "renunciation", label: "放棄判定", icon: "⚖️", free: true },
   ];
@@ -328,6 +401,67 @@ export default function ToolPage() {
                 </a>
               </div>
             )}
+          </div>
+        )}
+        {activeTab === "checklist" && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-lg font-bold text-indigo-900">相続手続きチェックリスト</h2>
+              <button
+                onClick={() => { setCheckedItems({}); localStorage.removeItem("soukoku_checklist"); }}
+                className="text-xs text-slate-400 hover:text-slate-600 underline"
+              >リセット</button>
+            </div>
+            <div className="mb-5">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm text-slate-600">進捗: {doneItems}/{totalItems}項目</span>
+                <span className="text-sm font-bold text-indigo-700">{Math.round((doneItems / totalItems) * 100)}%</span>
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-2.5">
+                <div
+                  className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300"
+                  style={{ width: `${(doneItems / totalItems) * 100}%` }}
+                />
+              </div>
+            </div>
+            <div className="space-y-5">
+              {CHECKLIST_ITEMS.map((phase) => (
+                <div key={phase.phase}>
+                  <h3 className="text-sm font-bold text-slate-700 mb-2 border-b border-slate-200 pb-1">{phase.phase}</h3>
+                  <div className="space-y-2">
+                    {phase.items.map((item) => (
+                      <label
+                        key={item.id}
+                        className={`flex items-start gap-3 p-2.5 rounded-lg cursor-pointer transition-colors ${
+                          checkedItems[item.id] ? "bg-green-50 border border-green-200" : "bg-slate-50 hover:bg-slate-100 border border-transparent"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!!checkedItems[item.id]}
+                          onChange={() => toggleCheck(item.id)}
+                          className="mt-0.5 w-4 h-4 text-indigo-600 rounded flex-shrink-0"
+                        />
+                        <span className={`text-sm ${checkedItems[item.id] ? "line-through text-slate-400" : "text-slate-700"}`}>
+                          {item.text}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {doneItems === totalItems && (
+              <div className="mt-5 bg-green-50 border border-green-300 rounded-xl p-4 text-center">
+                <p className="text-green-700 font-bold text-sm">🎉 全手続き完了！お疲れ様でした。</p>
+                <p className="text-green-600 text-xs mt-1">最終確認として弁護士・税理士への相談をおすすめします。</p>
+              </div>
+            )}
+            <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
+              <p className="text-amber-800 font-bold text-sm mb-1">💡 手続きに不安を感じたら</p>
+              <p className="text-amber-700 text-xs mb-2">相続専門の弁護士・税理士に相談することで、ミスなく安心して手続きが完了できます。</p>
+              <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 text-xs font-bold hover:underline">弁護士ドットコムで無料相談する →</a>
+            </div>
           </div>
         )}
         {/* 次のアクション3選 */}
