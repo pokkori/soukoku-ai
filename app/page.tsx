@@ -203,7 +203,13 @@ export default function HomePage() {
           Xでシェアする
         </a>
       </section>
-      <footer className="bg-indigo-900 text-indigo-300 py-8 px-4 text-sm">
+      <div className="fixed bottom-0 left-0 right-0 bg-indigo-950 border-t border-indigo-700 px-4 py-3 z-40 sm:hidden shadow-lg">
+        <a href="/tool" className="block w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black text-center py-3.5 rounded-xl text-sm">
+          ▶ 相続シミュレーションを無料で始める →
+        </a>
+      </div>
+
+      <footer className="bg-indigo-900 text-indigo-300 py-8 pb-24 sm:pb-8 px-4 text-sm">
         <div className="max-w-3xl mx-auto flex flex-wrap justify-between gap-4">
           <div><div className="text-white font-bold mb-1">⚖️ 相続AI</div><p className="text-xs">運営: ポッコリラボ</p></div>
           <div className="flex gap-6 text-xs">
