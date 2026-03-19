@@ -50,6 +50,63 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/* 相続手続きフロー可視化 */}
+      <section className="py-12 px-4 bg-indigo-900 text-white">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-black text-center mb-2">相続手続きの全体フロー</h2>
+          <p className="text-center text-indigo-300 text-sm mb-8">亡くなった直後〜完了まで、やるべきことが一目でわかります</p>
+          <div className="relative">
+            {/* フロー縦線 */}
+            <div className="absolute left-6 top-8 bottom-8 w-0.5 bg-indigo-600 hidden md:block" />
+            <div className="space-y-4">
+              {[
+                { phase: "死亡直後〜7日", title: "死亡届・葬儀手続き", items: ["死亡届を7日以内に提出", "火葬許可証の取得", "遺言書の有無を確認"], urgency: "high", icon: "🔴" },
+                { phase: "〜1ヶ月", title: "相続人・財産の調査", items: ["戸籍謄本を集めて相続人を確定", "銀行・不動産・保険・借金を調査", "財産目録を作成する"], urgency: "high", icon: "🟠" },
+                { phase: "〜3ヶ月（期限）", title: "相続放棄の検討・申述", items: ["借金が多い場合は相続放棄を検討", "家庭裁判所へ申述（期限厳守）", "限定承認という選択肢も"], urgency: "critical", icon: "⚠️" },
+                { phase: "〜4ヶ月（期限）", title: "準確定申告", items: ["故人の所得税を代わりに申告", "税務署へ提出が必要", "税理士への依頼を検討"], urgency: "high", icon: "🟡" },
+                { phase: "〜10ヶ月（期限）", title: "遺産分割・相続税申告", items: ["遺産分割協議書を作成・署名・押印", "相続税の申告・納付（遺産が基礎控除超の場合）", "銀行・不動産の名義変更"], urgency: "critical", icon: "⚠️" },
+                { phase: "完了", title: "名義変更・手続き完了", items: ["不動産の相続登記（2024年より義務化）", "自動車・有価証券の名義変更", "保険金の請求（3年が消滅時効）"], urgency: "normal", icon: "✅" },
+              ].map((step, i) => (
+                <div key={i} className="flex gap-4 items-start">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl z-10 ${
+                    step.urgency === "critical" ? "bg-red-500" :
+                    step.urgency === "high" ? "bg-amber-500" :
+                    "bg-green-500"
+                  }`}>{step.icon}</div>
+                  <div className={`flex-1 rounded-xl p-4 ${
+                    step.urgency === "critical" ? "bg-red-900/40 border border-red-500/50" :
+                    step.urgency === "high" ? "bg-amber-900/30 border border-amber-500/30" :
+                    "bg-indigo-800/50 border border-indigo-600/30"
+                  }`}>
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                        step.urgency === "critical" ? "bg-red-500 text-white" :
+                        step.urgency === "high" ? "bg-amber-500 text-white" :
+                        "bg-green-500 text-white"
+                      }`}>{step.phase}</span>
+                      <h3 className="font-bold text-white">{step.title}</h3>
+                    </div>
+                    <ul className="space-y-1">
+                      {step.items.map((item, j) => (
+                        <li key={j} className="text-indigo-200 text-sm flex gap-2">
+                          <span className="text-indigo-400 flex-shrink-0">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 text-center">
+            <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black px-8 py-3 rounded-xl transition-all hover:scale-105">
+              手続きタイムラインをAIで自動生成する →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 px-4 bg-indigo-50">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-black text-center text-indigo-900 mb-2">4つの機能で相続をサポート</h2>
@@ -115,19 +172,141 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/* よくある相続ケース3選 */}
       <section className="py-12 px-4 bg-white">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-lg font-bold text-center text-slate-700 mb-6">より複雑な相続は専門家へ</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer" className="block bg-blue-50 border border-blue-200 rounded-xl p-5 hover:bg-blue-100 transition-colors">
-              <div className="font-bold text-blue-800 mb-1">💼 税理士ドットコム</div>
-              <p className="text-sm text-blue-700">相続税申告は税理士へ。全国の税理士を無料で比較・相談できます。</p>
-              <div className="mt-2 text-xs text-blue-500">無料相談はこちら →</div>
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-black text-center text-indigo-900 mb-2">よくある相続ケース3選</h2>
+          <p className="text-center text-slate-500 text-sm mb-8">あなたの状況に近いケースを確認してください</p>
+          <div className="space-y-4">
+            {[
+              {
+                icon: "🏠",
+                title: "ケース1：実家（不動産）を兄弟で相続",
+                desc: "父が亡くなり、実家の土地・建物（評価額3,000万円）と預貯金500万円を、母・長男・次男の3人で相続するケース。",
+                points: [
+                  "相続人は3人 → 基礎控除4,800万円（3,000万+600万×3）",
+                  "遺産3,500万円 < 基礎控除4,800万円 → 相続税ゼロ",
+                  "不動産の分割方法（売却／長男取得／共有）について遺産分割協議書が必要",
+                  "司法書士への相続登記依頼が必要（2024年より義務化）",
+                ],
+                cost: "司法書士報酬：5〜15万円 / 登録免許税：固定資産評価額×0.4%",
+                badge: "相続税ゼロのケース",
+                badgeColor: "green",
+              },
+              {
+                icon: "💰",
+                title: "ケース2：預貯金・株式のみを子供2人で相続",
+                desc: "母が亡くなり、預貯金2,000万円・株式3,000万円の合計5,000万円を、子供2人（父はすでに死去）で相続するケース。",
+                points: [
+                  "相続人は2人 → 基礎控除4,200万円（3,000万+600万×2）",
+                  "課税遺産800万円 → 相続税概算約80万円（各40万円）",
+                  "申告期限は10ヶ月以内 → 税理士への依頼が安心",
+                  "株式は証券会社での名義変更手続きが必要",
+                ],
+                cost: "税理士報酬：20〜50万円（遺産総額に応じて変動）",
+                badge: "相続税あり・申告必要",
+                badgeColor: "amber",
+              },
+              {
+                icon: "🚨",
+                title: "ケース3：借金が発覚・相続放棄を検討",
+                desc: "父が亡くなり、調査したところ消費者金融に500万円の借金が判明。預貯金は200万円のみで、相続放棄を検討しているケース。",
+                points: [
+                  "マイナス300万円（借金500万−預貯金200万）",
+                  "相続放棄の期限は「相続を知った日から3ヶ月以内」",
+                  "家庭裁判所への申述が必要（弁護士・司法書士に依頼可）",
+                  "放棄すれば次の相続人（祖父母・兄弟）に権利が移る点に注意",
+                ],
+                cost: "弁護士・司法書士報酬：3〜10万円 / 裁判所費用：収入印紙800円＋郵送料",
+                badge: "相続放棄を検討すべきケース",
+                badgeColor: "red",
+              },
+            ].map((c, i) => (
+              <div key={i} className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+                <div className="flex items-start gap-3 mb-3">
+                  <span className="text-3xl">{c.icon}</span>
+                  <div>
+                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full mr-2 ${
+                      c.badgeColor === "green" ? "bg-green-100 text-green-700" :
+                      c.badgeColor === "amber" ? "bg-amber-100 text-amber-700" :
+                      "bg-red-100 text-red-700"
+                    }`}>{c.badge}</span>
+                    <h3 className="font-bold text-indigo-900 mt-1">{c.title}</h3>
+                    <p className="text-sm text-slate-600 mt-1">{c.desc}</p>
+                  </div>
+                </div>
+                <ul className="space-y-1 mb-3 ml-10">
+                  {c.points.map((p, j) => (
+                    <li key={j} className="text-sm text-slate-700 flex gap-2">
+                      <span className="text-indigo-400 flex-shrink-0">▶</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="ml-10 bg-indigo-50 rounded-lg px-3 py-2">
+                  <span className="text-xs text-indigo-700 font-medium">専門家費用目安：</span>
+                  <span className="text-xs text-indigo-600 ml-1">{c.cost}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 専門家費用比較セクション */}
+      <section className="py-12 px-4 bg-indigo-50">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-black text-center text-indigo-900 mb-2">専門家費用の相場を比較</h2>
+          <p className="text-center text-slate-500 text-sm mb-8">依頼先を選ぶ前に、費用感を把握しておきましょう</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-indigo-900 text-white">
+                  <th className="px-4 py-3 text-left rounded-tl-xl">専門家</th>
+                  <th className="px-4 py-3 text-left">得意な領域</th>
+                  <th className="px-4 py-3 text-left">費用相場</th>
+                  <th className="px-4 py-3 text-left rounded-tr-xl">相談窓口</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { expert: "税理士", area: "相続税申告・節税対策", cost: "20〜100万円（遺産額による）", link: "https://www.zeiri4.com/", linkText: "税理士ドットコム", color: "blue" },
+                  { expert: "司法書士", area: "相続登記・遺産分割協議書作成", cost: "5〜20万円", link: "https://www.legal-mall.com/s/souzoku", linkText: "ベンナビ相続", color: "green" },
+                  { expert: "弁護士", area: "相続争い・相続放棄・遺留分請求", cost: "着手金10〜30万円＋成功報酬", link: "https://www.bengo4.com/c_18/", linkText: "弁護士ドットコム", color: "purple" },
+                  { expert: "行政書士", area: "戸籍収集・遺産分割協議書作成", cost: "5〜15万円", link: "https://www.legal-mall.com/s/souzoku", linkText: "ベンナビ相続", color: "orange" },
+                ].map((row, i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                    <td className="px-4 py-3 font-bold text-indigo-900">{row.expert}</td>
+                    <td className="px-4 py-3 text-slate-700">{row.area}</td>
+                    <td className="px-4 py-3 text-slate-700">{row.cost}</td>
+                    <td className="px-4 py-3">
+                      <a href={row.link} target="_blank" rel="noopener noreferrer"
+                        className="text-indigo-600 font-bold hover:underline text-xs">{row.linkText} →</a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-slate-400 text-center mt-3">※ 費用は案件の複雑さにより大きく変動します。まずは無料相談で見積もりを取ることをお勧めします。</p>
+          <div className="mt-6 grid md:grid-cols-3 gap-3">
+            <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer"
+              className="block bg-white border border-blue-200 rounded-xl p-4 hover:bg-blue-50 transition-colors text-center">
+              <div className="font-bold text-blue-800 text-sm mb-1">💼 税理士ドットコム</div>
+              <p className="text-xs text-blue-600">相続税申告に特化。費用の目安を無料診断</p>
+              <div className="mt-2 text-xs text-blue-500 font-bold">無料相談 →</div>
             </a>
-            <a href="https://www.bengo4.com/inheritance/" target="_blank" rel="noopener noreferrer" className="block bg-green-50 border border-green-200 rounded-xl p-5 hover:bg-green-100 transition-colors">
-              <div className="font-bold text-green-800 mb-1">⚖️ 弁護士ドットコム（相続）</div>
-              <p className="text-sm text-green-700">遺産分割争い・相続放棄の手続きは弁護士へ。初回無料相談あり。</p>
-              <div className="mt-2 text-xs text-green-500">無料相談はこちら →</div>
+            <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer"
+              className="block bg-white border border-green-200 rounded-xl p-4 hover:bg-green-50 transition-colors text-center">
+              <div className="font-bold text-green-800 text-sm mb-1">⚖️ 弁護士ドットコム</div>
+              <p className="text-xs text-green-600">遺産分割争い・相続放棄の相談はこちら</p>
+              <div className="mt-2 text-xs text-green-500 font-bold">初回無料相談 →</div>
+            </a>
+            <a href="https://www.legal-mall.com/s/souzoku" target="_blank" rel="noopener noreferrer"
+              className="block bg-white border border-amber-200 rounded-xl p-4 hover:bg-amber-50 transition-colors text-center">
+              <div className="font-bold text-amber-800 text-sm mb-1">📋 ベンナビ相続</div>
+              <p className="text-xs text-amber-600">司法書士・弁護士を地域で検索。登記に強い</p>
+              <div className="mt-2 text-xs text-amber-500 font-bold">近くの専門家を探す →</div>
             </a>
           </div>
         </div>
