@@ -17,6 +17,7 @@ export default function HomePage() {
         <div className="font-bold text-lg">⚖️ 相続AI</div>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
+          <Link href="/blog" className="hover:text-amber-300 transition-colors">コラム</Link>
           <Link href="/legal" className="hover:text-amber-300 transition-colors">特商法</Link>
         </div>
       </nav>
