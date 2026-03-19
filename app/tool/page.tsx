@@ -115,6 +115,13 @@ export default function ToolPage() {
   const [timelines, setTimelines] = useState<{label:string;date:string;urgent:boolean}[]>([]);
   const [docForm, setDocForm] = useState({ deceasedName:"", heirNames:"", assets:"", distribution:"" });
   const [docResult, setDocResult] = useState("");
+  const SITUATION_PRESETS = [
+    { icon: "👴", label: "親が亡くなった", assets: "父が先月亡くなりました。相続人は母と子供2人（私と弟）です。遺言書はありません。", distribution: "" },
+    { icon: "🏠", label: "不動産あり", assets: "実家の土地・建物（評価額3000万円）の相続について知りたいです。", distribution: "不動産の分割方法を検討中です。" },
+    { icon: "💰", label: "預貯金のみ", assets: "預貯金が2000万円あります。相続人は子供3人で、分け方でもめています。", distribution: "均等分割を希望しますが協議中です。" },
+    { icon: "📝", label: "遺言書あり", assets: "遺言書が見つかりました。内容に納得できない相続人がいます。", distribution: "遺言書の内容と異なる分割を希望する相続人がいます。" },
+    { icon: "🚨", label: "借金あり", assets: "亡くなった親に借金（負債）があることがわかりました。相続放棄を考えています。", distribution: "相続放棄の方向で検討中です。" },
+  ];
   const [docLoading, setDocLoading] = useState(false);
   const [posAssets, setPosAssets] = useState("");
   const [negAssets, setNegAssets] = useState("");
@@ -340,6 +347,23 @@ export default function ToolPage() {
                 <button onClick={() => setShowModal(true)} className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">プレミアムにアップグレード（¥980/月）</button>
               </div>
             )}
+            {/* 相続状況プリセット */}
+            <div className="mb-4">
+              <p className="text-sm font-medium text-slate-700 mb-2">💡 相続状況プリセット（クリックで入力）</p>
+              <div className="flex flex-wrap gap-2">
+                {SITUATION_PRESETS.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => setDocForm(prev => ({ ...prev, assets: preset.assets, distribution: preset.distribution }))}
+                    className="flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-800 text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
+                  >
+                    <span>{preset.icon}</span>
+                    <span>{preset.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">被相続人（亡くなった方）の氏名</label>
