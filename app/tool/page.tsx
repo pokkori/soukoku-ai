@@ -28,7 +28,7 @@ function renderMarkdown(text: string): string {
   return result.join("\n");
 }
 
-type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist";
+type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist" | "quickcalc";
 
 const CHECKLIST_ITEMS = [
   {
@@ -88,7 +88,7 @@ const CHECKLIST_ITEMS = [
 ];
 
 export default function ToolPage() {
-  const [activeTab, setActiveTab] = useState<Tab>("simulator");
+  const [activeTab, setActiveTab] = useState<Tab>("quickcalc");
   const [isPremium, setIsPremium] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [useCount, setUseCount] = useState(0);
@@ -107,6 +107,12 @@ export default function ToolPage() {
 
   const totalItems = CHECKLIST_ITEMS.reduce((sum, p) => sum + p.items.length, 0);
   const doneItems = Object.values(checkedItems).filter(Boolean).length;
+  // かんたん試算
+  const [quickEstate, setQuickEstate] = useState(3000);
+  const [quickHeirs, setQuickHeirs] = useState(2);
+  const quickBasic = 3000 + 600 * quickHeirs;
+  const quickTaxable = Math.max(0, quickEstate - quickBasic);
+
   const [estateTotal, setEstateTotal] = useState("");
   const [heirCount, setHeirCount] = useState("2");
   const [hasSpouse, setHasSpouse] = useState(true);
@@ -216,6 +222,7 @@ export default function ToolPage() {
   }
 
   const tabs: { id: Tab; label: string; icon: string; free: boolean }[] = [
+    { id: "quickcalc", label: "かんたん試算", icon: "🧮", free: true },
     { id: "simulator", label: "相続税試算", icon: "💴", free: true },
     { id: "timeline", label: "手続き期限", icon: "📅", free: true },
     { id: "checklist", label: "チェックリスト", icon: "✅", free: true },
@@ -257,6 +264,91 @@ export default function ToolPage() {
             </button>
           ))}
         </div>
+        {activeTab === "quickcalc" && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-indigo-900 mb-1">相続税かんたん試算</h2>
+            <p className="text-xs text-slate-500 mb-5">スライダーを動かすだけでリアルタイム計算！</p>
+            <div className="space-y-6">
+              {/* 遺産総額スライダー */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-sm font-medium text-slate-700">遺産総額</label>
+                  <span className="text-xl font-black text-indigo-900">{quickEstate.toLocaleString()}万円</span>
+                </div>
+                <input
+                  type="range"
+                  min={500}
+                  max={30000}
+                  step={100}
+                  value={quickEstate}
+                  onChange={e => setQuickEstate(Number(e.target.value))}
+                  className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
+                />
+                <div className="flex justify-between text-xs text-slate-400 mt-1">
+                  <span>500万円</span>
+                  <span>3億円</span>
+                </div>
+              </div>
+              {/* 法定相続人数ボタン */}
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">法定相続人数</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map(n => (
+                    <button
+                      key={n}
+                      onClick={() => setQuickHeirs(n)}
+                      className={"flex-1 py-2 rounded-lg font-bold text-sm transition-all border " +
+                        (quickHeirs === n
+                          ? "bg-indigo-900 text-white border-indigo-900"
+                          : "bg-white text-slate-600 border-slate-300 hover:border-indigo-400")}
+                    >
+                      {n}人
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* リアルタイム結果 */}
+            <div className="mt-6 bg-indigo-50 rounded-xl p-5 space-y-3">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-600">基礎控除額</span>
+                <span className="font-bold text-slate-800">
+                  3,000万 + 600万 × {quickHeirs}人 = <span className="text-indigo-700">{quickBasic.toLocaleString()}万円</span>
+                </span>
+              </div>
+              <div className="flex justify-between text-sm border-t border-indigo-200 pt-3">
+                <span className="text-slate-600">課税遺産（概算）</span>
+                <span className={"text-lg font-black " + (quickTaxable > 0 ? "text-red-600" : "text-green-600")}>
+                  {quickTaxable > 0 ? `+${quickTaxable.toLocaleString()}万円` : "0円（非課税）"}
+                </span>
+              </div>
+              {quickTaxable === 0 ? (
+                <div className="mt-2 p-3 bg-green-100 rounded-lg text-green-700 text-sm font-bold text-center">
+                  相続税はかかりません
+                </div>
+              ) : (
+                <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-center">
+                  <p className="text-red-700 font-bold text-sm">課税遺産が発生しています</p>
+                  <p className="text-red-600 text-xs mt-1">詳細な税額は財産の種類・評価額・各種控除により異なります</p>
+                  <a
+                    href="https://www.zeiri4.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors"
+                  >
+                    税理士に無料相談する →
+                  </a>
+                </div>
+              )}
+            </div>
+            <div className="mt-4 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <span className="text-amber-500 mt-0.5 flex-shrink-0">⚠️</span>
+              <p className="text-xs text-amber-700">
+                この試算はあくまで目安です。実際の相続税は財産の種類・評価額・各種控除（配偶者控除・小規模宅地等の特例など）により異なります。正確な金額は税理士にご確認ください。
+              </p>
+            </div>
+          </div>
+        )}
         {activeTab === "simulator" && (
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h2 className="text-lg font-bold text-indigo-900 mb-4">相続税シミュレーター</h2>
