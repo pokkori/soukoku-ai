@@ -154,6 +154,54 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/* 競合との差別化テーブル */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full mb-3">他の相続サービスとの違い</div>
+            <h2 className="text-2xl font-black text-indigo-900">相続AI vs 他サービスの比較</h2>
+            <p className="text-slate-500 text-sm mt-2">相続AIは「相続の全体最適化」に特化しています</p>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr>
+                  <th className="text-left py-3 px-4 bg-slate-100 rounded-tl-xl font-semibold text-slate-600 text-xs">機能・特徴</th>
+                  <th className="py-3 px-4 bg-slate-100 text-center font-semibold text-slate-400 text-xs">税理士事務所<br/>（一般）</th>
+                  <th className="py-3 px-4 bg-slate-100 text-center font-semibold text-slate-400 text-xs">AI相続<br/>（申告書作成特化）</th>
+                  <th className="py-3 px-4 bg-indigo-700 text-center font-bold text-white rounded-tr-xl text-xs">相続AI<br/>（当サービス）</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["費用", "20〜100万円", "無料（税理士紹介あり）", "無料〜¥980/月"],
+                  ["相続税シミュレーター", "✓ 対応", "✓ 申告書作成まで", "✓ 即時試算・節税診断付き"],
+                  ["手続きタイムライン", "△ 別途確認", "△ 限定的", "✓ 日付指定で全期限を自動生成"],
+                  ["遺産分割協議書", "✓ 作成・確認", "✗ 対象外", "✓ AI雛形生成（プレミアム）"],
+                  ["節税診断（特例適用）", "✓ 対応", "✗ 対象外", "✓ 小規模宅地・配偶者控除を試算"],
+                  ["相続放棄シミュレーター", "✓ 対応", "✗ 対象外", "✓ プラス・マイナス比較で即判定"],
+                  ["状況別クイックガイド", "✓ 相談対応", "✗ 対象外", "✓ 状況に合ったツールへ即案内"],
+                  ["専門家への橋渡し", "—", "✓ 税理士紹介", "✓ 弁護士・税理士・司法書士を掲載"],
+                ].map(([feat, expert, aiSouzoku, ours], i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50"}>
+                    <td className="py-3 px-4 text-slate-700 font-medium text-xs">{feat}</td>
+                    <td className="py-3 px-4 text-center text-slate-400 text-xs">{expert}</td>
+                    <td className="py-3 px-4 text-center text-slate-400 text-xs">{aiSouzoku}</td>
+                    <td className="py-3 px-4 text-center font-bold text-indigo-700 bg-indigo-50 text-xs">{ours}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-slate-400 text-center mt-3">※ 税理士事務所は案件の複雑さにより大きく変動します。AI相続は株式会社みなと相続コンシェルの相続税申告書作成ソフトです。</p>
+          <div className="text-center mt-6">
+            <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-8 py-3 rounded-xl transition-all hover:scale-105">
+              相続AIで無料シミュレーション →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 px-4 bg-indigo-50">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-xl font-bold text-center text-indigo-900 mb-8">ご利用者の声</h2>

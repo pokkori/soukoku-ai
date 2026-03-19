@@ -28,7 +28,7 @@ function renderMarkdown(text: string): string {
   return result.join("\n");
 }
 
-type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist" | "quickcalc";
+type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist" | "quickcalc" | "setsuzei" | "flowchart";
 
 const CHECKLIST_ITEMS = [
   {
@@ -86,6 +86,267 @@ const CHECKLIST_ITEMS = [
     ],
   },
 ];
+
+// ===== 状況診断フローチャート =====
+function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => void }) {
+  const [step, setStep] = useState<number | null>(null);
+  const [answer, setAnswer] = useState<Record<number, string>>({});
+
+  const questions = [
+    {
+      id: 0,
+      text: "相続が発生してから、今どのくらい経ちましたか？",
+      options: [
+        { label: "亡くなったばかり（1週間以内）", value: "just", next: 1 },
+        { label: "1ヶ月以内", value: "1m", next: 2 },
+        { label: "3ヶ月以内（相続放棄の期限が迫っている）", value: "3m", next: 3 },
+        { label: "3ヶ月〜10ヶ月", value: "10m", next: 4 },
+        { label: "10ヶ月以上経過している", value: "over", next: 5 },
+      ],
+    },
+  ];
+
+  type Result = { title: string; message: string; urgent: boolean; tab: string; tabLabel: string };
+  const results: Record<number, Result> = {
+    1: {
+      title: "今すぐやること：死亡届・遺言書確認",
+      message: "死亡届は7日以内に提出が必要です。まず遺言書の有無を確認し、火葬許可証を取得してください。相続放棄の検討は3ヶ月以内ですが、今から財産・負債の調査を始めましょう。",
+      urgent: true,
+      tab: "checklist",
+      tabLabel: "手続きチェックリストを確認する",
+    },
+    2: {
+      title: "相続人・財産の確定が最優先",
+      message: "まず戸籍謄本を集めて相続人を確定しましょう。銀行・不動産・保険・借金の調査も進めてください。相続放棄（3ヶ月）の期限が近づいています。借金が多い場合は早めに専門家に相談を。",
+      urgent: true,
+      tab: "timeline",
+      tabLabel: "手続き期限を確認する",
+    },
+    3: {
+      title: "⚠️ 相続放棄の期限が迫っています",
+      message: "相続放棄の申述期限（3ヶ月）が近いです。借金がプラス財産を上回る場合は、今すぐ家庭裁判所に申述が必要です。放棄シミュレーターで判定してください。",
+      urgent: true,
+      tab: "renunciation",
+      tabLabel: "相続放棄シミュレーターを使う",
+    },
+    4: {
+      title: "遺産分割協議と相続税申告の準備へ",
+      message: "10ヶ月以内の相続税申告期限に向けて、遺産分割協議書の作成と相続税の計算が必要です。税理士への相談を検討してください。相続税がかかるか先に試算しましょう。",
+      urgent: false,
+      tab: "simulator",
+      tabLabel: "相続税を試算する",
+    },
+    5: {
+      title: "期限を過ぎた手続きの確認が必要",
+      message: "10ヶ月の申告期限が過ぎている場合、延滞税・加算税が発生している可能性があります。早急に税理士に相談してください。不動産登記（相続登記）も2024年より義務化されています。",
+      urgent: true,
+      tab: "checklist",
+      tabLabel: "残りの手続きを確認する",
+    },
+  };
+
+  if (step === null) {
+    return (
+      <div className="bg-white rounded-2xl p-6 shadow-sm">
+        <h2 className="text-lg font-bold text-indigo-900 mb-1">相続状況クイック診断</h2>
+        <p className="text-xs text-slate-500 mb-5">あなたの状況に合ったツールへ案内します（30秒）</p>
+        <p className="text-sm font-medium text-slate-700 mb-3">{questions[0].text}</p>
+        <div className="space-y-2">
+          {questions[0].options.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => { setAnswer({ 0: opt.value }); setStep(opt.next); }}
+              className="w-full text-left px-4 py-3 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl text-sm text-indigo-900 font-medium transition-colors"
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const result = results[step];
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className={`rounded-xl p-5 mb-5 ${result.urgent ? "bg-red-50 border-2 border-red-300" : "bg-indigo-50 border-2 border-indigo-300"}`}>
+        <div className={`font-bold text-base mb-2 ${result.urgent ? "text-red-800" : "text-indigo-900"}`}>
+          {result.urgent && "⚠️ "}{result.title}
+        </div>
+        <p className="text-sm text-slate-700 leading-relaxed">{result.message}</p>
+      </div>
+      <button
+        onClick={() => onSelectTab(result.tab)}
+        className="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-bold py-3 rounded-xl mb-3 transition-colors"
+      >
+        {result.tabLabel} →
+      </button>
+      <button
+        onClick={() => { setStep(null); setAnswer({}); }}
+        className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 rounded-xl text-sm transition-colors"
+      >
+        最初からやり直す
+      </button>
+      <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700">
+        ⚠️ このガイドはAIによる一般的な情報です。具体的な期限・手続きは必ず専門家にご確認ください。
+      </div>
+    </div>
+  );
+}
+
+// ===== 相続税節税診断 =====
+function SetsuzeiDiagnosis() {
+  const [estate, setEstate] = useState(5000);
+  const [heirs, setHeirs] = useState(2);
+  const [hasSpouse, setHasSpouse] = useState(true);
+  const [hasRealEstate, setHasRealEstate] = useState(false);
+  const [realEstateValue, setRealEstateValue] = useState(2000);
+  const [showResult, setShowResult] = useState(false);
+
+  const basicDeduction = 3000 + 600 * heirs;
+  // 小規模宅地等の特例（居住用宅地330㎡まで80%評価減）
+  const koshikochiReduction = hasRealEstate ? Math.min(realEstateValue * 0.8, 1320) : 0;
+  const estateAfterKoshikochi = Math.max(0, estate - koshikochiReduction);
+  const taxableBaseNoSpec = Math.max(0, estate - basicDeduction);
+
+  function calcTaxSimple(base: number, h: number, sp: boolean): number {
+    if (base <= 0) return 0;
+    const per = base / h;
+    let t = 0;
+    if (per <= 1000) t = per * 0.1;
+    else if (per <= 3000) t = 100 + (per - 1000) * 0.15;
+    else if (per <= 5000) t = 400 + (per - 3000) * 0.2;
+    else if (per <= 10000) t = 800 + (per - 5000) * 0.3;
+    else if (per <= 20000) t = 2300 + (per - 10000) * 0.4;
+    else if (per <= 30000) t = 6300 + (per - 20000) * 0.45;
+    else if (per <= 60000) t = 10800 + (per - 30000) * 0.5;
+    else t = 25800 + (per - 60000) * 0.55;
+    let total = t * h;
+    if (sp) total *= 0.5;
+    return Math.round(total);
+  }
+
+  const estateAfterRed = estateAfterKoshikochi;
+  const taxableBase = Math.max(0, estateAfterRed - basicDeduction);
+  const taxWithSpec = calcTaxSimple(taxableBase, heirs, hasSpouse);
+  const taxWithoutSpec = calcTaxSimple(taxableBaseNoSpec, heirs, hasSpouse);
+  const saving = taxWithoutSpec - taxWithSpec;
+
+  const measures = [
+    { applicable: hasSpouse, name: "配偶者の税額軽減", effect: "配偶者は1億6,000万円まで、または法定相続分まで相続税ゼロ", impact: "大" },
+    { applicable: hasRealEstate, name: "小規模宅地等の特例（居住用）", effect: `居住用宅地${realEstateValue}万円 → 評価額${Math.round(realEstateValue * 0.2).toLocaleString()}万円に圧縮（80%削減）`, impact: "大" },
+    { applicable: estate > 10000, name: "生命保険の非課税枠", effect: `相続人数×500万円（${heirs * 500}万円）まで非課税。生命保険に組み替えで節税`, impact: "中" },
+    { applicable: estate > 5000, name: "暦年贈与・相続時精算課税", effect: "毎年110万円までの非課税贈与。10年以上前から始めると大きな効果", impact: "中" },
+    { applicable: true, name: "葬式費用の控除", effect: "葬儀費用は遺産総額から控除可能。領収書を必ず保管してください", impact: "小" },
+  ].filter(m => m.applicable);
+
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <h2 className="text-lg font-bold text-indigo-900 mb-1">相続税節税診断</h2>
+      <p className="text-xs text-slate-500 mb-5">主要な節税特例を適用した場合の相続税削減額を試算します</p>
+      <div className="space-y-5">
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-medium text-slate-700">遺産総額</label>
+            <span className="text-xl font-black text-indigo-900">{estate.toLocaleString()}万円</span>
+          </div>
+          <input type="range" min={500} max={50000} step={500} value={estate}
+            onChange={e => setEstate(Number(e.target.value))}
+            className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600" />
+          <div className="flex justify-between text-xs text-slate-400 mt-1"><span>500万円</span><span>5億円</span></div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700 mb-2">法定相続人数</label>
+          <div className="flex gap-2">
+            {[1, 2, 3, 4, 5].map(n => (
+              <button key={n} onClick={() => setHeirs(n)}
+                className={"flex-1 py-2 rounded-lg font-bold text-sm transition-all border " + (heirs === n ? "bg-indigo-900 text-white border-indigo-900" : "bg-white text-slate-600 border-slate-300 hover:border-indigo-400")}>
+                {n}人
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3">
+            <input type="checkbox" id="sp2" checked={hasSpouse} onChange={e => setHasSpouse(e.target.checked)} className="w-4 h-4 text-indigo-600" />
+            <label htmlFor="sp2" className="text-sm text-slate-700 cursor-pointer">配偶者あり（配偶者控除を適用）</label>
+          </div>
+          <div className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3">
+            <input type="checkbox" id="re2" checked={hasRealEstate} onChange={e => setHasRealEstate(e.target.checked)} className="w-4 h-4 text-indigo-600" />
+            <label htmlFor="re2" className="text-sm text-slate-700 cursor-pointer">居住用不動産あり（小規模宅地特例を適用）</label>
+          </div>
+          {hasRealEstate && (
+            <div className="pl-8 space-y-1">
+              <div className="flex justify-between items-center">
+                <label className="text-xs text-slate-600">不動産評価額</label>
+                <span className="text-sm font-bold text-indigo-700">{realEstateValue.toLocaleString()}万円</span>
+              </div>
+              <input type="range" min={500} max={10000} step={500} value={realEstateValue}
+                onChange={e => setRealEstateValue(Number(e.target.value))}
+                className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600" />
+            </div>
+          )}
+        </div>
+        <button onClick={() => setShowResult(true)}
+          className="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-bold py-3 rounded-xl transition-colors">
+          節税効果を診断する
+        </button>
+      </div>
+      {showResult && (
+        <div className="mt-6 space-y-4">
+          <div className="bg-indigo-50 rounded-xl p-5">
+            <h3 className="font-bold text-indigo-900 mb-3 text-base">節税診断結果</h3>
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-center">
+                <p className="text-xs text-slate-500 mb-1">特例なしの場合</p>
+                <p className="text-xl font-black text-red-600">{taxWithoutSpec.toLocaleString()}万円</p>
+              </div>
+              <div className="bg-green-50 border border-green-200 rounded-xl p-3 text-center">
+                <p className="text-xs text-slate-500 mb-1">特例適用後</p>
+                <p className="text-xl font-black text-green-600">{taxWithSpec.toLocaleString()}万円</p>
+              </div>
+            </div>
+            {saving > 0 && (
+              <div className="bg-amber-50 border-2 border-amber-400 rounded-xl p-4 text-center mb-3">
+                <p className="text-xs text-amber-700 mb-1">節税効果（概算）</p>
+                <p className="text-3xl font-black text-amber-600">▼ {saving.toLocaleString()}万円</p>
+                <p className="text-xs text-amber-600 mt-1">の相続税削減が見込まれます</p>
+              </div>
+            )}
+            {saving === 0 && taxWithSpec === 0 && (
+              <div className="bg-green-100 border border-green-300 rounded-xl p-3 text-center mb-3">
+                <p className="text-green-700 font-bold text-sm">相続税はかかりません（基礎控除・特例適用後）</p>
+              </div>
+            )}
+          </div>
+          <div className="space-y-2">
+            <h3 className="font-bold text-indigo-900 text-sm">適用可能な節税対策</h3>
+            {measures.map((m, i) => (
+              <div key={i} className="bg-white border border-slate-200 rounded-xl p-3 flex gap-3 items-start">
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 mt-0.5 ${m.impact === "大" ? "bg-red-100 text-red-700" : m.impact === "中" ? "bg-amber-100 text-amber-700" : "bg-green-100 text-green-700"}`}>
+                  効果{m.impact}
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-slate-800">{m.name}</p>
+                  <p className="text-xs text-slate-600 mt-0.5">{m.effect}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <p className="text-amber-800 font-bold text-sm mb-1">💡 節税には専門家の確認が不可欠です</p>
+            <p className="text-amber-700 text-xs mb-3">小規模宅地特例・配偶者控除の適用には要件があります。相続税の申告前に必ず税理士にご相談ください。</p>
+            <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer"
+              className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">
+              税理士ドットコムで無料相談 →
+            </a>
+          </div>
+          <p className="text-xs text-slate-400 text-center">※ この試算はあくまで概算です。実際の相続税は財産の評価方法・各種特例の適用要件によって大きく異なります。</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ToolPage() {
   const [activeTab, setActiveTab] = useState<Tab>("quickcalc");
@@ -223,7 +484,9 @@ export default function ToolPage() {
 
   const tabs: { id: Tab; label: string; icon: string; free: boolean }[] = [
     { id: "quickcalc", label: "かんたん試算", icon: "🧮", free: true },
+    { id: "flowchart", label: "状況診断", icon: "🔍", free: true },
     { id: "simulator", label: "相続税試算", icon: "💴", free: true },
+    { id: "setsuzei", label: "節税診断", icon: "💡", free: true },
     { id: "timeline", label: "手続き期限", icon: "📅", free: true },
     { id: "checklist", label: "チェックリスト", icon: "✅", free: true },
     { id: "document", label: "協議書雛形", icon: "📝", free: false },
@@ -568,9 +831,26 @@ export default function ToolPage() {
               ))}
             </div>
             {doneItems === totalItems && (
-              <div className="mt-5 bg-green-50 border border-green-300 rounded-xl p-4 text-center">
-                <p className="text-green-700 font-bold text-sm">🎉 全手続き完了！お疲れ様でした。</p>
-                <p className="text-green-600 text-xs mt-1">最終確認として弁護士・税理士への相談をおすすめします。</p>
+              <div className="mt-5 bg-gradient-to-br from-indigo-900 to-indigo-800 border border-indigo-500 rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-2">🎉</div>
+                <p className="text-white font-black text-lg mb-1">全手続き完了！</p>
+                <p className="text-indigo-200 text-xs mb-4">お疲れ様でした。相続手続きが全て完了しました。</p>
+                <div className="bg-white/10 border border-white/20 rounded-xl p-4 mb-4">
+                  <div className="text-amber-300 text-sm font-bold mb-1">⚖️ 相続手続き完了証明書</div>
+                  <div className="text-white text-xs leading-relaxed">
+                    <p className="font-bold text-base text-amber-300">{totalItems}項目 全完了</p>
+                    <p className="text-indigo-300 text-xs mt-1">完了日: {new Date().toLocaleDateString("ja-JP")}</p>
+                  </div>
+                </div>
+                <a
+                  href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで相続手続き全" + totalItems + "項目が完了しました！✅ 死亡直後から相続税申告・不動産登記まで、AIがサポートしてくれて助かりました。⚖️ https://soukoku-ai.vercel.app #相続AI #相続手続き完了")}
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-5 rounded-lg text-sm transition-colors"
+                >
+                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  完了をXでシェアする
+                </a>
+                <p className="text-indigo-300 text-xs mt-3">最終確認として弁護士・税理士への相談をおすすめします。</p>
               </div>
             )}
             <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
@@ -579,6 +859,12 @@ export default function ToolPage() {
               <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 text-xs font-bold hover:underline">弁護士ドットコムで無料相談する →</a>
             </div>
           </div>
+        )}
+        {activeTab === "flowchart" && (
+          <SituationFlowchart onSelectTab={(tab) => setActiveTab(tab as Tab)} />
+        )}
+        {activeTab === "setsuzei" && (
+          <SetsuzeiDiagnosis />
         )}
         {/* 次のアクション3選 */}
         <div className="mt-6 bg-white border border-amber-200 rounded-xl p-4">
