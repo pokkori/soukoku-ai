@@ -28,7 +28,7 @@ function renderMarkdown(text: string): string {
   return result.join("\n");
 }
 
-type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist" | "quickcalc" | "setsuzei" | "flowchart";
+type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist" | "quickcalc" | "setsuzei" | "flowchart" | "kiso";
 
 const CHECKLIST_ITEMS = [
   {
@@ -389,6 +389,10 @@ export default function ToolPage() {
     { icon: "📝", label: "遺言書あり", assets: "遺言書が見つかりました。内容に納得できない相続人がいます。", distribution: "遺言書の内容と異なる分割を希望する相続人がいます。" },
     { icon: "🚨", label: "借金あり", assets: "亡くなった親に借金（負債）があることがわかりました。相続放棄を考えています。", distribution: "相続放棄の方向で検討中です。" },
   ];
+  // 基礎控除計算機
+  const [kisoHeirs, setKisoHeirs] = useState(2);
+  const kisoDeduction = 3000 + 600 * kisoHeirs;
+
   const [docLoading, setDocLoading] = useState(false);
   const [posAssets, setPosAssets] = useState("");
   const [negAssets, setNegAssets] = useState("");
@@ -484,6 +488,7 @@ export default function ToolPage() {
 
   const tabs: { id: Tab; label: string; icon: string; free: boolean }[] = [
     { id: "quickcalc", label: "かんたん試算", icon: "🧮", free: true },
+    { id: "kiso", label: "基礎控除計算", icon: "📐", free: true },
     { id: "flowchart", label: "状況診断", icon: "🔍", free: true },
     { id: "simulator", label: "相続税試算", icon: "💴", free: true },
     { id: "setsuzei", label: "節税診断", icon: "💡", free: true },
@@ -659,6 +664,11 @@ export default function ToolPage() {
                     <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">税理士ドットコムで無料相談 →</a>
                   </div>
                 )}
+                <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4">
+                  <p className="text-green-800 font-bold text-sm mb-1">⚖️ 遺産分割・相続放棄は弁護士に相談を</p>
+                  <p className="text-green-700 text-xs mb-3">相続税だけでなく、遺産分割の協議や相続放棄の手続きには弁護士・司法書士のサポートが安心です。初回無料相談から始められます。</p>
+                  <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored" className="block w-full text-center bg-white border border-green-300 hover:bg-green-50 text-green-800 font-bold px-4 py-2 rounded-lg text-sm transition-colors">弁護士ドットコムで無料相談する（相続専門）→</a>
+                </div>
               </div>
             )}
           </div>
@@ -747,10 +757,41 @@ export default function ToolPage() {
               )}
             </div>
             {docResult && (
-              <div className="mt-6 bg-slate-50 rounded-xl p-5">
-                <h3 className="font-bold text-indigo-900 mb-3">遺産分割協議書（雛形）</h3>
-                <div className="text-sm text-slate-700 whitespace-pre-wrap font-mono bg-white border rounded-lg p-4 max-h-96 overflow-y-auto">{docResult}</div>
-                <p className="text-xs text-slate-400 mt-2">※ この雛形はAIが生成したものです。実際の遺産分割協議書の確認には弁護士・司法書士にご相談ください。</p>
+              <div className="mt-6 space-y-4">
+                <div className="bg-slate-50 rounded-xl p-5">
+                  <h3 className="font-bold text-indigo-900 mb-3">遺産分割協議書（雛形）</h3>
+                  <div className="text-sm text-slate-700 whitespace-pre-wrap font-mono bg-white border rounded-lg p-4 max-h-96 overflow-y-auto">{docResult}</div>
+                  <p className="text-xs text-slate-400 mt-2">※ この雛形はAIが生成したものです。実際の遺産分割協議書の確認には弁護士・司法書士にご相談ください。</p>
+                </div>
+                {/* 相続専門家CTA強化バナー */}
+                <div className="bg-gradient-to-r from-indigo-900 to-indigo-800 rounded-2xl p-6 text-white">
+                  <div className="flex items-start gap-3 mb-4">
+                    <span className="text-3xl">⚖️</span>
+                    <div>
+                      <p className="font-black text-base mb-1">相続手続きを専門家に依頼する</p>
+                      <p className="text-indigo-200 text-sm">AIが生成した雛形を確認・完成させるために、弁護士・司法書士への相談をお勧めします。初回相談無料の専門家が多数います。</p>
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer"
+                      className="flex items-center justify-between bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-4 py-3 transition-colors">
+                      <div>
+                        <div className="text-sm font-bold text-white">弁護士ドットコム</div>
+                        <div className="text-xs text-indigo-300">遺産争い・相続放棄の相談</div>
+                      </div>
+                      <span className="text-amber-300 font-bold text-xs bg-amber-400/20 border border-amber-400/30 px-3 py-1 rounded-full whitespace-nowrap ml-2">無料相談 →</span>
+                    </a>
+                    <a href="https://www.legal-mall.com/s/souzoku" target="_blank" rel="noopener noreferrer"
+                      className="flex items-center justify-between bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-4 py-3 transition-colors">
+                      <div>
+                        <div className="text-sm font-bold text-white">ベンナビ相続</div>
+                        <div className="text-xs text-indigo-300">司法書士・相続登記に強い</div>
+                      </div>
+                      <span className="text-amber-300 font-bold text-xs bg-amber-400/20 border border-amber-400/30 px-3 py-1 rounded-full whitespace-nowrap ml-2">専門家を探す →</span>
+                    </a>
+                  </div>
+                  <p className="text-xs text-indigo-400 text-center mt-3">※ 広告・PR（各社公式サイトに遷移します）</p>
+                </div>
               </div>
             )}
           </div>
@@ -786,10 +827,18 @@ export default function ToolPage() {
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-bold text-indigo-900">相続手続きチェックリスト</h2>
-              <button
-                onClick={() => { setCheckedItems({}); localStorage.removeItem("soukoku_checklist"); }}
-                className="text-xs text-slate-400 hover:text-slate-600 underline"
-              >リセット</button>
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={() => window.print()}
+                  className="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg font-bold transition-colors"
+                >
+                  🖨️ 印刷
+                </button>
+                <button
+                  onClick={() => { setCheckedItems({}); localStorage.removeItem("soukoku_checklist"); }}
+                  className="text-xs text-slate-400 hover:text-slate-600 underline"
+                >リセット</button>
+              </div>
             </div>
             <div className="mb-5">
               <div className="flex items-center justify-between mb-1">
@@ -857,6 +906,61 @@ export default function ToolPage() {
               <p className="text-amber-800 font-bold text-sm mb-1">💡 手続きに不安を感じたら</p>
               <p className="text-amber-700 text-xs mb-2">相続専門の弁護士・税理士に相談することで、ミスなく安心して手続きが完了できます。</p>
               <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 text-xs font-bold hover:underline">弁護士ドットコムで無料相談する →</a>
+            </div>
+          </div>
+        )}
+        {activeTab === "kiso" && (
+          <div className="bg-white rounded-2xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-indigo-900 mb-1">基礎控除計算機</h2>
+            <p className="text-xs text-slate-500 mb-5">法定相続人数を入力するだけで基礎控除額をリアルタイム計算。申告が必要かどうかすぐわかります。</p>
+            <div className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-3">法定相続人数（配偶者・子・親・兄弟姉妹の合計）</label>
+                <div className="flex flex-wrap gap-2">
+                  {[1,2,3,4,5,6,7,8,9,10].map(n => (
+                    <button key={n} onClick={() => setKisoHeirs(n)}
+                      className={"px-4 py-2 rounded-lg font-bold text-sm transition-all border " + (kisoHeirs === n ? "bg-indigo-900 text-white border-indigo-900" : "bg-white text-slate-600 border-slate-300 hover:border-indigo-400")}>
+                      {n}人
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {/* リアルタイム計算結果 */}
+              <div className="bg-indigo-50 rounded-2xl p-6 space-y-4">
+                <div className="text-center">
+                  <p className="text-xs text-slate-500 mb-1">計算式: 3,000万円 + 600万円 × {kisoHeirs}人</p>
+                  <p className="text-4xl font-black text-indigo-900">{kisoDeduction.toLocaleString()}<span className="text-xl ml-1">万円</span></p>
+                  <p className="text-sm text-indigo-600 mt-1">が基礎控除額です</p>
+                </div>
+                <div className="border-t border-indigo-200 pt-4 space-y-3">
+                  <div className="bg-green-100 border border-green-300 rounded-xl p-4">
+                    <p className="text-green-800 font-bold text-sm mb-1">遺産総額が {kisoDeduction.toLocaleString()}万円 以下の場合</p>
+                    <p className="text-green-700 text-sm font-black">あなたの相続は申告不要かも？</p>
+                    <p className="text-green-600 text-xs mt-1">相続税の申告・納付が不要です（原則として）。ただし小規模宅地特例・生命保険・生前贈与加算などにより課税される場合があります。</p>
+                  </div>
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                    <p className="text-red-800 font-bold text-sm mb-1">遺産総額が {kisoDeduction.toLocaleString()}万円 超の場合</p>
+                    <p className="text-red-700 text-sm font-black">要申告 — 10ヶ月以内に税務署へ申告が必要</p>
+                    <p className="text-red-600 text-xs mt-1 mb-3">申告しない場合のペナルティ: 無申告加算税（15〜20%）・延滞税（年約8.7%）が課せられます。申告期限（相続開始から10ヶ月）を必ず守ってください。</p>
+                    <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer"
+                      className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition-colors">
+                      税理士ドットコムで無料相談する →
+                    </a>
+                  </div>
+                </div>
+              </div>
+              {/* Xシェアボタン */}
+              <a
+                href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで基礎控除額を計算しました！\n法定相続人" + kisoHeirs + "人 → 基礎控除 " + kisoDeduction.toLocaleString() + "万円\n遺産総額がこれ以下なら相続税申告は不要かも。\n\nhttps://soukoku-ai.vercel.app/tool\n#相続AI #相続税")}
+                target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                計算結果をXでシェアする
+              </a>
+              <p className="text-xs text-slate-400 text-center">
+                ※ 基礎控除額は概算です。実際には各種特例・生前贈与・生命保険の非課税枠等により課税額が変わります。正確な判定は税理士にご確認ください。
+              </p>
             </div>
           </div>
         )}

@@ -13,5 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/sozoku-hoki-tetsuzuki`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/blog/sozoku-timeline`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/blog/isan-bunkatsu-kyogisho`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: `${base}/blog/souzoku-checklist`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
   ];
 }

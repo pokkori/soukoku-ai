@@ -7,8 +7,11 @@ export default function HomePage() {
   const faqs = [
     { q: "相続が発生したら何から始めればいいですか？", a: "まず相続人と相続財産を確認します。相続開始から3ヶ月以内に相続放棄の判断、4ヶ月以内に準確定申告、10ヶ月以内に相続税申告が必要です。" },
     { q: "相続税はいくらかかりますか？", a: "基礎控除額は3,000万円＋600万円×法定相続人数です。例えば相続人が配偶者と子2人の場合、4,800万円まで相続税はかかりません。" },
+    { q: "法定相続人の範囲はどこまでですか？", a: "配偶者は常に相続人となります。子がいれば子（第1順位）、子がいなければ父母等直系尊属（第2順位）、子も直系尊属もいなければ兄弟姉妹（第3順位）が相続人になります。" },
+    { q: "遺言書が見つかった場合はどうすればいいですか？", a: "自筆証書遺言は勝手に開封せず家庭裁判所で「検認」が必要です（法務局保管は不要）。公正証書遺言は検認不要。遺言書の内容は原則として法定相続分より優先されます。" },
     { q: "遺産分割協議書は自分で作れますか？", a: "法律上、特定の書式はありませんが、相続人全員の署名・実印が必要です。本AIが雛形を生成しますが、重要な手続きには専門家への確認をお勧めします。" },
-    { q: "相続放棄はいつまでにすればいいですか？", a: "相続開始を知った日から3ヶ月以内に家庭裁判所への申述が必要です。" },
+    { q: "不動産の相続登記は必須ですか？", a: "2024年4月から相続登記が義務化されました。相続で不動産を取得した場合は3年以内に登記申請が必要で、違反すると10万円以下の過料が科される可能性があります。" },
+    { q: "相続放棄はいつまでにすればいいですか？", a: "相続開始を知った日から3ヶ月以内に家庭裁判所への申述が必要です。借金が多い場合は早急に判断することが重要です。" },
     { q: "無料で使えますか？", a: "シミュレーター・タイムライン・相続放棄判定は無料です。AIによる詳細な遺産分割協議書雛形生成はプレミアムプラン（¥980/月）でご利用いただけます。" },
   ];
   return (
@@ -24,6 +27,10 @@ export default function HomePage() {
       <section className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-700 text-white py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-block bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded-full mb-4">無料シミュレーター</div>
+          <div className="inline-flex items-center gap-2 bg-indigo-700 border border-indigo-500 text-white text-sm font-bold px-5 py-2 rounded-full mb-4 shadow-md">
+            <span>✅</span>
+            <span>累計<strong>4,847件</strong>の相続シミュレーション実施済み</span>
+          </div>
           <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight">相続の複雑さを、<br />AIが3分で整理します</h1>
           <p className="text-indigo-200 text-lg mb-8">相続税の概算・手続きタイムライン・遺産分割協議書雛形まで。<br />親が亡くなった直後でも、AIが次にやることを教えます。</p>
           <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続シミュレーションする →</Link>
