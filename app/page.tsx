@@ -1,6 +1,46 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+
+function DeadlineCountdown() {
+  const [deathDate, setDeathDate] = useState<string>('');
+  const [daysLeft, setDaysLeft] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!deathDate) { setDaysLeft(null); return; }
+    const death = new Date(deathDate);
+    const deadline = new Date(death);
+    deadline.setMonth(deadline.getMonth() + 3);
+    const today = new Date();
+    const diff = Math.ceil((deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    setDaysLeft(diff);
+  }, [deathDate]);
+
+  return (
+    <div className="bg-amber-50 border-2 border-amber-400 rounded-2xl p-6 my-8">
+      <h3 className="text-amber-800 font-bold text-lg mb-2">⚠️ 相続放棄の期限を確認</h3>
+      <p className="text-amber-700 text-sm mb-4">相続放棄は「相続を知った日から3ヶ月以内」に家庭裁判所へ申述が必要です</p>
+      <input
+        type="date"
+        value={deathDate}
+        onChange={e => setDeathDate(e.target.value)}
+        className="border border-amber-300 rounded-lg px-4 py-2 w-full mb-3 bg-white text-slate-800"
+      />
+      {daysLeft !== null && (
+        <div className={`text-center p-4 rounded-xl ${daysLeft < 14 ? 'bg-red-100 text-red-700' : daysLeft < 30 ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}`}>
+          <p className="text-4xl font-black">{daysLeft > 0 ? `残り${daysLeft}日` : '期限超過の可能性'}</p>
+          <p className="text-sm mt-1">{daysLeft < 30 ? '🚨 今すぐ弁護士に相談してください' : '今すぐ手続きを開始してください'}</p>
+          {daysLeft < 30 && (
+            <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer"
+              className="mt-3 inline-block bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition-colors">
+              弁護士に無料相談する →
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -12,7 +52,7 @@ export default function HomePage() {
     { q: "遺産分割協議書は自分で作れますか？", a: "法律上、特定の書式はありませんが、相続人全員の署名・実印が必要です。本AIが雛形を生成しますが、重要な手続きには専門家への確認をお勧めします。" },
     { q: "不動産の相続登記は必須ですか？", a: "2024年4月から相続登記が義務化されました。相続で不動産を取得した場合は3年以内に登記申請が必要で、違反すると10万円以下の過料が科される可能性があります。" },
     { q: "相続放棄はいつまでにすればいいですか？", a: "相続開始を知った日から3ヶ月以内に家庭裁判所への申述が必要です。借金が多い場合は早急に判断することが重要です。" },
-    { q: "無料で使えますか？", a: "シミュレーター・タイムライン・相続放棄判定は無料です。AIによる詳細な遺産分割協議書雛形生成はプレミアムプラン（¥980/月）でご利用いただけます。" },
+    { q: "無料で使えますか？", a: "シミュレーター・タイムライン・相続放棄判定は無料です。AIによる詳細な遺産分割協議書雛形生成・節税シミュレーション詳細はプレミアムプラン（¥1,980/月）でご利用いただけます。" },
   ];
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
@@ -35,6 +75,11 @@ export default function HomePage() {
           <p className="text-indigo-200 text-lg mb-8">相続税の概算・手続きタイムライン・遺産分割協議書雛形まで。<br />親が亡くなった直後でも、AIが次にやることを教えます。</p>
           <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続シミュレーションする →</Link>
           <p className="text-indigo-300 text-sm mt-4">登録不要・3分で完了・無料</p>
+        </div>
+      </section>
+      <section className="bg-white py-4 px-4">
+        <div className="max-w-3xl mx-auto">
+          <DeadlineCountdown />
         </div>
       </section>
       <section className="bg-white py-12 px-4">
@@ -181,7 +226,7 @@ export default function HomePage() {
               </thead>
               <tbody>
                 {[
-                  ["費用", "20〜100万円", "無料（税理士紹介あり）", "無料〜¥980/月"],
+                  ["費用", "20〜100万円", "無料（税理士紹介あり）", "無料〜¥1,980/月"],
                   ["相続税シミュレーター", "✓ 対応", "✓ 申告書作成まで", "✓ 即時試算・節税診断付き"],
                   ["手続きタイムライン", "△ 別途確認", "△ 限定的", "✓ 日付指定で全期限を自動生成"],
                   ["遺産分割協議書", "✓ 作成・確認", "✗ 対象外", "✓ AI雛形生成（プレミアム）"],
@@ -383,10 +428,10 @@ export default function HomePage() {
             </div>
             <div className="bg-white text-slate-800 rounded-2xl p-6 border-2 border-amber-400">
               <div className="text-amber-600 font-black text-lg mb-1">プレミアムプラン</div>
-              <div className="text-3xl font-black mb-1">¥980<span className="text-base font-normal text-slate-500">/月</span></div>
+              <div className="text-3xl font-black mb-1">¥1,980<span className="text-base font-normal text-slate-500">/月</span></div>
               <div className="text-xs text-slate-400 mb-4">いつでも解約可能</div>
               <ul className="text-left space-y-2 text-sm text-slate-600 mb-6">
-                {["無料プランの全機能", "遺産分割協議書雛形生成（AI）", "詳細な相続アドバイス（無制限）", "相続税節税対策プラン"].map((f, i) => (
+                {["無料プランの全機能", "遺産分割協議書雛形生成（AI）", "詳細な相続アドバイス（無制限）", "相続税節税対策プラン", "節税シミュレーション詳細（小規模宅地特例・配偶者控除の詳細試算）"].map((f, i) => (
                   <li key={i}>✓ {f}</li>
                 ))}
               </ul>
