@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import InheritanceSample from "@/components/InheritanceSample";
 
 // 相続税クイック試算ウィジェット
 function InheritanceTaxWidget() {
@@ -275,8 +276,62 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          {/* 遺産分割協議書サンプル展開UI */}
+          <div className="mt-8 max-w-2xl mx-auto">
+            <InheritanceSample />
+          </div>
         </div>
       </section>
+      {/* AIサンプル出力: 遺産分割協議書ドラフト */}
+      <section className="py-12 px-4 bg-white border-t border-indigo-100">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-block bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full mb-3">実際の出力サンプル</div>
+            <h2 className="text-2xl font-black text-indigo-900">AIが生成する遺産分割協議書ドラフト</h2>
+            <p className="text-slate-500 text-sm mt-2">「ChatGPTと何が違うの？」— 相続法に基づいた法的書式で出力されます</p>
+          </div>
+          <div className="bg-[#1e293b] rounded-2xl overflow-hidden shadow-xl font-mono text-sm">
+            <div className="px-5 py-3 bg-[#0f172a] flex items-center gap-2 border-b border-slate-700">
+              <div className="w-3 h-3 rounded-full bg-red-500"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              <span className="text-slate-400 text-xs ml-2">遺産分割協議書 ドラフト（AIサンプル）</span>
+            </div>
+            <div className="p-6 text-slate-200 leading-relaxed space-y-3 text-xs md:text-sm">
+              <p className="text-amber-400 font-bold">【遺産分割協議書 サンプル（AIドラフト）】</p>
+              <p className="text-white font-bold text-center py-2">遺産分割協議書</p>
+              <p>被相続人 山田太郎（令和7年10月15日死亡）の遺産について、<br />相続人全員で協議した結果、以下のとおり遺産を分割することに合意した。</p>
+              <div className="border-t border-slate-600 pt-3">
+                <p className="text-green-400 font-bold">第1条（不動産）</p>
+                <p>東京都世田谷区○○一丁目2番3号 宅地 150.00㎡</p>
+                <p>及び 同所 家屋番号3番 木造2階建 床面積 95.80㎡</p>
+                <p className="text-teal-300">→ 相続人 山田花子（配偶者）が相続する</p>
+              </div>
+              <div className="border-t border-slate-600 pt-3">
+                <p className="text-green-400 font-bold">第2条（預貯金）</p>
+                <p>三菱UFJ銀行 渋谷支店 普通預金 口座番号1234567</p>
+                <p>残高 1,200万円</p>
+                <p className="text-teal-300">→ 2分の1（600万円）を山田花子、残り2分の1を山田一郎（長男）が相続する</p>
+              </div>
+              <div className="border-t border-slate-600 pt-3">
+                <p className="text-slate-400 text-xs">…（株式・生命保険・その他財産 第3条〜第5条は全文生成で表示）</p>
+              </div>
+              <div className="border-t border-slate-600 pt-3 bg-amber-900/20 rounded-lg p-3">
+                <p className="text-amber-300 text-xs font-bold">⚠️ このサンプルはAIが生成した参考例です</p>
+                <p className="text-amber-200 text-xs">実際の法的効力を持つ書類は専門家（司法書士・弁護士）の確認を推奨します</p>
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-slate-400 text-center mt-3">※ 実際の出力はあなたの相続人情報・財産内容を基にAIが個別生成します</p>
+          <div className="text-center mt-6">
+            <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black px-8 py-4 rounded-xl shadow-lg transition-all hover:scale-105">
+              全文を無料で生成する →
+            </Link>
+            <p className="text-xs text-slate-400 mt-2">登録不要 • 3分で完了 • 弁護士相談前の下書きとして活用可</p>
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 px-4 bg-white">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl font-black text-center text-indigo-900 mb-8">3ステップで相続の全体像を把握</h2>
