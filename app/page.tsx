@@ -2,6 +2,97 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+// 相続税クイック試算ウィジェット
+function InheritanceTaxWidget() {
+  const [estateWan, setEstateWan] = useState(5000); // 遺産総額（万円）
+  const [heirsCount, setHeirsCount] = useState(2); // 法定相続人数
+  const [hasSpouse, setHasSpouse] = useState(true); // 配偶者ありか
+
+  // 基礎控除
+  const basicDeduction = 3000 + 600 * heirsCount;
+  // 課税遺産総額
+  const taxableEstate = Math.max(0, estateWan - basicDeduction);
+  // 配偶者控除適用後の簡易試算（配偶者は1億6000万まで非課税）
+  const taxableAfterSpouse = hasSpouse ? Math.max(0, taxableEstate * 0.5) : taxableEstate;
+  // 相続税の累進計算（簡易）
+  function calcInheritanceTax(amount: number): number {
+    if (amount <= 0) return 0;
+    const brackets = [
+      { limit: 1000, rate: 0.10, deduction: 0 },
+      { limit: 3000, rate: 0.15, deduction: 50 },
+      { limit: 5000, rate: 0.20, deduction: 200 },
+      { limit: 10000, rate: 0.30, deduction: 700 },
+      { limit: 20000, rate: 0.40, deduction: 1700 },
+      { limit: 30000, rate: 0.45, deduction: 2700 },
+      { limit: 60000, rate: 0.50, deduction: 4200 },
+      { limit: Infinity, rate: 0.55, deduction: 7200 },
+    ];
+    const b = brackets.find(b => amount <= b.limit) ?? brackets[brackets.length - 1];
+    return Math.max(0, Math.round(amount * b.rate - b.deduction));
+  }
+  // 法定相続分で按分してから合計（簡易）
+  const perPerson = taxableAfterSpouse / heirsCount;
+  const totalTax = Math.round(calcInheritanceTax(perPerson) * heirsCount);
+
+  return (
+    <div className="bg-white border-2 border-indigo-200 rounded-2xl p-6 max-w-2xl mx-auto shadow-sm">
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">遺産総額（万円）</label>
+            <input
+              type="range" min={500} max={50000} step={500} value={estateWan}
+              onChange={e => setEstateWan(Number(e.target.value))}
+              className="w-full accent-indigo-600"
+            />
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>500万</span>
+              <span className="font-black text-indigo-700 text-base">{estateWan.toLocaleString()}万円</span>
+              <span>5億</span>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-1">法定相続人の数</label>
+            <select value={heirsCount} onChange={e => setHeirsCount(Number(e.target.value))}
+              className="w-full border border-indigo-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
+              {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n}人</option>)}
+            </select>
+          </div>
+          <div className="flex items-center gap-3">
+            <input type="checkbox" id="spouse" checked={hasSpouse} onChange={e => setHasSpouse(e.target.checked)}
+              className="w-4 h-4 accent-indigo-600" />
+            <label htmlFor="spouse" className="text-sm font-bold text-gray-700">配偶者がいる（配偶者控除を適用）</label>
+          </div>
+        </div>
+        <div className="flex flex-col justify-center">
+          <div className="bg-indigo-50 border-2 border-indigo-300 rounded-2xl p-5 text-center">
+            <p className="text-xs text-gray-500 mb-1">基礎控除額</p>
+            <p className="text-lg font-black text-indigo-700 mb-3">{basicDeduction.toLocaleString()}万円</p>
+            {taxableEstate <= 0 ? (
+              <div className="bg-green-50 border border-green-300 rounded-xl p-3">
+                <p className="text-green-700 font-black text-lg">相続税 ゼロ</p>
+                <p className="text-xs text-green-600 mt-1">遺産総額が基礎控除以下のため申告不要</p>
+              </div>
+            ) : (
+              <div>
+                <p className="text-xs text-gray-500 mb-1">概算相続税総額</p>
+                <p className="text-red-600 font-black text-4xl mb-1">{totalTax.toLocaleString()}<span className="text-xl font-normal">万円</span></p>
+                <p className="text-xs text-gray-400">{hasSpouse ? "配偶者控除（1億6,000万まで非課税）適用済み" : "配偶者控除なし"}</p>
+              </div>
+            )}
+          </div>
+          <p className="text-xs text-gray-400 mt-3 text-center">※ 小規模宅地特例・各種控除未適用の概算値です</p>
+        </div>
+      </div>
+      <div className="mt-4 text-center">
+        <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-6 py-3 rounded-xl transition-all text-sm">
+          詳細シミュレーションをする（無料）→
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 function DeadlineCountdown() {
   const [deathDate, setDeathDate] = useState<string>('');
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
@@ -458,6 +549,73 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/* 相続税クイック試算ウィジェット */}
+      <section className="py-14 px-4 bg-white border-t border-slate-200">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="inline-block bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full mb-3">無料ツール</div>
+            <h2 className="text-2xl font-black text-indigo-900">相続税 かんたん試算ウィジェット</h2>
+            <p className="text-slate-500 text-sm mt-2">遺産総額と相続人数を入力するだけで相続税の概算がわかります</p>
+          </div>
+          <InheritanceTaxWidget />
+        </div>
+      </section>
+
+      {/* SEOテキスト: 相続税の計算方法 */}
+      <section className="py-14 px-4 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl font-black text-indigo-900 mb-4">相続税の計算方法：基礎控除から税額まで完全解説</h2>
+          <div className="prose prose-sm max-w-none text-gray-600 leading-relaxed space-y-4 mb-10">
+            <p>相続税の計算には「<strong className="text-gray-800">基礎控除額の把握</strong>」が最初のステップです。基礎控除額は<strong className="text-gray-800">3,000万円 ＋ 600万円 × 法定相続人数</strong>で算出します。例えば相続人が配偶者と子2人の場合、4,800万円まで相続税はかかりません。</p>
+            <p>遺産総額が基礎控除を超える場合は、超えた部分（課税遺産総額）に累進税率（10〜55%）が適用されます。ただし「小規模宅地等の特例」（居住用330㎡まで80%減額）や「配偶者控除」（1億6,000万円または法定相続分まで非課税）を活用することで、納税額を大幅に圧縮できます。</p>
+            <p>相続税の申告期限は「被相続人が亡くなった日の翌日から10ヶ月以内」です。この期限を過ぎると延滞税・加算税が課されます。まず本シミュレーターで概算を把握し、課税が見込まれる場合は速やかに税理士に相談することをおすすめします。</p>
+          </div>
+
+          <h2 className="text-2xl font-black text-indigo-900 mb-4">相続発生後にやるべき手続き優先順位</h2>
+          <div className="grid md:grid-cols-2 gap-4 mb-10">
+            {[
+              { phase: "死亡直後〜7日", icon: "🔴", urgency: "最緊急", items: ["死亡届の提出（7日以内・役所）", "火葬許可証の取得", "遺言書の有無を確認"] },
+              { phase: "〜3ヶ月以内", icon: "🟠", urgency: "最重要期限", items: ["相続人の確定（戸籍謄本取得）", "財産・負債の調査", "相続放棄の検討・申述（期限厳守）"] },
+              { phase: "〜4ヶ月以内", icon: "🟡", urgency: "期限あり", items: ["準確定申告（故人の所得税）", "事業継続の手続き（該当者）"] },
+              { phase: "〜10ヶ月以内", icon: "🟢", urgency: "相続税申告期限", items: ["遺産分割協議書の作成・署名", "相続税申告・納付", "不動産の相続登記（義務化済み）"] },
+            ].map((item) => (
+              <div key={item.phase} className="bg-white border border-slate-200 rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{item.icon}</span>
+                  <div>
+                    <span className="font-black text-indigo-900 text-sm">{item.phase}</span>
+                    <span className="ml-2 text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">{item.urgency}</span>
+                  </div>
+                </div>
+                <ul className="space-y-1">
+                  {item.items.map((it, j) => (
+                    <li key={j} className="text-xs text-slate-700 flex gap-2">
+                      <span className="text-indigo-400 shrink-0">▶</span>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <h2 className="text-2xl font-black text-indigo-900 mb-4">よくある質問</h2>
+          <div className="space-y-3">
+            {[
+              { q: "相続税がかかるかどうかわからない場合はどうすればいいですか？", a: "まず基礎控除額（3,000万円＋600万円×相続人数）と遺産総額を比較してください。遺産総額が基礎控除以下なら相続税の申告は不要です。本ページのクイック試算ウィジェットで概算を把握できます。" },
+              { q: "相続放棄はどのくらいの費用がかかりますか？", a: "家庭裁判所への申述費用は収入印紙800円＋郵送料約400円と低コストです。ただし手続きが複雑な場合や期限が迫っている場合は司法書士（3〜10万円）または弁護士（5〜20万円）への依頼も検討してください。" },
+              { q: "相続登記の義務化とはどういうことですか？", a: "2024年4月から相続によって不動産を取得した場合は3年以内の相続登記が義務となりました。違反すると10万円以下の過料が科される場合があります。司法書士への依頼費用は5〜15万円程度です。" },
+              { q: "遺産分割協議書は弁護士・司法書士に頼まないといけませんか？", a: "法律上は自分で作成可能です。本AIが生成する雛形を活用することで、専門家に依頼する前の下書き作成が可能です。ただし内容が複雑な場合や相続人間でもめている場合は弁護士への相談をおすすめします。" },
+            ].map((faq, i) => (
+              <div key={i} className="bg-white rounded-xl p-5 border border-slate-200">
+                <p className="font-semibold text-indigo-800 mb-2 text-sm">Q. {faq.q}</p>
+                <p className="text-sm text-gray-600">A. {faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 px-4 bg-amber-50 border-t border-amber-200">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-2xl font-black text-indigo-900 mb-4">今すぐ相続の全体像を把握しよう</h2>
