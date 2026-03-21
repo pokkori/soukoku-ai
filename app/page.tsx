@@ -85,11 +85,144 @@ function InheritanceTaxWidget() {
           <p className="text-xs text-gray-400 mt-3 text-center">※ 小規模宅地特例・各種控除未適用の概算値です</p>
         </div>
       </div>
+      {/* シェアカード + 遺産分割協議書サンプル */}
+      <div className="mt-4 border-t border-gray-100 pt-4">
+        <div className="flex flex-wrap gap-2 justify-center mb-4">
+          <button
+            onClick={() => {
+              const canvas = document.createElement("canvas");
+              canvas.width = 1200; canvas.height = 630;
+              const ctx = canvas.getContext("2d");
+              if (!ctx) return;
+              const grad = ctx.createLinearGradient(0, 0, 1200, 630);
+              grad.addColorStop(0, "#312e81"); grad.addColorStop(1, "#4f46e5");
+              ctx.fillStyle = grad; ctx.fillRect(0, 0, 1200, 630);
+              ctx.fillStyle = "rgba(255,255,255,0.05)";
+              ctx.beginPath(); ctx.arc(120, 520, 200, 0, Math.PI * 2); ctx.fill();
+              ctx.beginPath(); ctx.arc(1080, 110, 160, 0, Math.PI * 2); ctx.fill();
+              ctx.textAlign = "center";
+              ctx.fillStyle = "rgba(255,255,255,0.7)"; ctx.font = "bold 26px sans-serif";
+              ctx.fillText("相続AI - 相続税クイック試算", 600, 70);
+              if (taxableEstate <= 0) {
+                ctx.fillStyle = "#4ade80"; ctx.font = "bold 90px sans-serif";
+                ctx.fillText("相続税 ゼロ", 600, 270);
+                ctx.fillStyle = "#ffffff"; ctx.font = "30px sans-serif";
+                ctx.fillText(`遺産総額${estateWan.toLocaleString()}万円 < 基礎控除${basicDeduction.toLocaleString()}万円`, 600, 350);
+              } else {
+                ctx.fillStyle = "#fca5a5"; ctx.font = "bold 36px sans-serif";
+                ctx.fillText("概算相続税額", 600, 190);
+                ctx.fillStyle = "#ffffff"; ctx.font = "bold 100px sans-serif";
+                ctx.fillText(`${totalTax.toLocaleString()}万円`, 600, 310);
+                ctx.fillStyle = "rgba(255,255,255,0.8)"; ctx.font = "28px sans-serif";
+                ctx.fillText(`遺産総額${estateWan.toLocaleString()}万円 / 相続人${heirsCount}人${hasSpouse ? " / 配偶者控除あり" : ""}`, 600, 380);
+              }
+              ctx.fillStyle = "#a5b4fc"; ctx.font = "bold 24px sans-serif";
+              ctx.fillText(`基礎控除: ${basicDeduction.toLocaleString()}万円（3,000万 + 600万 × ${heirsCount}人）`, 600, 450);
+              ctx.fillStyle = "rgba(255,255,255,0.4)"; ctx.font = "20px sans-serif";
+              ctx.fillText("※概算値です。正確な金額は税理士にご確認ください", 600, 530);
+              ctx.fillText("soukoku-ai.vercel.app", 600, 575);
+              canvas.toBlob((blob) => {
+                if (!blob) return;
+                const file = new File([blob], "inheritance-tax.png", { type: "image/png" });
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                  navigator.share({ title: "相続税シミュレーション", text: `相続税概算: ${totalTax.toLocaleString()}万円`, files: [file] }).catch(() => {});
+                } else {
+                  const link = document.createElement("a");
+                  link.download = "inheritance-tax.png";
+                  link.href = URL.createObjectURL(blob);
+                  link.click();
+                }
+              }, "image/png");
+            }}
+            className="inline-flex items-center gap-1.5 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold py-2 px-4 rounded-lg text-xs transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            結果を画像で保存
+          </button>
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`相続税の概算: ${totalTax.toLocaleString()}万円（遺産${estateWan.toLocaleString()}万円・相続人${heirsCount}人）\n基礎控除: ${basicDeduction.toLocaleString()}万円\n#相続 #相続税`)}&url=${encodeURIComponent("https://soukoku-ai.vercel.app")}`}
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Xでシェア
+          </a>
+        </div>
+      </div>
       <div className="mt-4 text-center">
         <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-6 py-3 rounded-xl transition-all text-sm">
           詳細シミュレーションをする（無料）→
         </Link>
       </div>
+      {/* 遺産分割協議書サンプル折りたたみ */}
+      <InheritanceAgreementSample />
+    </div>
+  );
+}
+
+// 遺産分割協議書サンプル折りたたみ
+function InheritanceAgreementSample() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-5 border border-indigo-200 rounded-xl overflow-hidden">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-5 py-4 bg-indigo-50 hover:bg-indigo-100 transition-colors text-left">
+        <span className="text-sm font-bold text-indigo-800">遺産分割協議書サンプルを見る</span>
+        <svg className={`w-5 h-5 text-indigo-600 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
+      </button>
+      {open && (
+        <div className="p-5 bg-white">
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 font-mono text-xs text-gray-700 leading-relaxed whitespace-pre-wrap">
+{`遺産分割協議書
+
+被相続人　山田太郎（令和○年○月○日死亡）
+最後の住所　東京都○○区○○町○丁目○番○号
+最後の本籍　東京都○○区○○町○丁目○番地
+
+上記被相続人の遺産について、共同相続人全員で協議した結果、
+次のとおり遺産を分割することに合意した。
+
+1. 相続人 山田花子（妻）は、次の遺産を取得する。
+  (1) 土地
+      所在　東京都○○区○○町○丁目
+      地番　○番○
+      地目　宅地
+      地積　○○.○○平方メートル
+  (2) 建物
+      所在　東京都○○区○○町○丁目○番地○
+      家屋番号　○番○
+      種類　居宅
+  (3) 預貯金
+      ○○銀行○○支店 普通預金 口座番号○○○○○○○
+
+2. 相続人 山田一郎（長男）は、次の遺産を取得する。
+  (1) 預貯金
+      △△銀行△△支店 普通預金 口座番号△△△△△△△
+  (2) 有価証券
+      ○○証券○○支店 口座番号○○○○
+
+上記のとおり、相続人全員による遺産分割協議が成立したので、
+これを証するため本協議書を○通作成し、各自署名押印の上、
+各1通を保有する。
+
+令和○年○月○日
+
+住所　東京都○○区○○町○丁目○番○号
+相続人　山田花子　　　　印
+
+住所　東京都○○区○○町○丁目○番○号
+相続人　山田一郎　　　　印`}
+          </div>
+          <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3">
+            <p className="text-xs text-amber-800 font-bold mb-1">注意事項</p>
+            <p className="text-xs text-amber-700">これはサンプルです。実際の遺産分割協議書の作成には、相続人全員の合意と印鑑証明書が必要です。複雑な相続の場合は弁護士・司法書士にご相談ください。</p>
+          </div>
+          <div className="mt-3 text-center">
+            <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-colors">
+              AIで遺産分割協議書を作成する →
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
