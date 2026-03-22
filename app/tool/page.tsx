@@ -32,7 +32,7 @@ type Tab = "simulator" | "timeline" | "document" | "renunciation" | "checklist" 
 
 const CHECKLIST_ITEMS = [
   {
-    phase: "⚡ 死亡直後（7日以内）",
+    phase: "【緊急】死亡直後（7日以内）",
     color: "red",
     items: [
       { id: "c1", text: "死亡診断書の受け取り（医師から）" },
@@ -43,7 +43,7 @@ const CHECKLIST_ITEMS = [
     ],
   },
   {
-    phase: "📋 3ヶ月以内（最重要期限）",
+    phase: "【重要】3ヶ月以内（最重要期限）",
     color: "orange",
     items: [
       { id: "c6", text: "相続人の確定（戸籍謄本の取得・調査）" },
@@ -54,7 +54,7 @@ const CHECKLIST_ITEMS = [
     ],
   },
   {
-    phase: "📄 4ヶ月以内",
+    phase: "4ヶ月以内",
     color: "amber",
     items: [
       { id: "c11", text: "準確定申告（故人の所得税申告）— 税務署へ提出" },
@@ -62,7 +62,7 @@ const CHECKLIST_ITEMS = [
     ],
   },
   {
-    phase: "🏦 10ヶ月以内（相続税申告期限）",
+    phase: "10ヶ月以内（相続税申告期限）",
     color: "indigo",
     items: [
       { id: "c13", text: "遺産分割協議の実施（相続人全員の合意）" },
@@ -76,7 +76,7 @@ const CHECKLIST_ITEMS = [
     ],
   },
   {
-    phase: "✅ その他の手続き",
+    phase: "その他の手続き",
     color: "green",
     items: [
       { id: "c21", text: "クレジットカードの解約・未払い確認" },
@@ -633,7 +633,7 @@ export default function ToolPage() {
                 <input type="checkbox" id="spouse" checked={hasSpouse} onChange={e => setHasSpouse(e.target.checked)} className="w-4 h-4 text-indigo-600" />
                 <label htmlFor="spouse" className="text-sm text-slate-700">配偶者が相続人に含まれる（配偶者控除を適用）</label>
               </div>
-              <button onClick={handleSimulate} disabled={!estateTotal} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続税を計算する</button>
+              <button onClick={handleSimulate} disabled={!estateTotal} aria-label="入力した遺産情報をもとに相続税を計算する" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続税を計算する</button>
             </div>
             {simResult && (
               <div className="mt-6 bg-indigo-50 rounded-xl p-5">
@@ -681,7 +681,7 @@ export default function ToolPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">相続開始日（亡くなった日）</label>
                 <input type="date" value={inheritanceDate} onChange={e => setInheritanceDate(e.target.value)} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
-              <button onClick={handleTimeline} disabled={!inheritanceDate} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">期限を確認する</button>
+              <button onClick={handleTimeline} disabled={!inheritanceDate} aria-label="相続発生日から各手続きの期限を確認する" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">期限を確認する</button>
             </div>
             {timelines.length > 0 && (
               <div className="space-y-3">
@@ -808,7 +808,7 @@ export default function ToolPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">マイナスの財産合計（万円）</label>
                 <input type="number" value={negAssets} onChange={e => setNegAssets(e.target.value)} placeholder="例: 2000（借金・保証債務など）" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
-              <button onClick={handleRenunciation} disabled={!posAssets || !negAssets} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続放棄の判定を行う</button>
+              <button onClick={handleRenunciation} disabled={!posAssets || !negAssets} aria-label="プラス財産とマイナス財産を比較して相続放棄の判定を行う" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続放棄の判定を行う</button>
             </div>
             {renResult && (
               <div className={"mt-6 rounded-xl p-5 " + (renResult.includes("不要") ? "bg-green-50 border border-green-200" : renResult.includes("検討") ? "bg-red-50 border border-red-200" : "bg-amber-50 border border-amber-200")}>

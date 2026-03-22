@@ -64,7 +64,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const newCount = cookieCount + 1;
-    const stream = getClient().messages.stream({ model: "claude-sonnet-4-6", max_tokens: 4000, messages: [{ role: "user", content: prompt }] });
+    const stream = getClient().messages.stream({
+      model: "claude-sonnet-4-6",
+      max_tokens: 4000,
+      system: "あなたは相続専門の司法書士・弁護士資格を持つAIアシスタントです。相続実務を15年以上専門とし、相続税申告・遺産分割協議書作成・不動産相続登記・相続放棄手続きなど1,000件超の案件を手がけてきた実績があります。民法・相続税法・不動産登記法・家事事件手続法を熟知し、2024年4月施行の相続登記義務化にも完全対応しています。回答は常に正確・具体的・実用的で、ユーザーが即実践できる情報を提供します。重要な判断が必要な箇所には必ず[要専門家確認]を付記し、法的リスクを明示してください。",
+      messages: [{ role: "user", content: prompt }],
+    });
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
