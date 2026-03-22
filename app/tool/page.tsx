@@ -383,11 +383,11 @@ export default function ToolPage() {
   const [docForm, setDocForm] = useState({ deceasedName:"", heirNames:"", assets:"", distribution:"" });
   const [docResult, setDocResult] = useState("");
   const SITUATION_PRESETS = [
-    { icon: "👴", label: "親が亡くなった", assets: "父が先月亡くなりました。相続人は母と子供2人（私と弟）です。遺言書はありません。", distribution: "" },
-    { icon: "🏠", label: "不動産あり", assets: "実家の土地・建物（評価額3000万円）の相続について知りたいです。", distribution: "不動産の分割方法を検討中です。" },
-    { icon: "💰", label: "預貯金のみ", assets: "預貯金が2000万円あります。相続人は子供3人で、分け方でもめています。", distribution: "均等分割を希望しますが協議中です。" },
-    { icon: "📝", label: "遺言書あり", assets: "遺言書が見つかりました。内容に納得できない相続人がいます。", distribution: "遺言書の内容と異なる分割を希望する相続人がいます。" },
-    { icon: "🚨", label: "借金あり", assets: "亡くなった親に借金（負債）があることがわかりました。相続放棄を考えています。", distribution: "相続放棄の方向で検討中です。" },
+    { icon: "親", label: "親が亡くなった", assets: "父が先月亡くなりました。相続人は母と子供2人（私と弟）です。遺言書はありません。", distribution: "" },
+    { icon: "土", label: "不動産あり", assets: "実家の土地・建物（評価額3000万円）の相続について知りたいです。", distribution: "不動産の分割方法を検討中です。" },
+    { icon: "預", label: "預貯金のみ", assets: "預貯金が2000万円あります。相続人は子供3人で、分け方でもめています。", distribution: "均等分割を希望しますが協議中です。" },
+    { icon: "遺", label: "遺言書あり", assets: "遺言書が見つかりました。内容に納得できない相続人がいます。", distribution: "遺言書の内容と異なる分割を希望する相続人がいます。" },
+    { icon: "債", label: "借金あり", assets: "亡くなった親に借金（負債）があることがわかりました。相続放棄を考えています。", distribution: "相続放棄の方向で検討中です。" },
   ];
   // 基礎控除計算機
   const [kisoHeirs, setKisoHeirs] = useState(2);
@@ -487,21 +487,21 @@ export default function ToolPage() {
   }
 
   const tabs: { id: Tab; label: string; icon: string; free: boolean }[] = [
-    { id: "quickcalc", label: "かんたん試算", icon: "🧮", free: true },
-    { id: "kiso", label: "基礎控除計算", icon: "📐", free: true },
-    { id: "flowchart", label: "状況診断", icon: "🔍", free: true },
-    { id: "simulator", label: "相続税試算", icon: "💴", free: true },
-    { id: "setsuzei", label: "節税診断", icon: "💡", free: true },
-    { id: "timeline", label: "手続き期限", icon: "📅", free: true },
-    { id: "checklist", label: "チェックリスト", icon: "✅", free: true },
-    { id: "document", label: "協議書雛形", icon: "📝", free: false },
-    { id: "renunciation", label: "放棄判定", icon: "⚖️", free: true },
+    { id: "quickcalc", label: "かんたん試算", icon: "計", free: true },
+    { id: "kiso", label: "基礎控除計算", icon: "控", free: true },
+    { id: "flowchart", label: "状況診断", icon: "診", free: true },
+    { id: "simulator", label: "相続税試算", icon: "税", free: true },
+    { id: "setsuzei", label: "節税診断", icon: "節", free: true },
+    { id: "timeline", label: "手続き期限", icon: "期", free: true },
+    { id: "checklist", label: "チェックリスト", icon: "確", free: true },
+    { id: "document", label: "協議書雛形", icon: "書", free: false },
+    { id: "renunciation", label: "放棄判定", icon: "放", free: true },
   ];
 
   return (
     <div className="min-h-screen bg-slate-50">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">⚖️ 相続AI</Link>
+        <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-3 items-center text-sm">
           {isPremium ? (
             <span className="bg-amber-400 text-indigo-900 px-2 py-0.5 rounded-full text-xs font-bold">PREMIUM</span>
@@ -752,7 +752,7 @@ export default function ToolPage() {
               {docLoading && (
                 <div className="text-center mt-2">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-2" />
-                  <p className="text-xs text-gray-400">⚖️ 遺産情報分析 → 📊 相続税計算 → 📋 手続き一覧生成</p>
+                  <p className="text-xs text-gray-400">遺産情報分析 → 相続税計算 → 手続き一覧生成</p>
                 </div>
               )}
             </div>
@@ -972,23 +972,23 @@ export default function ToolPage() {
         )}
         {/* 次のアクション3選 */}
         <div className="mt-6 bg-white border border-amber-200 rounded-xl p-4">
-          <p className="text-sm font-bold text-amber-800 mb-3">📋 次にやるべきこと3選</p>
+          <p className="text-sm font-bold text-amber-800 mb-3">次にやるべきこと3選</p>
           <ol className="space-y-2">
             {[
-              { icon: "📅", text: "相続発生日から3ヶ月以内に相続放棄の期限を確認・対応する" },
-              { icon: "📄", text: "法務局・税務署に提出が必要な書類リストを作成して準備する" },
-              { icon: "⚖️", text: "税理士ドットコムで相続専門の税理士に無料相談を申し込む" },
+              { step: "1", text: "相続発生日から3ヶ月以内に相続放棄の期限を確認・対応する" },
+              { step: "2", text: "法務局・税務署に提出が必要な書類リストを作成して準備する" },
+              { step: "3", text: "税理士ドットコムで相続専門の税理士に無料相談を申し込む" },
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-                <span className="text-lg leading-none">{item.icon}</span>
-                <span>{i + 1}. {item.text}</span>
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-100 text-amber-800 text-xs font-bold shrink-0">{item.step}</span>
+                <span>{item.text}</span>
               </li>
             ))}
           </ol>
         </div>
         {/* 専門家相談アフィリエイト（A8.net） */}
         <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
-          <p className="text-sm font-black text-amber-900 mb-1">⚖️ 相続の専門家に相談する</p>
+          <p className="text-sm font-black text-amber-900 mb-1">相続の専門家に相談する</p>
           <p className="text-xs text-amber-700 mb-4">相続税・遺産分割・相続放棄は専門家のサポートで安心して進められます。初回相談無料の事務所多数。</p>
           <div className="grid grid-cols-1 gap-3">
             <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored"
