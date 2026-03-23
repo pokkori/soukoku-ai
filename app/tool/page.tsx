@@ -3,6 +3,61 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import KomojuButton from "@/components/KomojuButton";
 
+const HISTORY_KEY = "souzoku_history";
+const MAX_HISTORY = 5;
+
+interface DiagnosisHistory {
+  id: string;
+  date: string;
+  concern: string;
+  summary: string;
+}
+
+function saveHistory(concern: string, raw: string) {
+  try {
+    const existing: DiagnosisHistory[] = JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]");
+    const item: DiagnosisHistory = {
+      id: Date.now().toString(),
+      date: new Date().toLocaleDateString("ja-JP"),
+      concern: concern.slice(0, 30),
+      summary: raw.slice(0, 80).replace(/\n/g, " "),
+    };
+    localStorage.setItem(HISTORY_KEY, JSON.stringify([item, ...existing].slice(0, MAX_HISTORY)));
+  } catch { /* noop */ }
+}
+
+function DiagnosisHistoryPanel() {
+  const [history, setHistory] = useState<DiagnosisHistory[]>([]);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    try { setHistory(JSON.parse(localStorage.getItem(HISTORY_KEY) ?? "[]")); } catch { /* noop */ }
+  }, []);
+  if (history.length === 0) return null;
+  return (
+    <div className="border border-purple-200 rounded-xl mb-4 overflow-hidden bg-white">
+      <button type="button" onClick={() => setOpen(o => !o)}
+        aria-expanded={open} aria-label="過去の診断履歴を表示"
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-purple-50 transition-colors text-left">
+        <span className="text-sm font-bold text-purple-800">過去の診断履歴（直近{history.length}件）</span>
+        <span className="text-gray-400 text-xs">{open ? "▲" : "▼"}</span>
+      </button>
+      {open && (
+        <ul className="border-t border-purple-100 divide-y divide-purple-50">
+          {history.map(h => (
+            <li key={h.id} className="px-4 py-2">
+              <div className="flex items-center justify-between mb-0.5">
+                <span className="text-xs text-gray-500">{h.date}</span>
+              </div>
+              <p className="text-xs font-medium text-gray-700 truncate">{h.concern || "（相談内容）"}</p>
+              <p className="text-xs text-gray-400 truncate mt-0.5">{h.summary}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function renderMarkdown(text: string): string {
   const lines = text.split("\n");
   const result: string[] = [];
@@ -473,6 +528,7 @@ export default function ToolPage() {
         } else { buf += chunk; }
         setDocResult(buf);
       }
+      saveHistory(docForm.assets, buf);
     } catch (e) { console.error(e); }
     finally { setDocLoading(false); }
   }
@@ -735,6 +791,7 @@ export default function ToolPage() {
                 ))}
               </div>
             </div>
+            <DiagnosisHistoryPanel />
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">被相続人（亡くなった方）の氏名</label>
