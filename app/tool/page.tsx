@@ -255,6 +255,99 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
   );
 }
 
+// ===== 相続関係説明図 =====
+interface FamilyMember {
+  hasSpouse: boolean;
+  childrenCount: number;
+  hasParent: boolean;
+  hasSiblings: boolean;
+}
+
+function FamilyTreeSVG({ family }: { family: FamilyMember }) {
+  const centerX = 200;
+  const centerY = 80;
+
+  return (
+    <div className="bg-gray-50 rounded-xl p-4 mb-4 border border-gray-200">
+      <p className="text-xs font-bold text-gray-600 mb-2" id="family-tree-label">相続関係図（自動生成）</p>
+      <svg
+        width="400"
+        height="180"
+        viewBox="0 0 400 180"
+        role="img"
+        aria-labelledby="family-tree-label"
+        className="w-full max-w-[400px] mx-auto block"
+      >
+        {/* 被相続人（本人） */}
+        <rect x={centerX - 40} y={centerY - 18} width="80" height="36" rx="8" fill="#1e40af" />
+        <text x={centerX} y={centerY + 6} textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">被相続人</text>
+
+        {/* 配偶者 */}
+        {family.hasSpouse && (
+          <>
+            <line x1={centerX + 40} y1={centerY} x2={centerX + 100} y2={centerY} stroke="#374151" strokeWidth="2" />
+            <rect x={centerX + 100} y={centerY - 18} width="80" height="36" rx="8" fill="#be185d" />
+            <text x={centerX + 140} y={centerY + 6} textAnchor="middle" fill="white" fontSize="12" fontWeight="bold">配偶者</text>
+          </>
+        )}
+
+        {/* 子供 */}
+        {family.childrenCount > 0 && (
+          <>
+            <line x1={centerX} y1={centerY + 18} x2={centerX} y2={centerY + 50} stroke="#374151" strokeWidth="2" />
+            <line x1={centerX - 40 * Math.min(family.childrenCount, 4)} y1={centerY + 50} x2={centerX + 40 * Math.min(family.childrenCount, 4)} y2={centerY + 50} stroke="#374151" strokeWidth="2" />
+            {Array.from({ length: Math.min(family.childrenCount, 4) }, (_, i) => {
+              const totalW = Math.min(family.childrenCount, 4);
+              const xPos = centerX - 40 * (totalW - 1) + i * 80;
+              return (
+                <g key={i}>
+                  <line x1={xPos} y1={centerY + 50} x2={xPos} y2={centerY + 80} stroke="#374151" strokeWidth="2" />
+                  <rect x={xPos - 28} y={centerY + 80} width="56" height="30" rx="6" fill="#15803d" />
+                  <text x={xPos} y={centerY + 100} textAnchor="middle" fill="white" fontSize="11">{family.childrenCount > 4 && i === 3 ? `他${family.childrenCount - 3}名` : `子 ${i + 1}`}</text>
+                </g>
+              );
+            })}
+          </>
+        )}
+
+        {/* 親 */}
+        {family.hasParent && !family.childrenCount && (
+          <>
+            <line x1={centerX} y1={centerY - 18} x2={centerX} y2={centerY - 50} stroke="#374151" strokeWidth="2" />
+            <rect x={centerX - 28} y={centerY - 80} width="56" height="30" rx="6" fill="#7c3aed" />
+            <text x={centerX} y={centerY - 60} textAnchor="middle" fill="white" fontSize="11">親</text>
+          </>
+        )}
+
+        {/* 兄弟 */}
+        {family.hasSiblings && !family.childrenCount && !family.hasParent && (
+          <>
+            <line x1={centerX - 40} y1={centerY} x2={centerX - 100} y2={centerY} stroke="#374151" strokeWidth="2" />
+            <rect x={centerX - 180} y={centerY - 18} width="80" height="36" rx="6" fill="#b45309" />
+            <text x={centerX - 140} y={centerY + 6} textAnchor="middle" fill="white" fontSize="12">兄弟姉妹</text>
+          </>
+        )}
+
+        {/* 相続人なしの場合 */}
+        {!family.hasSpouse && !family.childrenCount && !family.hasParent && !family.hasSiblings && (
+          <text x={centerX} y={centerY + 50} textAnchor="middle" fill="#6b7280" fontSize="12">法定相続人なし</text>
+        )}
+      </svg>
+
+      {/* 凡例 */}
+      <div className="flex flex-wrap gap-3 mt-2 justify-center">
+        <span className="flex items-center gap-1 text-xs text-gray-500">
+          <span className="w-3 h-3 rounded-sm bg-blue-800 inline-block" aria-hidden="true" />被相続人
+        </span>
+        {family.hasSpouse && <span className="flex items-center gap-1 text-xs text-gray-500"><span className="w-3 h-3 rounded-sm bg-pink-700 inline-block" aria-hidden="true" />配偶者</span>}
+        {family.childrenCount > 0 && <span className="flex items-center gap-1 text-xs text-gray-500"><span className="w-3 h-3 rounded-sm bg-green-700 inline-block" aria-hidden="true" />子（法定相続分 {family.hasSpouse ? "1/2を人数等分" : "全額"}）</span>}
+        {family.hasParent && !family.childrenCount && <span className="flex items-center gap-1 text-xs text-gray-500"><span className="w-3 h-3 rounded-sm bg-purple-700 inline-block" aria-hidden="true" />親（法定相続分 {family.hasSpouse ? "1/3" : "全額"}）</span>}
+        {family.hasSiblings && !family.childrenCount && !family.hasParent && <span className="flex items-center gap-1 text-xs text-gray-500"><span className="w-3 h-3 rounded-sm bg-amber-700 inline-block" aria-hidden="true" />兄弟姉妹（法定相続分 {family.hasSpouse ? "1/4" : "全額"}）</span>}
+      </div>
+    </div>
+  );
+}
+
 // ===== 相続税節税診断 =====
 function SetsuzeiDiagnosis() {
   const [estate, setEstate] = useState(5000);
@@ -698,7 +791,14 @@ export default function ToolPage() {
               <button onClick={handleSimulate} disabled={!estateTotal} aria-label="入力した遺産情報をもとに相続税を計算する" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続税を計算する</button>
             </div>
             {simResult && (
-              <div className="mt-6 bg-indigo-50 rounded-xl p-5">
+              <div className="mt-6">
+                <FamilyTreeSVG family={{
+                  hasSpouse: hasSpouse,
+                  childrenCount: Math.max(0, parseInt(heirCount) - (hasSpouse ? 1 : 0)),
+                  hasParent: false,
+                  hasSiblings: false,
+                }} />
+              <div className="bg-indigo-50 rounded-xl p-5">
                 <h3 className="font-bold text-indigo-900 mb-3">計算結果</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span className="text-slate-600">遺産総額</span><span className="font-bold">{simResult.total.toLocaleString()}万円</span></div>
@@ -731,6 +831,7 @@ export default function ToolPage() {
                   <p className="text-green-700 text-xs mb-3">相続税だけでなく、遺産分割の協議や相続放棄の手続きには弁護士・司法書士のサポートが安心です。初回無料相談から始められます。</p>
                   <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored" className="block w-full text-center bg-white border border-green-300 hover:bg-green-50 text-green-800 font-bold px-4 py-2 rounded-lg text-sm transition-colors">弁護士ドットコムで無料相談する（相続専門）→</a>
                 </div>
+              </div>
               </div>
             )}
           </div>
