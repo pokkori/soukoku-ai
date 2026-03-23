@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-interface Props { planId: string; planLabel: string; className?: string; }
-export default function KomojuButton({ planId, planLabel, className }: Props) {
+interface Props { planId: string; planLabel: string; className?: string; "aria-label"?: string; }
+export default function KomojuButton({ planId, planLabel, className, "aria-label": ariaLabel }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const handleClick = async () => {
@@ -15,7 +15,7 @@ export default function KomojuButton({ planId, planLabel, className }: Props) {
   };
   return (
     <div>
-      <button onClick={handleClick} disabled={loading} className={className ?? "w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"}>
+      <button onClick={handleClick} disabled={loading} aria-label={ariaLabel ?? planLabel} className={className ?? "w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"}>
         {loading ? "決済ページへ移動中..." : planLabel}
       </button>
       {error && <p className="text-red-500 text-sm mt-2 text-center">{error}</p>}

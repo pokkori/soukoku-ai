@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import InheritanceSample from "@/components/InheritanceSample";
+import KomojuButton from "@/components/KomojuButton";
 
 // 相続税クイック試算ウィジェット
 function InheritanceTaxWidget() {
@@ -719,7 +720,12 @@ export default function HomePage() {
                   <li key={i}>✓ {f}</li>
                 ))}
               </ul>
-              <Link href="/tool" className="block bg-indigo-900 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-800 transition-colors">プレミアムで始める</Link>
+              <KomojuButton
+                planId="standard"
+                planLabel="プレミアムプランに登録する"
+                className="w-full bg-indigo-900 text-white font-bold py-2 px-4 rounded-xl hover:bg-indigo-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="KOMOJUでプレミアムプラン（¥1,980/月）に登録する"
+              />
             </div>
           </div>
         </div>
