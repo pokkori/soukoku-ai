@@ -147,6 +147,7 @@ function InheritanceTaxWidget() {
           <a
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`相続税の概算: ${totalTax.toLocaleString()}万円（遺産${estateWan.toLocaleString()}万円・相続人${heirsCount}人）\n基礎控除: ${basicDeduction.toLocaleString()}万円\n#相続 #相続税`)}&url=${encodeURIComponent("https://soukoku-ai.vercel.app")}`}
             target="_blank" rel="noopener noreferrer"
+            aria-label="相続税シミュレーション結果をXでシェアする（外部サイト）"
             className="inline-flex items-center gap-1.5 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors"
           >
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -155,7 +156,7 @@ function InheritanceTaxWidget() {
         </div>
       </div>
       <div className="mt-4 text-center">
-        <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-6 py-3 rounded-xl transition-all text-sm">
+        <Link href="/tool" aria-label="相続税の詳細シミュレーションをするツールページへ移動する（無料）" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-6 py-3 rounded-xl transition-all text-sm">
           詳細シミュレーションをする（無料）→
         </Link>
       </div>
@@ -222,7 +223,7 @@ function InheritanceAgreementSample() {
             <p className="text-xs text-amber-700">これはサンプルです。実際の遺産分割協議書の作成には、相続人全員の合意と印鑑証明書が必要です。複雑な相続の場合は弁護士・司法書士にご相談ください。</p>
           </div>
           <div className="mt-3 text-center">
-            <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-colors">
+            <Link href="/tool" aria-label="AIで遺産分割協議書を作成するツールへ移動する" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-colors">
               AIで遺産分割協議書を作成する →
             </Link>
           </div>
@@ -263,6 +264,7 @@ function DeadlineCountdown() {
           <p className="text-sm mt-1">{daysLeft < 30 ? '🚨 今すぐ弁護士に相談してください' : '今すぐ手続きを開始してください'}</p>
           {daysLeft < 30 && (
             <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer"
+              aria-label="弁護士ドットコムで相続放棄の無料相談をする（外部サイト）"
               className="mt-3 inline-block bg-red-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-red-700 transition-colors">
               弁護士に無料相談する →
             </a>
@@ -290,9 +292,9 @@ export default function HomePage() {
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
         <div className="font-bold text-lg">⚖️ 相続AI</div>
         <div className="flex gap-4 text-sm">
-          <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
-          <Link href="/blog" className="hover:text-amber-300 transition-colors">コラム</Link>
-          <Link href="/legal" className="hover:text-amber-300 transition-colors">特商法</Link>
+          <Link href="/tool" aria-label="相続シミュレーターツールページへ移動する" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
+          <Link href="/blog" aria-label="相続に関するコラム記事一覧へ移動する" className="hover:text-amber-300 transition-colors">コラム</Link>
+          <Link href="/legal" aria-label="特定商取引法に基づく表記ページへ移動する" className="hover:text-amber-300 transition-colors">特商法</Link>
         </div>
       </nav>
       <section className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-700 text-white py-16 px-4">
@@ -304,7 +306,7 @@ export default function HomePage() {
           </div>
           <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight">相続の複雑さを、<br />AIが3分で整理します</h1>
           <p className="text-indigo-200 text-lg mb-8">相続税の概算・手続きタイムライン・遺産分割協議書雛形まで。<br />親が亡くなった直後でも、AIが次にやることを教えます。</p>
-          <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続シミュレーションする →</Link>
+          <Link href="/tool" aria-label="相続税シミュレーターを無料で始める" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続シミュレーションする →</Link>
           <p className="text-indigo-300 text-sm mt-4">登録不要・3分で完了・無料</p>
         </div>
       </section>
@@ -383,7 +385,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="mt-6 text-center">
-            <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black px-8 py-3 rounded-xl transition-all hover:scale-105">
+            <Link href="/tool" aria-label="相続手続きタイムラインをAIで自動生成するツールへ移動する" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black px-8 py-3 rounded-xl transition-all hover:scale-105">
               手続きタイムラインをAIで自動生成する →
             </Link>
           </div>
@@ -463,7 +465,7 @@ export default function HomePage() {
           </div>
           <p className="text-xs text-slate-400 text-center mt-3">※ 実際の出力はあなたの相続人情報・財産内容を基にAIが個別生成します</p>
           <div className="text-center mt-6">
-            <Link href="/tool" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black px-8 py-4 rounded-xl shadow-lg transition-all hover:scale-105">
+            <Link href="/tool" aria-label="遺産分割協議書の全文をAIで無料生成するツールへ移動する" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black px-8 py-4 rounded-xl shadow-lg transition-all hover:scale-105">
               全文を無料で生成する →
             </Link>
             <p className="text-xs text-slate-400 mt-2">登録不要 • 3分で完了 • 弁護士相談前の下書きとして活用可</p>
@@ -532,7 +534,7 @@ export default function HomePage() {
           </div>
           <p className="text-xs text-slate-400 text-center mt-3">※ 税理士事務所は案件の複雑さにより大きく変動します。AI相続は株式会社みなと相続コンシェルの相続税申告書作成ソフトです。</p>
           <div className="text-center mt-6">
-            <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-8 py-3 rounded-xl transition-all hover:scale-105">
+            <Link href="/tool" aria-label="相続AIで無料シミュレーションを始める" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black px-8 py-3 rounded-xl transition-all hover:scale-105">
               相続AIで無料シミュレーション →
             </Link>
           </div>
@@ -666,6 +668,7 @@ export default function HomePage() {
                     <td className="px-4 py-3 text-slate-700">{row.cost}</td>
                     <td className="px-4 py-3">
                       <a href={row.link} target="_blank" rel="noopener noreferrer"
+                        aria-label={`${row.expert}に相談する - ${row.linkText}（外部サイト）`}
                         className="text-indigo-600 font-bold hover:underline text-xs">{row.linkText} →</a>
                     </td>
                   </tr>
@@ -676,18 +679,21 @@ export default function HomePage() {
           <p className="text-xs text-slate-400 text-center mt-3">※ 費用は案件の複雑さにより大きく変動します。まずは無料相談で見積もりを取ることをお勧めします。</p>
           <div className="mt-6 grid md:grid-cols-3 gap-3">
             <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer"
+              aria-label="税理士ドットコムで相続税申告の無料相談をする（外部サイト）"
               className="block bg-white border border-blue-200 rounded-xl p-4 hover:bg-blue-50 transition-colors text-center">
               <div className="font-bold text-blue-800 text-sm mb-1">💼 税理士ドットコム</div>
               <p className="text-xs text-blue-600">相続税申告に特化。費用の目安を無料診断</p>
               <div className="mt-2 text-xs text-blue-500 font-bold">無料相談 →</div>
             </a>
             <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer"
+              aria-label="弁護士ドットコムで相続・遺産分割の初回無料相談をする（外部サイト）"
               className="block bg-white border border-green-200 rounded-xl p-4 hover:bg-green-50 transition-colors text-center">
               <div className="font-bold text-green-800 text-sm mb-1">⚖️ 弁護士ドットコム</div>
               <p className="text-xs text-green-600">遺産分割争い・相続放棄の相談はこちら</p>
               <div className="mt-2 text-xs text-green-500 font-bold">初回無料相談 →</div>
             </a>
             <a href="https://www.legal-mall.com/s/souzoku" target="_blank" rel="noopener noreferrer"
+              aria-label="ベンナビ相続で近くの司法書士・弁護士を探す（外部サイト）"
               className="block bg-white border border-amber-200 rounded-xl p-4 hover:bg-amber-50 transition-colors text-center">
               <div className="font-bold text-amber-800 text-sm mb-1">📋 ベンナビ相続</div>
               <p className="text-xs text-amber-600">司法書士・弁護士を地域で検索。登記に強い</p>
@@ -709,7 +715,7 @@ export default function HomePage() {
                   <li key={i}>✓ {f}</li>
                 ))}
               </ul>
-              <Link href="/tool" className="block bg-amber-400 text-indigo-900 font-bold py-2 px-4 rounded-xl hover:bg-amber-300 transition-colors">無料で始める</Link>
+              <Link href="/tool" aria-label="無料プランで相続シミュレーターを始める" className="block bg-amber-400 text-indigo-900 font-bold py-2 px-4 rounded-xl hover:bg-amber-300 transition-colors">無料で始める</Link>
             </div>
             <div className="bg-white text-slate-800 rounded-2xl p-6 border-2 border-amber-400">
               <div className="text-amber-600 font-black text-lg mb-1">プレミアムプラン</div>
@@ -736,7 +742,7 @@ export default function HomePage() {
           <div className="space-y-3">
             {faqs.map((faq, i) => (
               <div key={i} className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full text-left px-5 py-4 font-medium text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors">
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} aria-label={openFaq === i ? `よくある質問「${faq.q}」を閉じる` : `よくある質問「${faq.q}」を開く`} aria-expanded={openFaq === i} className="w-full text-left px-5 py-4 font-medium text-slate-800 flex justify-between items-center hover:bg-slate-50 transition-colors">
                   <span>{faq.q}</span>
                   <span className="text-indigo-500 text-lg ml-2">{openFaq === i ? "−" : "+"}</span>
                 </button>
@@ -819,7 +825,7 @@ export default function HomePage() {
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-2xl font-black text-indigo-900 mb-4">今すぐ相続の全体像を把握しよう</h2>
           <p className="text-slate-600 text-sm mb-6">登録不要・3分で完了・無料シミュレーター</p>
-          <Link href="/tool" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">相続シミュレーションを始める →</Link>
+          <Link href="/tool" aria-label="今すぐ相続シミュレーションを無料で始める" className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">相続シミュレーションを始める →</Link>
         </div>
       </section>
       <div className="bg-slate-100 py-6 px-4">
@@ -831,6 +837,7 @@ export default function HomePage() {
           href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AI — 相続税シミュレーター・手続きタイムライン・相続放棄判定をAIが無料サポート⚖️ 法律・税務の初期調査に → https://soukoku-ai.vercel.app #相続 #相続税 #相続放棄")}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="相続AIをXでシェアする（外部サイト）"
           className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-xl text-sm transition-colors"
         >
           <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -840,7 +847,7 @@ export default function HomePage() {
         </a>
       </section>
       <div className="fixed bottom-0 left-0 right-0 bg-indigo-950 border-t border-indigo-700 px-4 py-3 z-40 sm:hidden shadow-lg">
-        <a href="/tool" className="block w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black text-center py-3.5 rounded-xl text-sm">
+        <a href="/tool" aria-label="相続シミュレーションを無料で始める（ツールページへ移動）" className="block w-full bg-indigo-500 hover:bg-indigo-400 text-white font-black text-center py-3.5 rounded-xl text-sm">
           ▶ 相続シミュレーションを無料で始める →
         </a>
       </div>
@@ -849,9 +856,9 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto flex flex-wrap justify-between gap-4">
           <div><div className="text-white font-bold mb-1">⚖️ 相続AI</div><p className="text-xs">運営: ポッコリラボ</p></div>
           <div className="flex gap-6 text-xs">
-            <Link href="/legal" className="hover:text-white transition-colors">特定商取引法</Link>
-            <Link href="/privacy" className="hover:text-white transition-colors">プライバシーポリシー</Link>
-            <Link href="/tool" className="hover:text-white transition-colors">ツール</Link>
+            <Link href="/legal" aria-label="特定商取引法に基づく表記ページへ移動する" className="hover:text-white transition-colors">特定商取引法</Link>
+            <Link href="/privacy" aria-label="プライバシーポリシーページへ移動する" className="hover:text-white transition-colors">プライバシーポリシー</Link>
+            <Link href="/tool" aria-label="相続シミュレーターツールページへ移動する" className="hover:text-white transition-colors">ツール</Link>
           </div>
         </div>
       </footer>
