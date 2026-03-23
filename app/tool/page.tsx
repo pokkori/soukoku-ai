@@ -269,7 +269,7 @@ function FamilyTreeSVG({ family }: { family: FamilyMember }) {
   const centerY = 80;
 
   return (
-    <div className="bg-gray-50 rounded-xl p-4 mb-4 border border-gray-200">
+    <div className="backdrop-blur-sm bg-white/90 rounded-xl p-4 mb-4 border border-white/20">
       <p className="text-xs font-bold text-gray-600 mb-2" id="family-tree-label">相続関係図（自動生成）</p>
       <svg
         width="400"
@@ -477,7 +477,7 @@ function SetsuzeiDiagnosis() {
           <div className="space-y-2">
             <h3 className="font-bold text-indigo-900 text-sm">適用可能な節税対策</h3>
             {measures.map((m, i) => (
-              <div key={i} className="bg-white border border-slate-200 rounded-xl p-3 flex gap-3 items-start">
+              <div key={i} className="backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl p-3 flex gap-3 items-start">
                 <span className={`text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 mt-0.5 ${m.impact === "大" ? "bg-red-100 text-red-700" : m.impact === "中" ? "bg-amber-100 text-amber-700" : "bg-green-100 text-green-700"}`}>
                   効果{m.impact}
                 </span>
@@ -931,7 +931,7 @@ export default function ToolPage() {
               <div className="mt-6 space-y-4">
                 <div className="bg-slate-50 rounded-xl p-5">
                   <h3 className="font-bold text-indigo-900 mb-3">遺産分割協議書（雛形）</h3>
-                  <div className="text-sm text-slate-700 whitespace-pre-wrap font-mono bg-white border rounded-lg p-4 max-h-96 overflow-y-auto">{docResult}</div>
+                  <div className="text-sm text-slate-700 whitespace-pre-wrap font-mono backdrop-blur-sm bg-white/90 border border-white/20 rounded-lg p-4 max-h-96 overflow-y-auto">{docResult}</div>
                   <p className="text-xs text-slate-400 mt-2">※ この雛形はAIが生成したものです。実際の遺産分割協議書の確認には弁護士・司法書士にご相談ください。</p>
                 </div>
                 {/* 相続専門家CTA強化バナー */}
@@ -1163,7 +1163,7 @@ export default function ToolPage() {
           <p className="text-xs text-amber-700 mb-4">相続税・遺産分割・相続放棄は専門家のサポートで安心して進められます。初回相談無料の事務所多数。</p>
           <div className="grid grid-cols-1 gap-3">
             <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors">
               <div>
                 <div className="text-sm font-bold text-slate-800">弁護士ドットコム — 相続専門</div>
                 <div className="text-xs text-slate-500 mt-0.5">初回相談無料 • 全国対応 • 土日OK</div>
@@ -1171,7 +1171,7 @@ export default function ToolPage() {
               <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">無料相談 →</span>
             </a>
             <a href="https://zeirishi.mynavi.jp/column/inheritance/" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors">
               <div>
                 <div className="text-sm font-bold text-slate-800">税理士ドットコム — 相続税申告</div>
                 <div className="text-xs text-slate-500 mt-0.5">相続税申告実績No.1 • 費用の目安を無料診断</div>
@@ -1179,7 +1179,7 @@ export default function ToolPage() {
               <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">費用診断 →</span>
             </a>
             <a href="https://www.legal-mall.com/s/souzoku" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors">
               <div>
                 <div className="text-sm font-bold text-slate-800">ベンナビ相続 — 司法書士・弁護士</div>
                 <div className="text-xs text-slate-500 mt-0.5">遺産分割・相続登記に特化 • 近くの専門家を検索</div>
@@ -1188,7 +1188,7 @@ export default function ToolPage() {
             </a>
             {/* A8.net: FPカフェ 無料FP相談 */}
             <a href="https://px.a8.net/svt/ejp?a8mat=4AZIOF+2SMA0I+5ULO+5YZ75" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between bg-white border border-amber-300 rounded-xl px-4 py-3 hover:bg-amber-50 transition-colors">
+              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors">
               <div>
                 <div className="text-sm font-bold text-slate-800">FPカフェ — 無料FP相談</div>
                 <div className="text-xs text-slate-500 mt-0.5">相続・資産承継の無料ファイナンシャルプランナー相談</div>
