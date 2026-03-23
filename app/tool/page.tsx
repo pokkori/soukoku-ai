@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import KomojuButton from "@/components/KomojuButton";
+import { updateStreak, loadStreak, getStreakMilestoneMessage, type StreakData } from "@/lib/streak";
 
 const HISTORY_KEY = "souzoku_history";
 const MAX_HISTORY = 5;
@@ -508,10 +509,13 @@ export default function ToolPage() {
   const [showModal, setShowModal] = useState(false);
   const [useCount, setUseCount] = useState(0);
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [streak, setStreak] = useState<StreakData | null>(null);
+  const [streakMsg, setStreakMsg] = useState<string | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem("soukoku_checklist");
     if (saved) setCheckedItems(JSON.parse(saved));
+    setStreak(loadStreak("souzoku"));
   }, []);
 
   function toggleCheck(id: string) {
@@ -622,6 +626,7 @@ export default function ToolPage() {
         setDocResult(buf);
       }
       saveHistory(docForm.assets, buf);
+      const s = updateStreak("souzoku"); setStreak(s); const msg = getStreakMilestoneMessage(s.count); if (msg) setStreakMsg(msg);
     } catch (e) { console.error(e); }
     finally { setDocLoading(false); }
   }
@@ -667,6 +672,8 @@ export default function ToolPage() {
       </nav>
       <div className="max-w-3xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-black text-indigo-900 mb-2">相続AIツール</h1>
+        {streak && streak.count > 0 && <div className="mt-2 inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-3 py-1 text-sm"><span>{streak.count}日連続利用中</span></div>}
+        {streakMsg && <div className="mt-2 ml-2 inline-flex items-center gap-2 bg-yellow-50 border border-yellow-300 rounded-full px-3 py-1 text-sm text-yellow-700">{streakMsg}</div>}
         <p className="text-slate-500 text-sm mb-6">相続税の試算から手続き期限管理まで、AIがサポートします</p>
         {!isPremium && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex justify-between items-center">
