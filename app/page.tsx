@@ -44,6 +44,7 @@ function InheritanceTaxWidget() {
             <input
               type="range" min={500} max={50000} step={500} value={estateWan}
               onChange={e => setEstateWan(Number(e.target.value))}
+              aria-label={`遺産総額を選択（現在: ${estateWan.toLocaleString()}万円）`}
               className="w-full accent-indigo-600"
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -55,6 +56,7 @@ function InheritanceTaxWidget() {
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1">法定相続人の数</label>
             <select value={heirsCount} onChange={e => setHeirsCount(Number(e.target.value))}
+              aria-label="法定相続人の人数を選択"
               className="w-full border border-indigo-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white">
               {[1,2,3,4,5,6].map(n => <option key={n} value={n}>{n}人</option>)}
             </select>
@@ -89,6 +91,8 @@ function InheritanceTaxWidget() {
       <div className="mt-4 border-t border-gray-100 pt-4">
         <div className="flex flex-wrap gap-2 justify-center mb-4">
           <button
+            type="button"
+            aria-label="相続税シミュレーション結果を画像で保存する"
             onClick={() => {
               const canvas = document.createElement("canvas");
               canvas.width = 1200; canvas.height = 630;
@@ -165,7 +169,7 @@ function InheritanceAgreementSample() {
   const [open, setOpen] = useState(false);
   return (
     <div className="mt-5 border border-indigo-200 rounded-xl overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-5 py-4 bg-indigo-50 hover:bg-indigo-100 transition-colors text-left">
+      <button type="button" onClick={() => setOpen(!open)} aria-label={open ? "遺産分割協議書サンプルを閉じる" : "遺産分割協議書サンプルを見る"} aria-expanded={open} className="w-full flex items-center justify-between px-5 py-4 bg-indigo-50 hover:bg-indigo-100 transition-colors text-left">
         <span className="text-sm font-bold text-indigo-800">遺産分割協議書サンプルを見る</span>
         <svg className={`w-5 h-5 text-indigo-600 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
       </button>
@@ -249,6 +253,7 @@ function DeadlineCountdown() {
         type="date"
         value={deathDate}
         onChange={e => setDeathDate(e.target.value)}
+        aria-label="被相続人の死亡日を入力（相続放棄の期限計算に使用）"
         className="border border-amber-300 rounded-lg px-4 py-2 w-full mb-3 bg-white text-slate-800"
       />
       {daysLeft !== null && (

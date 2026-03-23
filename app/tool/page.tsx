@@ -155,7 +155,9 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
           {questions[0].options.map((opt) => (
             <button
               key={opt.value}
+              type="button"
               onClick={() => { setAnswer({ 0: opt.value }); setStep(opt.next); }}
+              aria-label={`相続発生からの期間「${opt.label}」を選択`}
               className="w-full text-left px-4 py-3 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl text-sm text-indigo-900 font-medium transition-colors"
             >
               {opt.label}
@@ -176,13 +178,17 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
         <p className="text-sm text-slate-700 leading-relaxed">{result.message}</p>
       </div>
       <button
+        type="button"
         onClick={() => onSelectTab(result.tab)}
+        aria-label={`${result.tabLabel}へ移動する`}
         className="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-bold py-3 rounded-xl mb-3 transition-colors"
       >
         {result.tabLabel} →
       </button>
       <button
+        type="button"
         onClick={() => { setStep(null); setAnswer({}); }}
+        aria-label="相続状況クイック診断を最初からやり直す"
         className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 rounded-xl text-sm transition-colors"
       >
         最初からやり直す
