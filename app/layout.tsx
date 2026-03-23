@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     images: ["/og.png"],
   },
   metadataBase: new URL(SITE_URL),
+  manifest: "/manifest.json",
 };
 
 const breadcrumbLd = {

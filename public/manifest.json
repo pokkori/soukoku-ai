@@ -1,0 +1,24 @@
+{
+  "name": "相続AI",
+  "short_name": "相続AI",
+  "description": "相続の複雑さをAIが3分で整理。相続税額・各相続人の取り分・手続きステップを即計算。遺産分割協議書の雛形も生成。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
