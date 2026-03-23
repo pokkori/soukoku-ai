@@ -35,10 +35,10 @@ function DiagnosisHistoryPanel() {
   }, []);
   if (history.length === 0) return null;
   return (
-    <div className="border border-purple-200 rounded-xl mb-4 overflow-hidden bg-white">
+    <div className="backdrop-blur-sm bg-white/5 border border-white/10 shadow-lg rounded-2xl mb-4 overflow-hidden">
       <button type="button" onClick={() => setOpen(o => !o)}
         aria-expanded={open} aria-label="過去の診断履歴を表示"
-        className="w-full flex items-center justify-between px-4 py-3 hover:bg-purple-50 transition-colors text-left">
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-purple-50/60 transition-colors text-left">
         <span className="text-sm font-bold text-purple-800">過去の診断履歴（直近{history.length}件）</span>
         <span className="text-gray-400 text-xs">{open ? "▲" : "▼"}</span>
       </button>
@@ -203,7 +203,7 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
 
   if (step === null) {
     return (
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
         <h2 className="text-lg font-bold text-indigo-900 mb-1">相続状況クイック診断</h2>
         <p className="text-xs text-slate-500 mb-5">あなたの状況に合ったツールへ案内します（30秒）</p>
         <p className="text-sm font-medium text-slate-700 mb-3">{questions[0].text}</p>
@@ -226,7 +226,7 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
 
   const result = results[step];
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
+    <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
       <div className={`rounded-xl p-5 mb-5 ${result.urgent ? "bg-red-50 border-2 border-red-300" : "bg-indigo-50 border-2 border-indigo-300"}`}>
         <div className={`font-bold text-base mb-2 ${result.urgent ? "text-red-800" : "text-indigo-900"}`}>
           {result.urgent && "⚠️ "}{result.title}
@@ -396,7 +396,7 @@ function SetsuzeiDiagnosis() {
   ].filter(m => m.applicable);
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
+    <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
       <h2 className="text-lg font-bold text-indigo-900 mb-1">相続税節税診断</h2>
       <p className="text-xs text-slate-500 mb-5">主要な節税特例を適用した場合の相続税削減額を試算します</p>
       <div className="space-y-5">
@@ -443,7 +443,7 @@ function SetsuzeiDiagnosis() {
           )}
         </div>
         <button onClick={() => setShowResult(true)}
-          className="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-bold py-3 rounded-xl transition-colors">
+          className="w-full bg-indigo-900/90 hover:bg-white/20 hover:backdrop-blur-sm hover:border hover:border-white/30 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
           節税効果を診断する
         </button>
       </div>
@@ -659,7 +659,7 @@ export default function ToolPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
         <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-3 items-center text-sm">
@@ -672,11 +672,11 @@ export default function ToolPage() {
       </nav>
       <div className="max-w-3xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-black text-indigo-900 mb-2">相続AIツール</h1>
-        {streak && streak.count > 0 && <div className="mt-2 inline-flex items-center gap-2 bg-orange-50 border border-orange-200 rounded-full px-3 py-1 text-sm"><span>{streak.count}日連続利用中</span></div>}
+        {streak && streak.count > 0 && <div className="mt-2 inline-flex items-center gap-2 backdrop-blur-sm bg-orange-50/70 border border-orange-200/60 shadow-md rounded-full px-3 py-1 text-sm"><span>{streak.count}日連続利用中</span></div>}
         {streakMsg && <div className="mt-2 ml-2 inline-flex items-center gap-2 bg-yellow-50 border border-yellow-300 rounded-full px-3 py-1 text-sm text-yellow-700">{streakMsg}</div>}
         <p className="text-slate-500 text-sm mb-6">相続税の試算から手続き期限管理まで、AIがサポートします</p>
         {!isPremium && (
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex justify-between items-center">
+          <div className="backdrop-blur-sm bg-amber-50/80 border border-amber-200/60 shadow-lg rounded-xl p-4 mb-6 flex justify-between items-center">
             <div>
               <p className="text-amber-800 font-semibold text-sm">無料利用: {useCount}/3回</p>
               <p className="text-amber-600 text-xs">遺産分割協議書雛形生成はプレミアム機能です</p>
@@ -684,7 +684,7 @@ export default function ToolPage() {
             <button onClick={() => setShowModal(true)} className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">アップグレード</button>
           </div>
         )}
-        <div className="flex gap-1 mb-6 bg-slate-200 rounded-xl p-1 overflow-x-auto">
+        <div className="flex gap-1 mb-6 backdrop-blur-sm bg-white/20 border border-white/30 rounded-xl p-1 overflow-x-auto shadow-md">
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={"flex-1 min-w-[80px] py-2 px-2 rounded-lg text-xs font-bold transition-all " + (activeTab === tab.id ? "bg-white text-indigo-900 shadow-sm" : "text-slate-600 hover:text-slate-800")}>
@@ -695,7 +695,7 @@ export default function ToolPage() {
           ))}
         </div>
         {activeTab === "quickcalc" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-900 mb-1">相続税かんたん試算</h2>
             <p className="text-xs text-slate-500 mb-5">スライダーを動かすだけでリアルタイム計算！</p>
             <div className="space-y-6">
@@ -780,7 +780,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "simulator" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-900 mb-4">相続税シミュレーター</h2>
             <div className="space-y-4">
               <div>
@@ -844,7 +844,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "timeline" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-900 mb-4">手続きタイムライン</h2>
             <div className="space-y-4 mb-4">
               <div>
@@ -873,7 +873,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "document" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-900 mb-1">遺産分割協議書雛形生成</h2>
             <div className="inline-block bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full mb-4 font-medium">プレミアム機能</div>
             {!isPremium && (
@@ -968,7 +968,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "renunciation" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-900 mb-4">相続放棄シミュレーター</h2>
             <div className="space-y-4">
               <div>
@@ -995,7 +995,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "checklist" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-bold text-indigo-900">相続手続きチェックリスト</h2>
               <div className="flex gap-2 items-center">
@@ -1081,7 +1081,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "kiso" && (
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-900 mb-1">基礎控除計算機</h2>
             <p className="text-xs text-slate-500 mb-5">法定相続人数を入力するだけで基礎控除額をリアルタイム計算。申告が必要かどうかすぐわかります。</p>
             <div className="space-y-5">
@@ -1142,7 +1142,7 @@ export default function ToolPage() {
           <SetsuzeiDiagnosis />
         )}
         {/* 次のアクション3選 */}
-        <div className="mt-6 bg-white border border-amber-200 rounded-xl p-4">
+        <div className="mt-6 backdrop-blur-sm bg-white/30 border border-amber-200/60 shadow-lg rounded-xl p-4">
           <p className="text-sm font-bold text-amber-800 mb-3">次にやるべきこと3選</p>
           <ol className="space-y-2">
             {[
@@ -1158,7 +1158,7 @@ export default function ToolPage() {
           </ol>
         </div>
         {/* 専門家相談アフィリエイト（A8.net） */}
-        <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-5">
+        <div className="mt-6 backdrop-blur-sm bg-amber-50/80 border border-amber-200/60 shadow-lg rounded-xl p-5">
           <p className="text-sm font-black text-amber-900 mb-1">相続の専門家に相談する</p>
           <p className="text-xs text-amber-700 mb-4">相続税・遺産分割・相続放棄は専門家のサポートで安心して進められます。初回相談無料の事務所多数。</p>
           <div className="grid grid-cols-1 gap-3">
@@ -1199,13 +1199,13 @@ export default function ToolPage() {
           <p className="text-xs text-slate-400 text-center mt-3">※ 広告・PR掲載（各社公式サイトに遷移します）</p>
         </div>
 
-        <div className="mt-4 bg-slate-100 rounded-xl p-4">
+        <div className="mt-4 backdrop-blur-sm bg-white/20 border border-white/20 rounded-xl p-4">
           <p className="text-xs text-slate-500 text-center">※ 本ツールはAIによる情報提供を目的としており、法律・税務・財務に関する専門的アドバイスではありません。重要な判断は必ず弁護士・税理士等の有資格者にご相談ください。</p>
         </div>
       </div>
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl relative">
+          <div className="backdrop-blur-md bg-white/80 border border-white/30 rounded-2xl p-6 max-w-sm w-full shadow-xl relative">
             <button onClick={() => setShowModal(false)} className="absolute top-3 right-3 text-gray-400 text-xl">✕</button>
             <div className="text-3xl mb-3 text-center">⚖️</div>
             <h2 className="text-lg font-bold mb-2 text-center">プレミアムプラン</h2>
