@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import FeedbackButton from "@/components/FeedbackButton";
 import "./globals.css";
 
 const SITE_URL = "https://sozoku-ai.vercel.app";
@@ -120,6 +121,22 @@ const jsonLd = {
             "text": "被相続人（亡くなった方）がその年に得た所得について、相続人が代わりに行う確定申告です。死亡日の翌日から4ヶ月以内に税務署へ提出する必要があります。事業所得・不動産所得・給与所得などがあった場合に必要です。"
           }
         },
+        {
+          "@type": "Question",
+          "name": "士業・専門家が相続AIを活用する方法はありますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "税理士・司法書士・弁護士などの士業の方向けに、顧問先へのヒアリング支援・初期シミュレーション・遺産分割協議書の雛形作成補助として活用いただけます。法人向けプランでは複数案件の一括管理・カスタムレポート出力が可能です。詳細は「士業・専門家の方へ」ページをご覧ください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "相続財産に海外資産が含まれる場合はどうなりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "日本の相続税は居住者の場合、海外財産を含むすべての財産に課税されます（無制限納税義務）。海外預金・不動産・有価証券の評価は複雑で、租税条約の適用有無も確認が必要です。必ず税理士・国際相続の専門家にご相談ください。本AIは海外資産の概算把握に活用できます。"
+          }
+        },
       ],
     },
   ],
@@ -140,6 +157,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="antialiased">
         {children}
+        <footer className="flex justify-center py-2">
+          <FeedbackButton serviceName="相続AI" />
+        </footer>
         <Analytics />
         {/* Microsoft Clarity — プロジェクトIDが設定されたら有効化 */}
         {/* <Script id="clarity-script" strategy="afterInteractive">

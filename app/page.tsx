@@ -294,6 +294,7 @@ export default function HomePage() {
         <div className="flex gap-4 text-sm">
           <Link href="/tool" aria-label="相続シミュレーターツールページへ移動する" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" aria-label="相続に関するコラム記事一覧へ移動する" className="hover:text-amber-300 transition-colors">コラム</Link>
+          <Link href="/business" aria-label="士業・専門家向け相続AI法人プランを見る" className="hover:text-amber-300 transition-colors font-bold hidden sm:inline">士業・専門家の方へ</Link>
           <Link href="/legal" aria-label="特定商取引法に基づく表記ページへ移動する" className="hover:text-amber-300 transition-colors">特商法</Link>
         </div>
       </nav>

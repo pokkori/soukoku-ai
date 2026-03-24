@@ -920,13 +920,13 @@ export default function ToolPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">相続財産の概要</label>
-                <textarea value={docForm.assets} onChange={e => setDocForm({...docForm, assets: e.target.value})} placeholder="例: 預貯金2,000万円（○○銀行）、土地・建物（○○市）" rows={3} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <textarea value={docForm.assets} onChange={e => setDocForm({...docForm, assets: e.target.value})} placeholder="例: 預貯金2,000万円（○○銀行）、土地・建物（○○市）" rows={3} aria-label="相続財産の概要を入力する（預貯金・不動産・株式等）" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">分割内容（希望）</label>
-                <textarea value={docForm.distribution} onChange={e => setDocForm({...docForm, distribution: e.target.value})} placeholder="例: 田中花子が不動産全て、田中一郎が預貯金" rows={3} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <textarea value={docForm.distribution} onChange={e => setDocForm({...docForm, distribution: e.target.value})} placeholder="例: 田中花子が不動産全て、田中一郎が預貯金" rows={3} aria-label="遺産の分割方法・希望する配分内容を入力する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
-              <button onClick={handleDocGenerate} disabled={docLoading || !isPremium} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">
+              <button onClick={handleDocGenerate} disabled={docLoading || !isPremium} aria-label={isPremium ? "入力した情報をもとに遺産分割協議書の雛形を生成する" : "プレミアムプランにアップグレードして協議書雛形を生成する"} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">
                 {docLoading ? "生成中..." : isPremium ? "協議書雛形を生成する" : "プレミアムプランで利用する"}
               </button>
               {docLoading && (
@@ -1206,6 +1206,24 @@ export default function ToolPage() {
             </a>
           </div>
           <p className="text-xs text-slate-400 text-center mt-3">※ 広告・PR掲載（各社公式サイトに遷移します）</p>
+        </div>
+
+        {/* LINEシェア */}
+        <div className="mt-4 backdrop-blur-sm bg-green-50/80 border border-green-200/60 rounded-xl p-4 text-center">
+          <p className="text-xs font-bold text-green-800 mb-2">家族・兄弟にこのツールを共有する</p>
+          <p className="text-xs text-green-700 mb-3">相続は家族全員の問題です。LINEで共有して一緒に確認しましょう。</p>
+          <a
+            href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent("https://souzoku-ai.vercel.app/tool")}&text=${encodeURIComponent("相続AI — 相続税・手続きをAIが無料で診断してくれるよ。家族みんなで確認しよう。")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors"
+            aria-label="LINEでこのページを家族に共有する"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.124 2 11.207c0 2.816 1.394 5.312 3.567 6.949-.157.584-.509 2.125-.584 2.453-.09.397.145.39.305.284.125-.083 1.978-1.301 2.78-1.831.636.09 1.293.138 1.932.138 5.523 0 10-4.124 10-9.207C20 6.124 17.523 2 12 2z"/>
+            </svg>
+            LINEで家族に共有
+          </a>
         </div>
 
         <div className="mt-4 backdrop-blur-sm bg-white/20 border border-white/20 rounded-xl p-4">
