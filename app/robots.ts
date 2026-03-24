@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/success"],
     },
-    sitemap: "https://soukoku-ai.vercel.app/sitemap.xml",
+    sitemap: "https://sozoku-ai.vercel.app/sitemap.xml",
   };
 }

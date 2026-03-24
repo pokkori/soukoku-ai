@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import "./globals.css";
 
-const SITE_URL = "https://soukoku-ai.vercel.app";
+const SITE_URL = "https://sozoku-ai.vercel.app";
 const TITLE = "相続AI｜相続手続きをAIが3分で整理・相続税シミュレーション無料・遺産分割協議書テンプレート";
 const DESC = "相続の複雑さをAIが3分で整理。資産総額・相続人数を入力するだけで相続税額・各相続人の取り分・手続きステップを即計算。10ヶ月の申告期限や相続放棄の判断もサポート。遺産分割協議書の雛形も生成。税理士・弁護士への相談前に使える無料相続シミュレーター。";
 

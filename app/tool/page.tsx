@@ -415,6 +415,8 @@ function SetsuzeiDiagnosis() {
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map(n => (
               <button key={n} onClick={() => setHeirs(n)}
+                aria-label={`節税診断の法定相続人数を${n}人に設定する`}
+                aria-pressed={heirs === n}
                 className={"flex-1 py-2 rounded-lg font-bold text-sm transition-all border " + (heirs === n ? "bg-indigo-900 text-white border-indigo-900" : "bg-white text-slate-600 border-slate-300 hover:border-indigo-400")}>
                 {n}人
               </button>
@@ -443,6 +445,7 @@ function SetsuzeiDiagnosis() {
           )}
         </div>
         <button onClick={() => setShowResult(true)}
+          aria-label="入力した相続情報をもとに節税効果を診断する"
           className="w-full bg-indigo-900/90 hover:bg-white/20 hover:backdrop-blur-sm hover:border hover:border-white/30 text-white font-bold py-3 rounded-xl transition-all shadow-lg">
           節税効果を診断する
         </button>
@@ -666,7 +669,7 @@ export default function ToolPage() {
           {isPremium ? (
             <span className="bg-amber-400 text-indigo-900 px-2 py-0.5 rounded-full text-xs font-bold">PREMIUM</span>
           ) : (
-            <button onClick={() => setShowModal(true)} className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-3 py-1 rounded-lg text-xs transition-colors">プレミアム ¥980/月</button>
+            <button onClick={() => setShowModal(true)} aria-label="相続AIプレミアムプラン（月額980円）にアップグレードする" className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-3 py-1 rounded-lg text-xs transition-colors">プレミアム ¥980/月</button>
           )}
         </div>
       </nav>
@@ -681,12 +684,14 @@ export default function ToolPage() {
               <p className="text-amber-800 font-semibold text-sm">無料利用: {useCount}/3回</p>
               <p className="text-amber-600 text-xs">遺産分割協議書雛形生成はプレミアム機能です</p>
             </div>
-            <button onClick={() => setShowModal(true)} className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">アップグレード</button>
+            <button onClick={() => setShowModal(true)} aria-label="相続AIをプレミアムにアップグレードする" className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">アップグレード</button>
           </div>
         )}
         <div className="flex gap-1 mb-6 backdrop-blur-sm bg-white/20 border border-white/30 rounded-xl p-1 overflow-x-auto shadow-md">
           {tabs.map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              aria-label={`${tab.label}タブを表示${!tab.free ? "（プレミアム機能）" : ""}`}
+              aria-pressed={activeTab === tab.id}
               className={"flex-1 min-w-[80px] py-2 px-2 rounded-lg text-xs font-bold transition-all " + (activeTab === tab.id ? "bg-white text-indigo-900 shadow-sm" : "text-slate-600 hover:text-slate-800")}>
               <span className="block text-base mb-0.5">{tab.icon}</span>
               {tab.label}
@@ -712,6 +717,7 @@ export default function ToolPage() {
                   step={100}
                   value={quickEstate}
                   onChange={e => setQuickEstate(Number(e.target.value))}
+                  aria-label={`遺産総額を設定する（現在: ${quickEstate.toLocaleString()}万円）`}
                   className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
                 />
                 <div className="flex justify-between text-xs text-slate-400 mt-1">
@@ -727,6 +733,8 @@ export default function ToolPage() {
                     <button
                       key={n}
                       onClick={() => setQuickHeirs(n)}
+                      aria-label={`かんたん試算の法定相続人数を${n}人に設定する`}
+                      aria-pressed={quickHeirs === n}
                       className={"flex-1 py-2 rounded-lg font-bold text-sm transition-all border " +
                         (quickHeirs === n
                           ? "bg-indigo-900 text-white border-indigo-900"
@@ -785,11 +793,11 @@ export default function ToolPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">遺産総額（万円）</label>
-                <input type="number" value={estateTotal} onChange={e => setEstateTotal(e.target.value)} placeholder="例: 5000" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <input type="number" value={estateTotal} onChange={e => setEstateTotal(e.target.value)} placeholder="例: 5000" aria-label="遺産総額を万円単位で入力する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">法定相続人数（人）</label>
-                <input type="number" value={heirCount} onChange={e => setHeirCount(e.target.value)} min="1" max="20" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <input type="number" value={heirCount} onChange={e => setHeirCount(e.target.value)} min="1" max="20" aria-label="法定相続人数を人数で入力する（1〜20人）" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <div className="flex items-center gap-2">
                 <input type="checkbox" id="spouse" checked={hasSpouse} onChange={e => setHasSpouse(e.target.checked)} className="w-4 h-4 text-indigo-600" />
@@ -822,7 +830,7 @@ export default function ToolPage() {
                   {hasSpouse && simResult.taxable > 0 && <p className="text-xs text-slate-500">※ 配偶者の税額軽減（1/2）を適用した概算です</p>}
                   <p className="text-xs text-slate-400 mt-2">この計算は概算です。実際の相続税は財産の種類・評価方法・各種控除により異なります。税理士にご相談ください。</p>
                 </div>
-                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続税シミュレーター結果\n遺産総額: " + simResult.total.toLocaleString() + "万円\n相続税概算: " + (simResult.taxable > 0 ? simResult.tax.toLocaleString() + "万円" : "0円（非課税）") + "\n\nhttps://soukoku-ai.vercel.app\n#相続AI #相続税")} target="_blank" rel="noopener noreferrer" className="mt-4 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
+                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続税シミュレーター結果\n遺産総額: " + simResult.total.toLocaleString() + "万円\n相続税概算: " + (simResult.taxable > 0 ? simResult.tax.toLocaleString() + "万円" : "0円（非課税）") + "\n\nhttps://sozoku-ai.vercel.app\n#相続AI #相続税")} target="_blank" rel="noopener noreferrer" className="mt-4 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                   この結果をXでシェアする
                 </a>
@@ -849,7 +857,7 @@ export default function ToolPage() {
             <div className="space-y-4 mb-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">相続開始日（亡くなった日）</label>
-                <input type="date" value={inheritanceDate} onChange={e => setInheritanceDate(e.target.value)} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <input type="date" value={inheritanceDate} onChange={e => setInheritanceDate(e.target.value)} aria-label="相続が開始した日付を選択する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <button onClick={handleTimeline} disabled={!inheritanceDate} aria-label="相続発生日から各手続きの期限を確認する" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">期限を確認する</button>
             </div>
@@ -864,7 +872,7 @@ export default function ToolPage() {
                     <span className={"text-sm font-bold " + (t.urgent ? "text-red-600" : "text-slate-600")}>{t.date}</span>
                   </div>
                 ))}
-                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続手続きタイムライン\n相続開始日: " + inheritanceDate + "\n最重要期限: 相続放棄は3ヶ月以内・相続税申告は10ヶ月以内\n\nhttps://soukoku-ai.vercel.app\n#相続AI #相続手続き")} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
+                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続手続きタイムライン\n相続開始日: " + inheritanceDate + "\n最重要期限: 相続放棄は3ヶ月以内・相続税申告は10ヶ月以内\n\nhttps://sozoku-ai.vercel.app\n#相続AI #相続手続き")} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                   タイムラインをXでシェアする
                 </a>
@@ -879,7 +887,7 @@ export default function ToolPage() {
             {!isPremium && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
                 <p className="text-amber-800 text-sm font-medium mb-2">この機能はプレミアムプランでご利用いただけます</p>
-                <button onClick={() => setShowModal(true)} className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">プレミアムにアップグレード（¥980/月）</button>
+                <button onClick={() => setShowModal(true)} aria-label="相続AIプレミアムプランにアップグレードする（月額980円）" className="bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">プレミアムにアップグレード（¥980/月）</button>
               </div>
             )}
             {/* 相続状況プリセット */}
@@ -891,6 +899,7 @@ export default function ToolPage() {
                     key={preset.label}
                     type="button"
                     onClick={() => setDocForm(prev => ({ ...prev, assets: preset.assets, distribution: preset.distribution }))}
+                    aria-label={`相続状況プリセット「${preset.label}」を選択して入力フォームに反映する`}
                     className="flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-800 text-xs font-medium px-3 py-1.5 rounded-full transition-colors"
                   >
                     <span>{preset.icon}</span>
@@ -903,11 +912,11 @@ export default function ToolPage() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">被相続人（亡くなった方）の氏名</label>
-                <input type="text" value={docForm.deceasedName} onChange={e => setDocForm({...docForm, deceasedName: e.target.value})} placeholder="例: 田中太郎" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <input type="text" value={docForm.deceasedName} onChange={e => setDocForm({...docForm, deceasedName: e.target.value})} placeholder="例: 田中太郎" aria-label="亡くなった方（被相続人）の氏名を入力する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">相続人の氏名（カンマ区切り）</label>
-                <input type="text" value={docForm.heirNames} onChange={e => setDocForm({...docForm, heirNames: e.target.value})} placeholder="例: 田中花子, 田中一郎" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                <input type="text" value={docForm.heirNames} onChange={e => setDocForm({...docForm, heirNames: e.target.value})} placeholder="例: 田中花子, 田中一郎" aria-label="相続人全員の氏名をカンマ区切りで入力する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">相続財産の概要</label>
@@ -986,7 +995,7 @@ export default function ToolPage() {
                 <h3 className={"font-bold mb-3 " + (renResult.includes("不要") ? "text-green-800" : renResult.includes("検討") ? "text-red-800" : "text-amber-800")}>判定結果</h3>
                 <p className="text-sm whitespace-pre-line text-slate-700">{renResult}</p>
                 <p className="text-xs text-slate-400 mt-3">※ この判定はシミュレーションです。実際の判断は必ず専門家にご相談ください。</p>
-                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続放棄シミュレーター結果\nプラス資産: " + (posAssets || "0") + "万円 / マイナス資産: " + (negAssets || "0") + "万円\n判定: " + (renResult.includes("不要") ? "相続放棄は不要" : renResult.includes("検討") ? "相続放棄を検討推奨" : "要専門家相談") + "\n\nhttps://soukoku-ai.vercel.app\n#相続AI #相続放棄")} target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
+                <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続放棄シミュレーター結果\nプラス資産: " + (posAssets || "0") + "万円 / マイナス資産: " + (negAssets || "0") + "万円\n判定: " + (renResult.includes("不要") ? "相続放棄は不要" : renResult.includes("検討") ? "相続放棄を検討推奨" : "要専門家相談") + "\n\nhttps://sozoku-ai.vercel.app\n#相続AI #相続放棄")} target="_blank" rel="noopener noreferrer" className="mt-3 flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full">
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                   判定結果をXでシェアする
                 </a>
@@ -1063,7 +1072,7 @@ export default function ToolPage() {
                   </div>
                 </div>
                 <a
-                  href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで相続手続き全" + totalItems + "項目が完了しました！✅ 死亡直後から相続税申告・不動産登記まで、AIがサポートしてくれて助かりました。⚖️ https://soukoku-ai.vercel.app #相続AI #相続手続き完了")}
+                  href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで相続手続き全" + totalItems + "項目が完了しました！✅ 死亡直後から相続税申告・不動産登記まで、AIがサポートしてくれて助かりました。⚖️ https://sozoku-ai.vercel.app #相続AI #相続手続き完了")}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-5 rounded-lg text-sm transition-colors"
                 >
@@ -1122,7 +1131,7 @@ export default function ToolPage() {
               </div>
               {/* Xシェアボタン */}
               <a
-                href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで基礎控除額を計算しました！\n法定相続人" + kisoHeirs + "人 → 基礎控除 " + kisoDeduction.toLocaleString() + "万円\n遺産総額がこれ以下なら相続税申告は不要かも。\n\nhttps://soukoku-ai.vercel.app/tool\n#相続AI #相続税")}
+                href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで基礎控除額を計算しました！\n法定相続人" + kisoHeirs + "人 → 基礎控除 " + kisoDeduction.toLocaleString() + "万円\n遺産総額がこれ以下なら相続税申告は不要かも。\n\nhttps://sozoku-ai.vercel.app/tool\n#相続AI #相続税")}
                 target="_blank" rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors w-full"
               >

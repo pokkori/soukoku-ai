@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const secretKey = process.env.KOMOJU_SECRET_KEY;
     if (!secretKey) return NextResponse.json({ error: "Komoju not configured" }, { status: 500 });
 
-    const origin = req.headers.get("origin") || "https://soukoku-ai.vercel.app";
+    const origin = req.headers.get("origin") || "https://sozoku-ai.vercel.app";
     const res = await fetch("https://komoju.com/api/v1/sessions", {
       method: "POST",
       headers: {

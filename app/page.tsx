@@ -125,7 +125,7 @@ function InheritanceTaxWidget() {
               ctx.fillText(`基礎控除: ${basicDeduction.toLocaleString()}万円（3,000万 + 600万 × ${heirsCount}人）`, 600, 450);
               ctx.fillStyle = "rgba(255,255,255,0.4)"; ctx.font = "20px sans-serif";
               ctx.fillText("※概算値です。正確な金額は税理士にご確認ください", 600, 530);
-              ctx.fillText("soukoku-ai.vercel.app", 600, 575);
+              ctx.fillText("sozoku-ai.vercel.app", 600, 575);
               canvas.toBlob((blob) => {
                 if (!blob) return;
                 const file = new File([blob], "inheritance-tax.png", { type: "image/png" });
@@ -145,7 +145,7 @@ function InheritanceTaxWidget() {
             結果を画像で保存
           </button>
           <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`相続税の概算: ${totalTax.toLocaleString()}万円（遺産${estateWan.toLocaleString()}万円・相続人${heirsCount}人）\n基礎控除: ${basicDeduction.toLocaleString()}万円\n#相続 #相続税`)}&url=${encodeURIComponent("https://soukoku-ai.vercel.app")}`}
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`相続税の概算: ${totalTax.toLocaleString()}万円（遺産${estateWan.toLocaleString()}万円・相続人${heirsCount}人）\n基礎控除: ${basicDeduction.toLocaleString()}万円\n#相続 #相続税`)}&url=${encodeURIComponent("https://sozoku-ai.vercel.app")}`}
             target="_blank" rel="noopener noreferrer"
             aria-label="相続税シミュレーション結果をXでシェアする（外部サイト）"
             className="inline-flex items-center gap-1.5 bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg text-xs transition-colors"
@@ -290,7 +290,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <div className="font-bold text-lg">⚖️ 相続AI</div>
+        <div className="font-bold text-lg flex items-center gap-1"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L3 9v11h6v-6h6v6h6V9z"/></svg>相続AI</div>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" aria-label="相続シミュレーターツールページへ移動する" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" aria-label="相続に関するコラム記事一覧へ移動する" className="hover:text-amber-300 transition-colors">コラム</Link>
@@ -401,7 +401,7 @@ export default function HomePage() {
               { icon: "💴", title: "相続税シミュレーター", desc: "遺産総額・相続人数を入力するだけで相続税の概算額と基礎控除を自動計算。専門家に相談する前の目安として活用できます。", free: true },
               { icon: "📅", title: "手続きタイムライン", desc: "相続開始日を入力すると、準確定申告（4ヶ月）・相続放棄（3ヶ月）・相続税申告（10ヶ月）などの期限を一覧表示。", free: true },
               { icon: "📝", title: "遺産分割協議書雛形生成", desc: "相続人情報と財産内容を入力するだけで、AIが遺産分割協議書の雛形を生成。法律用語も自動で補完します。", free: false },
-              { icon: "⚖️", title: "相続放棄シミュレーター", desc: "プラスの財産とマイナスの財産（借金）を比較して、相続放棄すべきかどうかをAIが判定。手続きの流れも解説。", free: true },
+              { icon: "SC", title: "相続放棄シミュレーター", desc: "プラスの財産とマイナスの財産（借金）を比較して、相続放棄すべきかどうかをAIが判定。手続きの流れも解説。", free: true },
             ].map((f, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-indigo-100">
                 <div className="flex items-center gap-2 mb-3">
@@ -688,7 +688,7 @@ export default function HomePage() {
             <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer"
               aria-label="弁護士ドットコムで相続・遺産分割の初回無料相談をする（外部サイト）"
               className="block bg-white border border-green-200 rounded-xl p-4 hover:bg-green-50 transition-colors text-center">
-              <div className="font-bold text-green-800 text-sm mb-1">⚖️ 弁護士ドットコム</div>
+              <div className="font-bold text-green-800 text-sm mb-1">弁護士ドットコム</div>
               <p className="text-xs text-green-600">遺産分割争い・相続放棄の相談はこちら</p>
               <div className="mt-2 text-xs text-green-500 font-bold">初回無料相談 →</div>
             </a>
@@ -834,7 +834,7 @@ export default function HomePage() {
       {/* X Share */}
       <section className="py-6 px-6 text-center bg-slate-50">
         <a
-          href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AI — 相続税シミュレーター・手続きタイムライン・相続放棄判定をAIが無料サポート⚖️ 法律・税務の初期調査に → https://soukoku-ai.vercel.app #相続 #相続税 #相続放棄")}
+          href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AI — 相続税シミュレーター・手続きタイムライン・相続放棄判定をAIが無料サポート⚖️ 法律・税務の初期調査に → https://sozoku-ai.vercel.app #相続 #相続税 #相続放棄")}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="相続AIをXでシェアする（外部サイト）"
@@ -854,7 +854,7 @@ export default function HomePage() {
 
       <footer className="bg-indigo-900 text-indigo-300 py-8 pb-24 sm:pb-8 px-4 text-sm">
         <div className="max-w-3xl mx-auto flex flex-wrap justify-between gap-4">
-          <div><div className="text-white font-bold mb-1">⚖️ 相続AI</div><p className="text-xs">運営: ポッコリラボ</p></div>
+          <div><div className="text-white font-bold mb-1">相続AI</div><p className="text-xs">運営: ポッコリラボ</p></div>
           <div className="flex gap-6 text-xs">
             <Link href="/legal" aria-label="特定商取引法に基づく表記ページへ移動する" className="hover:text-white transition-colors">特定商取引法</Link>
             <Link href="/privacy" aria-label="プライバシーポリシーページへ移動する" className="hover:text-white transition-colors">プライバシーポリシー</Link>
