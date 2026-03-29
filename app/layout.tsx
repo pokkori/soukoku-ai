@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
+import { Noto_Sans_JP } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import FeedbackButton from "@/components/FeedbackButton";
 import "./globals.css";
+
+const notoSansJP = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+  variable: "--font-noto-sans-jp",
+});
 
 const SITE_URL = "https://sozoku-ai.vercel.app";
 const TITLE = "相続AI｜相続手続きをAIが3分で整理・相続税シミュレーション無料・遺産分割協議書テンプレート";
@@ -31,6 +39,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(SITE_URL),
   manifest: "/manifest.json",
+  other: { "theme-color": "#0F0F1A" },
 };
 
 const breadcrumbLd = {
@@ -51,7 +60,7 @@ const jsonLd = {
       "url": SITE_URL,
       "applicationCategory": "LegalApplication",
       "operatingSystem": "Web",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "description": "基本無料・プレミアムプラン ¥980/月" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY", "description": "基本無料・プレミアムプラン ¥1,980/月" },
       "description": DESC,
     },
     {
@@ -144,7 +153,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={`dark ${notoSansJP.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -155,7 +164,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`${notoSansJP.className} antialiased min-h-screen text-white`} style={{ background: '#0B0F1E' }}>
         {children}
         <footer className="flex justify-center py-2">
           <FeedbackButton serviceName="相続AI" />
