@@ -16,6 +16,7 @@ interface KwData {
   description: string;
   features: { title: string; text: string }[];
   faqs: { q: string; a: string }[];
+  lastUpdated: string;
 }
 
 const KEYWORDS: Record<string, KwData> = {
@@ -51,6 +52,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "本ツールは概算シミュレーション用です。正式な申告には税理士への相談をお勧めします。事前に概算を把握することで、専門家への相談がスムーズになります。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "souzoku-tetuzuki-nagare": {
     keyword: "相続手続き 流れ",
@@ -84,6 +86,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "比較的シンプルな案件であれば可能です。ただし不動産がある場合の登記や、相続税申告が必要な場合は司法書士・税理士への依頼が一般的です。相続AIで事前に全体像を把握してから専門家に相談すると効率的です。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "souzoku-houji-bukken": {
     keyword: "相続放棄",
@@ -117,6 +120,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "相続放棄はすべての財産・負債を放棄します。限定承認はプラスの財産の範囲内でマイナスの財産を引き継ぐ方法です。限定承認は相続人全員で行う必要があるため、手続きはより複雑になります。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "isan-bunkatsu-kyougi": {
     keyword: "遺産分割協議",
@@ -150,6 +154,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "はい、相続人全員が合意すれば法定相続分と異なる割合での分割が可能です。例えば自宅に住み続ける相続人に不動産を、他の相続人に預貯金を多く配分するなど、実情に合った分割ができます。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "souzoku-zei-kiso-koujo": {
     keyword: "相続税 基礎控除",
@@ -183,6 +188,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "配偶者の税額軽減（1億6,000万円または法定相続分まで非課税）、未成年者控除、障害者控除、相次相続控除などがあります。相続AIで該当する控除を自動チェックできます。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "igon-tsukurikata": {
     keyword: "遺言書 作り方",
@@ -216,6 +222,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "民法上、15歳以上であれば遺言をすることができます。遺言能力（判断能力）があることが要件です。認知症の進行が心配な場合は早めの作成をお勧めします。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "souzoku-zei-sesuzei": {
     keyword: "相続税 節税",
@@ -249,6 +256,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "早ければ早いほど効果的です。生前贈与は年数をかけるほど移転額が増え、暦年贈与の加算期間（7年）を考慮すると、できるだけ早く始めることが節税効果を最大化します。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "fudousan-souzoku": {
     keyword: "不動産 相続",
@@ -282,6 +290,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "共有名義はトラブルの原因になりやすいです。売却・建替え時に全員の同意が必要で、さらに相続が発生すると権利関係がさらに複雑化します。可能であれば単独名義にするか、代償分割を検討してください。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "souzoku-soudan-muryou": {
     keyword: "相続相談 無料",
@@ -315,6 +324,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "入力いただいた情報はシミュレーション目的のみに使用し、第三者への提供は行いません。詳細はプライバシーポリシーをご覧ください。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
   "seizen-zouyo-ai": {
     keyword: "生前贈与 AI",
@@ -348,6 +358,7 @@ const KEYWORDS: Record<string, KwData> = {
         a: "はい、贈与額・贈与年数・相続人構成を入力すると、暦年贈与と相続時精算課税制度それぞれの税額を比較し、最適な贈与プランをAIが提案します。",
       },
     ],
+    lastUpdated: "2026-03-31",
   },
 };
 
@@ -372,6 +383,9 @@ export async function generateMetadata({
   return {
     title,
     description: desc,
+    other: {
+      "article:modified_time": data.lastUpdated,
+    },
     openGraph: {
       title,
       description: desc,
@@ -400,6 +414,7 @@ export default async function KeywordPage({
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
+    "dateModified": data.lastUpdated,
     mainEntity: data.faqs.map((f) => ({
       "@type": "Question",
       name: f.q,
@@ -568,6 +583,11 @@ export default async function KeywordPage({
             </Link>
           </div>
         </section>
+
+        {/* LastUpdated */}
+        <p className="text-center text-xs text-white/40 mt-8">
+          最終更新: 2026年3月31日
+        </p>
 
         {/* ===== CrossSell ===== */}
         <section className="py-8 px-4">
