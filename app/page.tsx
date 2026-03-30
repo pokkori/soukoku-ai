@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import InheritanceSample from "@/components/InheritanceSample";
 import KomojuButton from "@/components/KomojuButton";
+import { ShareButtons } from "@/components/ShareButtons";
+import { AdBanner } from "@/components/AdBanner";
 
 /* ---- SVG Icon helper (replaces all emoji) ---- */
 const IC: Record<string, React.ReactNode> = {
@@ -911,26 +913,25 @@ export default function HomePage() {
  <div className="bg-slate-100 py-6 px-4">
  <p className="text-center text-xs text-slate-400 max-w-2xl mx-auto">※ 本サービスはAIによる情報提供を目的としており、法律・税務・財務に関する専門的アドバイスではありません。相続手続き・相続税申告については、必ず弁護士・税理士等の有資格者にご相談ください。</p>
  </div>
- {/* X Share */}
+ {/* シェアセクション */}
  <section className="py-6 px-6 text-center bg-white/[0.03]">
- <a
- href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AI — 相続税シミュレーター・手続きタイムライン・相続放棄判定をAIが無料サポート 法律・税務の初期調査に → https://sozoku-ai.vercel.app #相続 #相続税 #相続放棄")}
- target="_blank"
- rel="noopener noreferrer"
- aria-label="相続AIをXでシェアする（外部サイト）"
- className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-xl text-sm transition-colors"
- >
- <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
- <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
- </svg>
- Xでシェアする
- </a>
+ <ShareButtons url="https://sozoku-ai.vercel.app" text="相続AIを使ってみた！" hashtags="相続AI" />
  </section>
  <div className="fixed bottom-0 left-0 right-0 bg-indigo-950 border-t border-indigo-700 px-4 py-3 z-40 sm:hidden shadow-lg">
  <a href="/tool" aria-label="相続シミュレーションを無料で始める（ツールページへ移動）" className="block w-full backdrop-blur-sm bg-white/50 hover:bg-indigo-400 text-white font-black text-center py-3.5 rounded-xl text-sm">
  ▶ 相続シミュレーションを無料で始める →
  </a>
  </div>
+
+ {/* AI免責バナー */}
+ <section className="px-4 py-6">
+ <div className="max-w-3xl mx-auto bg-yellow-900/30 border border-yellow-700/50 rounded-lg p-3 text-sm text-yellow-200">
+ <p>
+ <svg className="w-4 h-4 inline-block mr-1 -mt-0.5 text-yellow-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" strokeLinecap="round" strokeLinejoin="round"/></svg>
+ 本サービスはAIによる参考情報です。法的効力を持つものではありません。重要な判断は弁護士・税理士にご相談ください。2026年3月時点の法令に基づいています。
+ </p>
+ </div>
+ </section>
 
  <footer className="bg-indigo-900 text-indigo-300 py-8 pb-24 sm:pb-8 px-4 text-sm">
  <div className="max-w-3xl mx-auto flex flex-wrap justify-between gap-4">
@@ -942,6 +943,7 @@ export default function HomePage() {
  </div>
  </div>
  </footer>
+ <AdBanner slot="" />
  </div>
  );
 }
