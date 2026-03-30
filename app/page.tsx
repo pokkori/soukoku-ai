@@ -352,6 +352,38 @@ export default function HomePage() {
  { q: "無料で使えますか？", a: "シミュレーター・タイムライン・相続放棄判定は無料です。AIによる詳細な遺産分割協議書雛形生成・節税シミュレーション詳細はプレミアムプラン（¥1,980/月）でご利用いただけます。" },
  ];
  return (
+ <>
+ <script
+   type="application/ld+json"
+   dangerouslySetInnerHTML={{
+     __html: JSON.stringify({
+       '@context': 'https://schema.org',
+       '@type': 'FAQPage',
+       mainEntity: [
+         { '@type': 'Question', name: '相続が発生したら何から始めればいいですか？', acceptedAnswer: { '@type': 'Answer', text: 'まず相続人と相続財産を確認します。相続開始から3ヶ月以内に相続放棄の判断、4ヶ月以内に準確定申告、10ヶ月以内に相続税申告が必要です。' } },
+         { '@type': 'Question', name: '相続税はいくらかかりますか？', acceptedAnswer: { '@type': 'Answer', text: '基礎控除額は3,000万円＋600万円×法定相続人数です。例えば相続人が配偶者と子2人の場合、4,800万円まで相続税はかかりません。' } },
+         { '@type': 'Question', name: '法定相続人の範囲はどこまでですか？', acceptedAnswer: { '@type': 'Answer', text: '配偶者は常に相続人となります。子がいれば子（第1順位）、子がいなければ父母等直系尊属（第2順位）、子も直系尊属もいなければ兄弟姉妹（第3順位）が相続人になります。' } },
+         { '@type': 'Question', name: '遺言書が見つかった場合はどうすればいいですか？', acceptedAnswer: { '@type': 'Answer', text: '自筆証書遺言は勝手に開封せず家庭裁判所で「検認」が必要です（法務局保管は不要）。公正証書遺言は検認不要。遺言書の内容は原則として法定相続分より優先されます。' } },
+         { '@type': 'Question', name: '不動産の相続登記は必須ですか？', acceptedAnswer: { '@type': 'Answer', text: '2024年4月から相続登記が義務化されました。相続で不動産を取得した場合は3年以内に登記申請が必要で、違反すると10万円以下の過料が科される可能性があります。' } },
+         { '@type': 'Question', name: '相続放棄はいつまでにすればいいですか？', acceptedAnswer: { '@type': 'Answer', text: '相続開始を知った日から3ヶ月以内に家庭裁判所への申述が必要です。借金が多い場合は早急に判断することが重要です。' } },
+         { '@type': 'Question', name: '無料で使えますか？', acceptedAnswer: { '@type': 'Answer', text: 'シミュレーター・タイムライン・相続放棄判定は無料です。AIによる詳細な遺産分割協議書雛形生成・節税シミュレーション詳細はプレミアムプラン（¥1,980/月）でご利用いただけます。' } },
+       ],
+     }).replace(/</g, '\\u003c'),
+   }}
+ />
+ <script
+   type="application/ld+json"
+   dangerouslySetInnerHTML={{
+     __html: JSON.stringify({
+       '@context': 'https://schema.org',
+       '@type': 'SoftwareApplication',
+       name: '相続AI',
+       operatingSystem: 'Web',
+       applicationCategory: 'FinanceApplication',
+       offers: { '@type': 'Offer', price: 0, priceCurrency: 'JPY' },
+     }).replace(/</g, '\\u003c'),
+   }}
+ />
  <div className="min-h-screen text-white relative" style={{background: 'radial-gradient(ellipse at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(99,102,241,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(37,99,235,0.08) 0%, transparent 50%), #0B0F1E'}}>
    {/* Floating particles */}
    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
@@ -945,5 +977,6 @@ export default function HomePage() {
  </footer>
  <AdBanner slot="" />
  </div>
+ </>
  );
 }
