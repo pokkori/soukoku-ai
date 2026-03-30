@@ -8,6 +8,7 @@ import { UsageCounter } from "@/components/UsageCounter";
 import { ShareButtons } from "@/components/ShareButtons";
 import { AdBanner } from "@/components/AdBanner";
 import { CrossSell } from "@/components/CrossSell";
+import { TrustBadge } from "@/components/TrustBadge";
 
 /* ---- SVG Icon helper (replaces all emoji) ---- */
 const IC: Record<string, React.ReactNode> = {
@@ -425,6 +426,7 @@ export default function HomePage() {
  <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight">相続の複雑さを、<br />AIが3分で整理します</h1>
  <p className="text-indigo-200 text-lg mb-8">相続税の概算・手続きタイムライン・遺産分割協議書雛形まで。<br />親が亡くなった直後でも、AIが次にやることを教えます。</p>
  <div className="max-w-xs mx-auto mb-4"><UsageCounter /></div>
+ <div className="mb-4"><TrustBadge /></div>
  <Link href="/tool" aria-label="相続税シミュレーターを無料で始める" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続をAI診断 →</Link>
  <p className="text-xs opacity-60 mt-2">※登録不要・すぐに結果</p>
  <p className="text-indigo-300 text-sm mt-4">登録不要・3分で完了・無料</p>
