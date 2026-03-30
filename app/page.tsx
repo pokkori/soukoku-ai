@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import InheritanceSample from "@/components/InheritanceSample";
 import KomojuButton from "@/components/KomojuButton";
+import { StreakBanner } from "@/components/StreakBanner";
+import { UsageCounter } from "@/components/UsageCounter";
 import { ShareButtons } from "@/components/ShareButtons";
 import { AdBanner } from "@/components/AdBanner";
 
@@ -411,6 +413,7 @@ export default function HomePage() {
  <Link href="/legal" aria-label="特定商取引法に基づく表記ページへ移動する" className="hover:text-amber-300 transition-colors">特商法</Link>
  </div>
  </nav>
+ <StreakBanner />
  <section className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-700 text-white py-16 px-4">
  <div className="max-w-3xl mx-auto text-center">
  <div className="inline-block bg-amber-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded-full mb-4">無料シミュレーター</div>
@@ -420,6 +423,7 @@ export default function HomePage() {
  </div>
  <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight">相続の複雑さを、<br />AIが3分で整理します</h1>
  <p className="text-indigo-200 text-lg mb-8">相続税の概算・手続きタイムライン・遺産分割協議書雛形まで。<br />親が亡くなった直後でも、AIが次にやることを教えます。</p>
+ <div className="max-w-xs mx-auto mb-4"><UsageCounter /></div>
  <Link href="/tool" aria-label="相続税シミュレーターを無料で始める" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続シミュレーションする →</Link>
  <p className="text-indigo-300 text-sm mt-4">登録不要・3分で完了・無料</p>
  </div>
