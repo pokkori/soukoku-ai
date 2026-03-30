@@ -427,6 +427,26 @@ export default function HomePage() {
  <p className="text-indigo-200 text-lg mb-8">相続税の概算・手続きタイムライン・遺産分割協議書雛形まで。<br />親が亡くなった直後でも、AIが次にやることを教えます。</p>
  <div className="max-w-xs mx-auto mb-4"><UsageCounter /></div>
  <div className="mb-4"><TrustBadge /></div>
+ {/* ヒーロー内サンプルプレビュー — アハモーメント */}
+ <div className="max-w-xl mx-auto mb-5 mt-2">
+   <p className="text-xs text-indigo-300/60 text-center mb-2">AIが生成する相続診断の一例</p>
+   <div className="bg-indigo-900/30 border border-indigo-400/30 rounded-xl overflow-hidden text-left">
+     <div className="bg-indigo-500/10 border-b border-indigo-400/20 px-4 py-2 flex items-center gap-2">
+       <span className="text-xs font-bold text-indigo-300">入力:</span>
+       <span className="text-xs text-white/70">遺産総額4,200万円・相続人3名（配偶者＋子2名）</span>
+     </div>
+     <div className="px-4 py-3">
+       <pre className="text-xs text-white/80 whitespace-pre-wrap font-sans leading-relaxed">{`相続税：課税なし（基礎控除4,800万円以内）
+
+【手続きタイムライン】
+3ヶ月以内：相続放棄の要否を検討
+4ヶ月以内：準確定申告（所得があった場合）
+10ヶ月以内：相続税申告（今回は不要）
+
+→ 遺産分割協議書ドラフトを今すぐ生成できます`}</pre>
+     </div>
+   </div>
+ </div>
  <Link href="/tool" aria-label="相続税シミュレーターを無料で始める" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-black text-lg px-8 py-4 rounded-2xl shadow-lg transition-all hover:scale-105">無料で相続をAI診断 →</Link>
  <p className="text-xs opacity-60 mt-2">※登録不要・すぐに結果</p>
  <p className="text-indigo-300 text-sm mt-4">登録不要・3分で完了・無料</p>
