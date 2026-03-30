@@ -1,5 +1,18 @@
 import { MetadataRoute } from "next";
 
+const KEYWORD_SLUGS = [
+  "souzoku-zei-keisan",
+  "souzoku-tetuzuki-nagare",
+  "souzoku-houji-bukken",
+  "isan-bunkatsu-kyougi",
+  "souzoku-zei-kiso-koujo",
+  "igon-tsukurikata",
+  "souzoku-zei-sesuzei",
+  "fudousan-souzoku",
+  "souzoku-soudan-muryou",
+  "seizen-zouyo-ai",
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://sozoku-ai.vercel.app";
   return [
@@ -14,5 +27,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/blog/sozoku-timeline`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/blog/isan-bunkatsu-kyogisho`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/blog/souzoku-checklist`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 },
+    ...KEYWORD_SLUGS.map((slug) => ({
+      url: `${base}/keywords/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
   ];
 }
