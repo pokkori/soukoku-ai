@@ -11,7 +11,7 @@ export default function SozokuHokiPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">⚖️ 相続AI</Link>
+        <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" className="hover:text-amber-300 transition-colors">コラム</Link>
@@ -27,11 +27,13 @@ export default function SozokuHokiPage() {
 
         <div className="mb-6">
           <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded-full">相続放棄</span>
-          <span className="text-slate-400 text-xs ml-3">📖 約6分で読めます</span>
+          <span className="text-slate-400 text-xs ml-3">約6分で読めます</span>
         </div>
 
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex gap-3">
-          <span className="text-2xl shrink-0">⚠️</span>
+          <span className="shrink-0">
+            <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          </span>
           <div>
             <p className="font-bold text-red-800 text-sm">重要: 相続放棄の期限は3ヶ月</p>
             <p className="text-xs text-red-600">「相続の開始があったことを知った日」から3ヶ月以内に家庭裁判所への申述が必要です。この期限を過ぎると原則として相続放棄できません。</p>
@@ -47,7 +49,7 @@ export default function SozokuHokiPage() {
         </p>
 
         <div className="bg-indigo-50 rounded-xl p-5 mb-8 border border-indigo-100">
-          <h2 className="font-bold text-indigo-900 mb-3">📋 この記事でわかること</h2>
+          <h2 className="font-bold text-indigo-900 mb-3">この記事でわかること</h2>
           <ol className="space-y-1 text-sm text-indigo-700">
             <li>1. 相続放棄をすべきかの判断基準</li>
             <li>2. 手続きの流れ（5ステップ）</li>
@@ -174,7 +176,7 @@ export default function SozokuHokiPage() {
               { title: "次順位の相続人に連絡しなかった", desc: "相続放棄すると次順位の相続人（被相続人の親や兄弟など）が相続人になります。事前に連絡しておくのが礼儀です。" },
             ].map(item => (
               <div key={item.title} className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                <p className="font-bold text-amber-800 mb-1">⚠️ {item.title}</p>
+                <p className="font-bold text-amber-800 mb-1">注意: {item.title}</p>
                 <p className="text-sm text-slate-600">{item.desc}</p>
               </div>
             ))}
@@ -190,7 +192,7 @@ export default function SozokuHokiPage() {
         </div>
 
         <div className="mt-10">
-          <h3 className="font-bold text-slate-700 mb-4">📚 関連コラム</h3>
+          <h3 className="font-bold text-slate-700 mb-4">関連コラム</h3>
           <div className="space-y-3">
             {[
               { href: "/blog/sozoku-zei-keisan", title: "相続税の計算方法をわかりやすく解説" },

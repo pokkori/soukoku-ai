@@ -79,7 +79,7 @@ export default function BlogIndexPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">⚖️ 相続AI</Link>
+        <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" className="text-amber-300 font-medium">コラム</Link>
@@ -104,7 +104,7 @@ export default function BlogIndexPage() {
                 <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${CATEGORY_COLORS[article.category] || "bg-gray-100 text-gray-600"}`}>
                   {article.category}
                 </span>
-                <span className="text-xs text-slate-400">📖 {article.readTime}で読める</span>
+                <span className="text-xs text-slate-400">{article.readTime}で読める</span>
               </div>
               <h2 className="font-bold text-indigo-900 mb-2 group-hover:text-indigo-600 transition-colors leading-snug">{article.title}</h2>
               <p className="text-sm text-slate-500 leading-relaxed">{article.desc}</p>

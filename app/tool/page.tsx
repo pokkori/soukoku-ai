@@ -179,7 +179,7 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
       tabLabel: "手続き期限を確認する",
     },
     3: {
-      title: "⚠️ 相続放棄の期限が迫っています",
+      title: "【警告】相続放棄の期限が迫っています",
       message: "相続放棄の申述期限（3ヶ月）が近いです。借金がプラス財産を上回る場合は、今すぐ家庭裁判所に申述が必要です。放棄シミュレーターで判定してください。",
       urgent: true,
       tab: "renunciation",
@@ -229,7 +229,7 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
     <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
       <div className={`rounded-xl p-5 mb-5 ${result.urgent ? "bg-red-50 border-2 border-red-300" : "bg-indigo-50 border-2 border-indigo-300"}`}>
         <div className={`font-bold text-base mb-2 ${result.urgent ? "text-red-800" : "text-indigo-900"}`}>
-          {result.urgent && "⚠️ "}{result.title}
+          {result.urgent && "【要注意】"}{result.title}
         </div>
         <p className="text-sm text-slate-700 leading-relaxed">{result.message}</p>
       </div>
@@ -250,7 +250,7 @@ function SituationFlowchart({ onSelectTab }: { onSelectTab: (tab: string) => voi
         最初からやり直す
       </button>
       <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700">
-        ⚠️ このガイドはAIによる一般的な情報です。具体的な期限・手続きは必ず専門家にご確認ください。
+        ※ このガイドはAIによる一般的な情報です。具体的な期限・手続きは必ず専門家にご確認ください。
       </div>
     </div>
   );
@@ -492,7 +492,7 @@ function SetsuzeiDiagnosis() {
             ))}
           </div>
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-            <p className="text-amber-800 font-bold text-sm mb-1">💡 節税には専門家の確認が不可欠です</p>
+            <p className="text-amber-800 font-bold text-sm mb-1">ヒント: 節税には専門家の確認が不可欠です</p>
             <p className="text-amber-700 text-xs mb-3">小規模宅地特例・配偶者控除の適用には要件があります。相続税の申告前に必ず税理士にご相談ください。</p>
             <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer"
               className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">
@@ -780,7 +780,9 @@ export default function ToolPage() {
               )}
             </div>
             <div className="mt-4 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3">
-              <span className="text-amber-500 mt-0.5 flex-shrink-0">⚠️</span>
+              <span className="text-amber-500 mt-0.5 flex-shrink-0">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+              </span>
               <p className="text-xs text-amber-700">
                 この試算はあくまで目安です。実際の相続税は財産の種類・評価額・各種控除（配偶者控除・小規模宅地等の特例など）により異なります。正確な金額は税理士にご確認ください。
               </p>
@@ -836,13 +838,13 @@ export default function ToolPage() {
                 </a>
                 {simResult.taxable > 0 && (
                   <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
-                    <p className="text-amber-800 font-bold text-sm mb-1">💡 相続税がかかります — 税理士への相談をお勧めします</p>
+                    <p className="text-amber-800 font-bold text-sm mb-1">ヒント: 相続税がかかります — 税理士への相談をお勧めします</p>
                     <p className="text-amber-700 text-xs mb-3">相続税の節税・申告には専門家のサポートが不可欠です。税理士ドットコムで無料相談できます。</p>
                     <a href="https://www.zeiri4.com/" target="_blank" rel="noopener noreferrer" className="inline-block bg-amber-400 hover:bg-amber-300 text-indigo-900 font-bold px-4 py-2 rounded-lg text-sm transition-colors">税理士ドットコムで無料相談 →</a>
                   </div>
                 )}
                 <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4">
-                  <p className="text-green-800 font-bold text-sm mb-1">⚖️ 遺産分割・相続放棄は弁護士に相談を</p>
+                  <p className="text-green-800 font-bold text-sm mb-1">法律: 遺産分割・相続放棄は弁護士に相談を</p>
                   <p className="text-green-700 text-xs mb-3">相続税だけでなく、遺産分割の協議や相続放棄の手続きには弁護士・司法書士のサポートが安心です。初回無料相談から始められます。</p>
                   <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer sponsored" className="block w-full text-center bg-white border border-green-300 hover:bg-green-50 text-green-800 font-bold px-4 py-2 rounded-lg text-sm transition-colors">弁護士ドットコムで無料相談する（相続専門）→</a>
                 </div>
@@ -892,7 +894,7 @@ export default function ToolPage() {
             )}
             {/* 相続状況プリセット */}
             <div className="mb-4">
-              <p className="text-sm font-medium text-slate-700 mb-2">💡 相続状況プリセット（クリックで入力）</p>
+              <p className="text-sm font-medium text-slate-700 mb-2">相続状況プリセット（クリックで入力）</p>
               <div className="flex flex-wrap gap-2">
                 {SITUATION_PRESETS.map((preset) => (
                   <button
@@ -946,7 +948,9 @@ export default function ToolPage() {
                 {/* 相続専門家CTA強化バナー */}
                 <div className="bg-gradient-to-r from-indigo-900 to-indigo-800 rounded-2xl p-6 text-white">
                   <div className="flex items-start gap-3 mb-4">
-                    <span className="text-3xl">⚖️</span>
+                    <span className="shrink-0">
+                      <svg className="w-8 h-8 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+                    </span>
                     <div>
                       <p className="font-black text-base mb-1">相続手続きを専門家に依頼する</p>
                       <p className="text-indigo-200 text-sm">AIが生成した雛形を確認・完成させるために、弁護士・司法書士への相談をお勧めします。初回相談無料の専門家が多数います。</p>
@@ -1012,7 +1016,8 @@ export default function ToolPage() {
                   onClick={() => window.print()}
                   className="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-3 py-1.5 rounded-lg font-bold transition-colors"
                 >
-                  🖨️ 印刷
+                  <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+                  印刷
                 </button>
                 <button
                   onClick={() => { setCheckedItems({}); localStorage.removeItem("soukoku_checklist"); }}
@@ -1061,18 +1066,20 @@ export default function ToolPage() {
             </div>
             {doneItems === totalItems && (
               <div className="mt-5 bg-gradient-to-br from-indigo-900 to-indigo-800 border border-indigo-500 rounded-2xl p-6 text-center">
-                <div className="text-4xl mb-2">🎉</div>
+                <div className="mb-2 flex justify-center">
+                  <svg className="w-12 h-12 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                </div>
                 <p className="text-white font-black text-lg mb-1">全手続き完了！</p>
                 <p className="text-indigo-200 text-xs mb-4">お疲れ様でした。相続手続きが全て完了しました。</p>
                 <div className="bg-white/10 border border-white/20 rounded-xl p-4 mb-4">
-                  <div className="text-amber-300 text-sm font-bold mb-1">⚖️ 相続手続き完了証明書</div>
+                  <div className="text-amber-300 text-sm font-bold mb-1">相続手続き完了証明書</div>
                   <div className="text-white text-xs leading-relaxed">
                     <p className="font-bold text-base text-amber-300">{totalItems}項目 全完了</p>
                     <p className="text-indigo-300 text-xs mt-1">完了日: {new Date().toLocaleDateString("ja-JP")}</p>
                   </div>
                 </div>
                 <a
-                  href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで相続手続き全" + totalItems + "項目が完了しました！✅ 死亡直後から相続税申告・不動産登記まで、AIがサポートしてくれて助かりました。⚖️ https://sozoku-ai.vercel.app #相続AI #相続手続き完了")}
+                  href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent("相続AIで相続手続き全" + totalItems + "項目が完了しました！死亡直後から相続税申告・不動産登記まで、AIがサポートしてくれて助かりました。 https://sozoku-ai.vercel.app #相続AI #相続手続き完了")}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white font-bold py-2 px-5 rounded-lg text-sm transition-colors"
                 >
@@ -1083,7 +1090,7 @@ export default function ToolPage() {
               </div>
             )}
             <div className="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-4">
-              <p className="text-amber-800 font-bold text-sm mb-1">💡 手続きに不安を感じたら</p>
+              <p className="text-amber-800 font-bold text-sm mb-1">ヒント: 手続きに不安を感じたら</p>
               <p className="text-amber-700 text-xs mb-2">相続専門の弁護士・税理士に相談することで、ミスなく安心して手続きが完了できます。</p>
               <a href="https://www.bengo4.com/c_18/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 text-xs font-bold hover:underline">弁護士ドットコムで無料相談する →</a>
             </div>
@@ -1234,7 +1241,9 @@ export default function ToolPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
           <div className="backdrop-blur-md bg-white/80 border border-white/30 rounded-2xl p-6 max-w-sm w-full shadow-xl relative">
             <button onClick={() => setShowModal(false)} className="absolute top-3 right-3 text-gray-400 text-xl">✕</button>
-            <div className="text-3xl mb-3 text-center">⚖️</div>
+            <div className="mb-3 flex justify-center">
+              <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+            </div>
             <h2 className="text-lg font-bold mb-2 text-center">プレミアムプラン</h2>
             <p className="text-sm text-gray-500 mb-4 text-center">相続AI 無制限利用</p>
             <KomojuButton planId="standard" planLabel="プレミアムプラン ¥980/月" className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50" />

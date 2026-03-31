@@ -21,7 +21,7 @@ export default function SozokuTimelinePage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">⚖️ 相続AI</Link>
+        <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" className="hover:text-amber-300 transition-colors">コラム</Link>
@@ -37,7 +37,7 @@ export default function SozokuTimelinePage() {
 
         <div className="mb-6">
           <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-0.5 rounded-full">手続き</span>
-          <span className="text-slate-400 text-xs ml-3">📖 約4分で読めます</span>
+          <span className="text-slate-400 text-xs ml-3">約4分で読めます</span>
         </div>
 
         <h1 className="text-2xl md:text-3xl font-black text-indigo-900 mb-4 leading-tight">
@@ -67,16 +67,16 @@ export default function SozokuTimelinePage() {
                   }`}>
                     {item.period}
                   </div>
-                  {item.priority === "critical" && <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded font-bold">⚠️ 最重要</span>}
+                  {item.priority === "critical" && <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded font-bold">最重要</span>}
                 </div>
                 <ul className="space-y-1 mb-2">
                   {item.tasks.map(task => (
                     <li key={task} className="text-sm text-slate-700 flex gap-2">
-                      <span className="text-indigo-500 shrink-0">✓</span>{task}
+                      <span className="text-indigo-500 shrink-0 font-bold">&#10003;</span>{task}
                     </li>
                   ))}
                 </ul>
-                <p className="text-xs text-slate-400">💡 {item.note}</p>
+                <p className="text-xs text-slate-400">ヒント: {item.note}</p>
               </div>
             ))}
           </div>
@@ -110,7 +110,7 @@ export default function SozokuTimelinePage() {
         </div>
 
         <div className="mt-10">
-          <h3 className="font-bold text-slate-700 mb-4">📚 関連コラム</h3>
+          <h3 className="font-bold text-slate-700 mb-4">関連コラム</h3>
           <div className="space-y-3">
             {[
               { href: "/blog/sozoku-zei-keisan", title: "相続税の計算方法をわかりやすく解説" },

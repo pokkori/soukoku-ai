@@ -11,7 +11,7 @@ export default function SozokuZeiKeisanPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">⚖️ 相続AI</Link>
+        <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" className="hover:text-amber-300 transition-colors">コラム</Link>
@@ -28,7 +28,7 @@ export default function SozokuZeiKeisanPage() {
 
         <div className="mb-6">
           <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-0.5 rounded-full">相続税</span>
-          <span className="text-slate-400 text-xs ml-3">📖 約5分で読めます</span>
+          <span className="text-slate-400 text-xs ml-3">約5分で読めます</span>
         </div>
 
         <h1 className="text-2xl md:text-3xl font-black text-indigo-900 mb-4 leading-tight">
@@ -41,7 +41,7 @@ export default function SozokuZeiKeisanPage() {
 
         {/* 目次 */}
         <div className="bg-indigo-50 rounded-xl p-5 mb-8 border border-indigo-100">
-          <h2 className="font-bold text-indigo-900 mb-3">📋 この記事でわかること</h2>
+          <h2 className="font-bold text-indigo-900 mb-3">この記事でわかること</h2>
           <ol className="space-y-1 text-sm text-indigo-700">
             <li>1. 相続税の基礎控除額の計算</li>
             <li>2. 課税遺産総額の求め方</li>
@@ -63,7 +63,7 @@ export default function SozokuZeiKeisanPage() {
             <p className="text-center text-2xl font-black text-amber-700">3,000万円 ＋ 600万円 × 法定相続人の数</p>
           </div>
           <div className="bg-white rounded-xl border border-slate-200 p-4 mb-4">
-            <p className="font-bold text-slate-700 mb-2">📝 計算例</p>
+            <p className="font-bold text-slate-700 mb-2">計算例</p>
             <ul className="space-y-1 text-sm text-slate-600">
               <li>• 相続人が配偶者と子1人（2人）: 3,000 + 600×2 = <strong>4,200万円</strong></li>
               <li>• 相続人が配偶者と子2人（3人）: 3,000 + 600×3 = <strong>4,800万円</strong></li>
@@ -140,7 +140,7 @@ export default function SozokuZeiKeisanPage() {
             4. 計算シミュレーション例
           </h2>
           <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-100 mb-4">
-            <p className="font-bold text-indigo-900 mb-3">📋 前提条件</p>
+            <p className="font-bold text-indigo-900 mb-3">前提条件</p>
             <ul className="text-sm text-slate-600 space-y-1">
               <li>• 遺産総額: 8,000万円（現金5,000万円 + 自宅3,000万円）</li>
               <li>• 負債: 500万円</li>
@@ -179,7 +179,7 @@ export default function SozokuZeiKeisanPage() {
               { title: "農地の納税猶予", desc: "農業を継続する場合、農地の相続税が猶予される制度" },
             ].map(item => (
               <div key={item.title} className="bg-green-50 border border-green-200 rounded-xl p-4">
-                <p className="font-bold text-green-800 text-sm mb-1">✅ {item.title}</p>
+                <p className="font-bold text-green-800 text-sm mb-1">○ {item.title}</p>
                 <p className="text-xs text-slate-600">{item.desc}</p>
               </div>
             ))}
@@ -197,7 +197,7 @@ export default function SozokuZeiKeisanPage() {
 
         {/* 関連記事 */}
         <div className="mt-10">
-          <h3 className="font-bold text-slate-700 mb-4">📚 関連コラム</h3>
+          <h3 className="font-bold text-slate-700 mb-4">関連コラム</h3>
           <div className="space-y-3">
             {[
               { href: "/blog/sozoku-hoki-tetsuzuki", title: "相続放棄の手続き完全ガイド｜期限・必要書類・費用" },

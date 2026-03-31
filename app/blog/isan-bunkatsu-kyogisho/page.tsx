@@ -11,7 +11,7 @@ export default function IsanBunkatsuPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="font-bold text-lg">⚖️ 相続AI</Link>
+        <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">ツールを使う</Link>
           <Link href="/blog" className="hover:text-amber-300 transition-colors">コラム</Link>
@@ -27,7 +27,7 @@ export default function IsanBunkatsuPage() {
 
         <div className="mb-6">
           <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-full">遺産分割</span>
-          <span className="text-slate-400 text-xs ml-3">📖 約7分で読めます</span>
+          <span className="text-slate-400 text-xs ml-3">約7分で読めます</span>
         </div>
 
         <h1 className="text-2xl md:text-3xl font-black text-indigo-900 mb-4 leading-tight">
@@ -39,7 +39,7 @@ export default function IsanBunkatsuPage() {
         </p>
 
         <div className="bg-indigo-50 rounded-xl p-5 mb-8 border border-indigo-100">
-          <h2 className="font-bold text-indigo-900 mb-3">📋 この記事でわかること</h2>
+          <h2 className="font-bold text-indigo-900 mb-3">この記事でわかること</h2>
           <ol className="space-y-1 text-sm text-indigo-700">
             <li>1. 遺産分割協議書が必要なケース</li>
             <li>2. 必須記載事項チェックリスト</li>
@@ -61,7 +61,7 @@ export default function IsanBunkatsuPage() {
               { title: "自動車の名義変更", desc: "陸運局での手続きに遺産分割協議書が必要。" },
             ].map(item => (
               <div key={item.title} className="bg-white border border-slate-200 rounded-xl p-4">
-                <p className="font-bold text-indigo-800 text-sm mb-1">📄 {item.title}</p>
+                <p className="font-bold text-indigo-800 text-sm mb-1">{item.title}</p>
                 <p className="text-xs text-slate-600">{item.desc}</p>
               </div>
             ))}
@@ -118,9 +118,9 @@ export default function IsanBunkatsuPage() {
               },
             ].map(item => (
               <div key={item.type} className="bg-white border border-slate-200 rounded-xl p-5">
-                <p className="font-bold text-indigo-800 mb-2">📌 {item.type}の記載例</p>
+                <p className="font-bold text-indigo-800 mb-2">{item.type}の記載例</p>
                 <pre className="bg-slate-50 rounded-lg p-3 text-xs text-slate-700 font-mono leading-relaxed whitespace-pre-wrap mb-2">{item.example}</pre>
-                <p className="text-xs text-amber-700">💡 {item.note}</p>
+                <p className="text-xs text-amber-700">ヒント: {item.note}</p>
               </div>
             ))}
           </div>
@@ -138,7 +138,7 @@ export default function IsanBunkatsuPage() {
               { title: "ページ間に契印（割印）を押す", desc: "複数ページにわたる場合、ページをまたぐ形で全員の印を押します（差し替え防止）。" },
             ].map(item => (
               <div key={item.title} className="flex gap-3 bg-white rounded-xl p-4 border border-slate-200">
-                <span className="text-indigo-500 shrink-0">✓</span>
+                <span className="text-indigo-500 shrink-0 font-bold">&#10003;</span>
                 <div>
                   <p className="font-bold text-slate-700 text-sm">{item.title}</p>
                   <p className="text-xs text-slate-500">{item.desc}</p>
@@ -159,7 +159,7 @@ export default function IsanBunkatsuPage() {
               { title: "認知症の相続人がいる場合", desc: "意思能力のない相続人の署名は無効。成年後見制度の利用が必要。" },
             ].map(item => (
               <div key={item.title} className="bg-red-50 border border-red-200 rounded-xl p-4">
-                <p className="font-bold text-red-700 mb-1">❌ {item.title}</p>
+                <p className="font-bold text-red-700 mb-1">× {item.title}</p>
                 <p className="text-xs text-slate-600">{item.desc}</p>
               </div>
             ))}
@@ -175,7 +175,7 @@ export default function IsanBunkatsuPage() {
         </div>
 
         <div className="mt-10">
-          <h3 className="font-bold text-slate-700 mb-4">📚 関連コラム</h3>
+          <h3 className="font-bold text-slate-700 mb-4">関連コラム</h3>
           <div className="space-y-3">
             {[
               { href: "/blog/sozoku-zei-keisan", title: "相続税の計算方法をわかりやすく解説" },

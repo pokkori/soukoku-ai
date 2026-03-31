@@ -146,7 +146,7 @@ export default function SouzokuChecklistPage() {
 
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
         <Link href="/" className="font-bold text-lg">
-          ⚖️ 相続AI
+          相続AI
         </Link>
         <div className="flex gap-4 text-sm">
           <Link href="/tool" className="hover:text-amber-300 transition-colors">
@@ -174,7 +174,7 @@ export default function SouzokuChecklistPage() {
           <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-full">
             2026年最新
           </span>
-          <span className="text-slate-400 text-xs">📖 約6分で読めます</span>
+          <span className="text-slate-400 text-xs">約6分で読めます</span>
         </div>
 
         <h1 className="text-2xl md:text-3xl font-black text-indigo-900 mb-4 leading-tight">
@@ -193,13 +193,13 @@ export default function SouzokuChecklistPage() {
           <p className="font-bold text-amber-800 mb-2">重要な3つの期限</p>
           <ul className="space-y-1 text-amber-700">
             <li>
-              ⚠️ <strong>3ヶ月以内</strong>: 相続放棄・限定承認の申述（家庭裁判所）
+              【注意】<strong>3ヶ月以内</strong>: 相続放棄・限定承認の申述（家庭裁判所）
             </li>
             <li>
-              ⚠️ <strong>4ヶ月以内</strong>: 準確定申告（税務署）
+              【注意】<strong>4ヶ月以内</strong>: 準確定申告（税務署）
             </li>
             <li>
-              ⚠️ <strong>10ヶ月以内</strong>: 相続税申告・納付（税務署）
+              【注意】<strong>10ヶ月以内</strong>: 相続税申告・納付（税務署）
             </li>
           </ul>
         </div>
@@ -243,7 +243,7 @@ export default function SouzokuChecklistPage() {
                   </div>
                   {(phase.color === "red" || phase.badge === "最重要期限") && (
                     <span className="text-xs bg-red-600 text-white px-2 py-0.5 rounded font-bold">
-                      ⚠️ {phase.badge}
+                      {phase.badge}
                     </span>
                   )}
                   {phase.color === "orange" && (
@@ -260,7 +260,7 @@ export default function SouzokuChecklistPage() {
                           item.critical ? "text-red-500" : "text-indigo-400"
                         }`}
                       >
-                        {item.critical ? "⚠️" : "✓"}
+                        {item.critical ? "!" : "&#10003;"}
                       </span>
                       <span
                         className={
@@ -275,7 +275,7 @@ export default function SouzokuChecklistPage() {
                   ))}
                 </ul>
                 <p className="text-xs text-slate-400 border-t border-slate-100 pt-2">
-                  💡 {phase.note}
+                  ヒント: {phase.note}
                 </p>
               </div>
             ))}
@@ -411,7 +411,7 @@ export default function SouzokuChecklistPage() {
 
         {/* 関連コラム */}
         <div>
-          <h3 className="font-bold text-slate-700 mb-4">📚 関連コラム</h3>
+          <h3 className="font-bold text-slate-700 mb-4">関連コラム</h3>
           <div className="space-y-3">
             {[
               {
