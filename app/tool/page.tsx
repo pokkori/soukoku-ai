@@ -4,6 +4,7 @@ import Link from "next/link";
 import KomojuButton from "@/components/KomojuButton";
 import { GlowButton } from "@/components/GlowButton";
 import { updateStreak, loadStreak, getStreakMilestoneMessage, type StreakData } from "@/lib/streak";
+import ConfettiLaunch from "@/components/ConfettiLaunch";
 
 const HISTORY_KEY = "souzoku_history";
 const MAX_HISTORY = 5;
@@ -453,7 +454,7 @@ function SetsuzeiDiagnosis() {
       </div>
       {showResult && (
         <div className="mt-6 space-y-4">
-          <div className="p-5" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+          <div className="glass-dark rounded-2xl p-5">
             <h3 className="font-bold text-indigo-200 mb-3 text-base" style={{ fontFamily: 'var(--font-rounded)' }}>節税診断結果</h3>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-center">
@@ -515,6 +516,7 @@ export default function ToolPage() {
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
   const [streak, setStreak] = useState<StreakData | null>(null);
   const [streakMsg, setStreakMsg] = useState<string | null>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("soukoku_checklist");
@@ -582,6 +584,8 @@ export default function ToolPage() {
     let tax = taxable > 0 ? calcTax(perPerson) * heirs : 0;
     if (hasSpouse && taxable > 0) tax = tax * 0.5;
     setSimResult({ total, basic, taxable, tax: Math.round(tax), heirs });
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 4000);
   }
 
   function handleTimeline() {
@@ -664,6 +668,7 @@ export default function ToolPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50">
+      <ConfettiLaunch trigger={showConfetti} message="試算完了！" />
       <nav className="bg-indigo-900 text-white px-4 py-3 flex justify-between items-center">
         <Link href="/" className="font-bold text-lg">相続AI</Link>
         <div className="flex gap-3 items-center text-sm">
@@ -855,7 +860,7 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "timeline" && (
-          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+          <div className="glass-dark rounded-2xl p-6">
             <h2 className="text-lg font-bold text-indigo-200 mb-4" style={{ fontFamily: 'var(--font-rounded)' }}>手続きタイムライン</h2>
             <div className="space-y-4 mb-4">
               <div>
