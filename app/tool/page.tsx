@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import KomojuButton from "@/components/KomojuButton";
+import { GlowButton } from "@/components/GlowButton";
 import { updateStreak, loadStreak, getStreakMilestoneMessage, type StreakData } from "@/lib/streak";
 
 const HISTORY_KEY = "souzoku_history";
@@ -452,8 +453,8 @@ function SetsuzeiDiagnosis() {
       </div>
       {showResult && (
         <div className="mt-6 space-y-4">
-          <div className="bg-indigo-50 rounded-xl p-5">
-            <h3 className="font-bold text-indigo-900 mb-3 text-base">節税診断結果</h3>
+          <div className="p-5" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+            <h3 className="font-bold text-indigo-200 mb-3 text-base" style={{ fontFamily: 'var(--font-rounded)' }}>節税診断結果</h3>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-center">
                 <p className="text-xs text-slate-500 mb-1">特例なしの場合</p>
@@ -674,7 +675,7 @@ export default function ToolPage() {
         </div>
       </nav>
       <div className="max-w-3xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-black text-indigo-900 mb-2">相続AIツール</h1>
+        <h1 className="text-2xl font-black text-indigo-900 mb-2" style={{ fontFamily: 'var(--font-rounded)' }}>相続AIツール</h1>
         {streak && streak.count > 0 && <div className="mt-2 inline-flex items-center gap-2 backdrop-blur-sm bg-orange-50/70 border border-orange-200/60 shadow-md rounded-full px-3 py-1 text-sm"><span>{streak.count}日連続利用中</span></div>}
         {streakMsg && <div className="mt-2 ml-2 inline-flex items-center gap-2 bg-yellow-50 border border-yellow-300 rounded-full px-3 py-1 text-sm text-yellow-700">{streakMsg}</div>}
         <p className="text-slate-500 text-sm mb-6">相続税の試算から手続き期限管理まで、AIがサポートします</p>
@@ -790,8 +791,8 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "simulator" && (
-          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-indigo-900 mb-4">相続税シミュレーター</h2>
+          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+            <h2 className="text-lg font-bold text-indigo-200 mb-4" style={{ fontFamily: 'var(--font-rounded)' }}>相続税シミュレーター</h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">遺産総額（万円）</label>
@@ -805,7 +806,7 @@ export default function ToolPage() {
                 <input type="checkbox" id="spouse" checked={hasSpouse} onChange={e => setHasSpouse(e.target.checked)} className="w-4 h-4 text-indigo-600" />
                 <label htmlFor="spouse" className="text-sm text-slate-700">配偶者が相続人に含まれる（配偶者控除を適用）</label>
               </div>
-              <button onClick={handleSimulate} disabled={!estateTotal} aria-label="入力した遺産情報をもとに相続税を計算する" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続税を計算する</button>
+              <GlowButton onClick={handleSimulate} disabled={!estateTotal} aria-label="入力した遺産情報をもとに相続税を計算する" variant="primary">相続税を計算する</GlowButton>
             </div>
             {simResult && (
               <div className="mt-6">
@@ -854,14 +855,14 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "timeline" && (
-          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-indigo-900 mb-4">手続きタイムライン</h2>
+          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+            <h2 className="text-lg font-bold text-indigo-200 mb-4" style={{ fontFamily: 'var(--font-rounded)' }}>手続きタイムライン</h2>
             <div className="space-y-4 mb-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">相続開始日（亡くなった日）</label>
                 <input type="date" value={inheritanceDate} onChange={e => setInheritanceDate(e.target.value)} aria-label="相続が開始した日付を選択する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
-              <button onClick={handleTimeline} disabled={!inheritanceDate} aria-label="相続発生日から各手続きの期限を確認する" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">期限を確認する</button>
+              <GlowButton onClick={handleTimeline} disabled={!inheritanceDate} aria-label="相続発生日から各手続きの期限を確認する" variant="primary">期限を確認する</GlowButton>
             </div>
             {timelines.length > 0 && (
               <div className="space-y-3">
@@ -883,8 +884,8 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "document" && (
-          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-indigo-900 mb-1">遺産分割協議書雛形生成</h2>
+          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+            <h2 className="text-lg font-bold text-indigo-200 mb-1" style={{ fontFamily: 'var(--font-rounded)' }}>遺産分割協議書雛形生成</h2>
             <div className="inline-block bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full mb-4 font-medium">プレミアム機能</div>
             {!isPremium && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
@@ -928,9 +929,9 @@ export default function ToolPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">分割内容（希望）</label>
                 <textarea value={docForm.distribution} onChange={e => setDocForm({...docForm, distribution: e.target.value})} placeholder="例: 田中花子が不動産全て、田中一郎が預貯金" rows={3} aria-label="遺産の分割方法・希望する配分内容を入力する" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
-              <button onClick={handleDocGenerate} disabled={docLoading || !isPremium} aria-label={isPremium ? "入力した情報をもとに遺産分割協議書の雛形を生成する" : "プレミアムプランにアップグレードして協議書雛形を生成する"} className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">
+              <GlowButton onClick={handleDocGenerate} disabled={docLoading || !isPremium} aria-label={isPremium ? "入力した情報をもとに遺産分割協議書の雛形を生成する" : "プレミアムプランにアップグレードして協議書雛形を生成する"} variant="primary">
                 {docLoading ? "生成中..." : isPremium ? "協議書雛形を生成する" : "プレミアムプランで利用する"}
-              </button>
+              </GlowButton>
               {docLoading && (
                 <div className="text-center mt-2">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto mb-2" />
@@ -981,8 +982,8 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "renunciation" && (
-          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-indigo-900 mb-4">相続放棄シミュレーター</h2>
+          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+            <h2 className="text-lg font-bold text-indigo-200 mb-4" style={{ fontFamily: 'var(--font-rounded)' }}>相続放棄シミュレーター</h2>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">プラスの財産合計（万円）</label>
@@ -992,7 +993,7 @@ export default function ToolPage() {
                 <label className="block text-sm font-medium text-slate-700 mb-1">マイナスの財産合計（万円）</label>
                 <input type="number" value={negAssets} onChange={e => setNegAssets(e.target.value)} placeholder="例: 2000（借金・保証債務など）" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
               </div>
-              <button onClick={handleRenunciation} disabled={!posAssets || !negAssets} aria-label="プラス財産とマイナス財産を比較して相続放棄の判定を行う" className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white font-bold py-3 rounded-xl transition-colors">相続放棄の判定を行う</button>
+              <GlowButton onClick={handleRenunciation} disabled={!posAssets || !negAssets} aria-label="プラス財産とマイナス財産を比較して相続放棄の判定を行う" variant="primary">相続放棄の判定を行う</GlowButton>
             </div>
             {renResult && (
               <div className={"mt-6 rounded-xl p-5 " + (renResult.includes("不要") ? "bg-green-50 border border-green-200" : renResult.includes("検討") ? "bg-red-50 border border-red-200" : "bg-amber-50 border border-amber-200")}>
@@ -1008,9 +1009,9 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "checklist" && (
-          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
+          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
             <div className="flex items-center justify-between mb-2">
-              <h2 className="text-lg font-bold text-indigo-900">相続手続きチェックリスト</h2>
+              <h2 className="text-lg font-bold text-indigo-200" style={{ fontFamily: 'var(--font-rounded)' }}>相続手続きチェックリスト</h2>
               <div className="flex gap-2 items-center">
                 <button
                   onClick={() => window.print()}
@@ -1097,8 +1098,8 @@ export default function ToolPage() {
           </div>
         )}
         {activeTab === "kiso" && (
-          <div className="backdrop-blur-md bg-white/10 border border-white/20 shadow-xl rounded-2xl p-6">
-            <h2 className="text-lg font-bold text-indigo-900 mb-1">基礎控除計算機</h2>
+          <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
+            <h2 className="text-lg font-bold text-indigo-200 mb-1" style={{ fontFamily: 'var(--font-rounded)' }}>基礎控除計算機</h2>
             <p className="text-xs text-slate-500 mb-5">法定相続人数を入力するだけで基礎控除額をリアルタイム計算。申告が必要かどうかすぐわかります。</p>
             <div className="space-y-5">
               <div>
