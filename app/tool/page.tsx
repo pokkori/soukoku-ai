@@ -1245,14 +1245,48 @@ export default function ToolPage() {
       </div>
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="backdrop-blur-md bg-white/80 border border-white/30 rounded-2xl p-6 max-w-sm w-full shadow-xl relative">
-            <button onClick={() => setShowModal(false)} className="absolute top-3 right-3 text-gray-400 text-xl">✕</button>
-            <div className="mb-3 flex justify-center">
-              <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+          <div className="backdrop-blur-md bg-white/90 border border-white/30 rounded-2xl p-6 max-w-lg w-full shadow-xl relative">
+            <button onClick={() => setShowModal(false)} className="absolute top-3 right-3 text-gray-400 text-xl" aria-label="閉じる">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+            </button>
+            <h2 className="text-xl font-bold mb-1 text-center text-indigo-900">プランを選択</h2>
+            <p className="text-sm text-gray-500 mb-5 text-center">相続AI 無制限利用 — いつでもキャンセル可</p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {/* ライトプラン */}
+              <div className="rounded-2xl border-2 border-gray-200 bg-white p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+                <p className="text-xs font-bold text-gray-400 mb-1 tracking-widest uppercase">ライト</p>
+                <p className="text-3xl font-black text-gray-800 mb-0.5">¥980<span className="text-sm font-normal text-gray-400">/月</span></p>
+                <ul className="text-xs text-gray-600 mb-4 space-y-1 w-full mt-2">
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>相続診断 無制限</li>
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>基本計算機能</li>
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>チェックリスト</li>
+                </ul>
+                <KomojuButton planId="lite" planLabel="ライトで始める" planType="lite" />
+              </div>
+              {/* スタンダードプラン */}
+              <div className="rounded-2xl border-2 border-indigo-500 bg-indigo-50 p-4 flex flex-col items-center shadow-md relative">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[10px] font-black px-3 py-0.5 rounded-full tracking-wider">人気No.1</span>
+                <p className="text-xs font-bold text-indigo-500 mb-1 tracking-widest uppercase">スタンダード</p>
+                <p className="text-3xl font-black text-indigo-800 mb-0.5">¥1,980<span className="text-sm font-normal text-indigo-400">/月</span></p>
+                <ul className="text-xs text-indigo-700 mb-4 space-y-1 w-full mt-2">
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-indigo-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>ライトの全機能</li>
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-indigo-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>全タブ全機能解放</li>
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-indigo-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>PDF書類テンプレ</li>
+                </ul>
+                <KomojuButton planId="standard" planLabel="スタンダードで始める" planType="standard" />
+              </div>
+              {/* ビジネスプラン */}
+              <div className="rounded-2xl border-2 border-amber-400 bg-amber-50 p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+                <p className="text-xs font-bold text-amber-500 mb-1 tracking-widest uppercase">ビジネス</p>
+                <p className="text-3xl font-black text-amber-800 mb-0.5">¥2,980<span className="text-sm font-normal text-amber-400">/月</span></p>
+                <ul className="text-xs text-amber-700 mb-4 space-y-1 w-full mt-2">
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>スタンダードの全機能</li>
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>複数人分の計算対応</li>
+                  <li className="flex items-start gap-1"><svg className="w-3.5 h-3.5 text-amber-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/></svg>優先サポート</li>
+                </ul>
+                <KomojuButton planId="business" planLabel="ビジネスで始める" planType="business" />
+              </div>
             </div>
-            <h2 className="text-lg font-bold mb-2 text-center">プレミアムプラン</h2>
-            <p className="text-sm text-gray-500 mb-4 text-center">相続AI 無制限利用</p>
-            <KomojuButton planId="standard" planLabel="プレミアムプラン ¥980/月" className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50" />
           </div>
         </div>
       )}

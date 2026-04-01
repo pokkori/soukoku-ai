@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const PLANS: Record<string, { amount: number; currency: string; name: string }> = {
-  standard: { amount: 1980, currency: "JPY", name: "プレミアムプラン（相続AI）" },
+  lite:     { amount:  980, currency: "JPY", name: "ライトプラン（相続AI）" },
+  standard: { amount: 1980, currency: "JPY", name: "スタンダードプラン（相続AI）" },
+  business: { amount: 2980, currency: "JPY", name: "ビジネスプラン（相続AI）" },
 };
 
 export async function POST(req: NextRequest) {
