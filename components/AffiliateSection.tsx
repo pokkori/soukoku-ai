@@ -1,18 +1,24 @@
 'use client';
 
 // ===================================================================
-// AffiliateSectionコンポーネント — A8.netアフィリエイトCTA
-// A8.netプログラムIDは取得後に下記の href を差し替えてください。
-// 差し替え箇所: href="https://px.a8.net/svt/ejp?a8mat=【プログラムID】"
+// AffiliateSectionコンポーネント — A8.netアフィリエイトCTA（相続特化）
+// 環境変数:
+//   NEXT_PUBLIC_A8_BENGOSHI_URL   — ベンナビ相続（弁護士・司法書士）
+//   NEXT_PUBLIC_A8_FP_URL         — FPカフェ（FP無料相談）
+//   NEXT_PUBLIC_A8_ZEIRISHI_URL   — 税理士ドットコム
+//   NEXT_PUBLIC_A8_HOKEN_URL      — 弁護士費用保険（メットライフ等）
+// A8.netプログラムID取得後に .env.local / Vercel環境変数に設定してください。
 // ===================================================================
 
 interface AffiliateItem {
   title: string;
   description: string;
   cta: string;
-  /** A8.netアフィリリンク（プログラムID取得後に差し替え）*/
   href: string;
   badge: string;
+  accentColor: string;
+  badgeBg: string;
+  borderColor: string;
 }
 
 const ITEMS: AffiliateItem[] = [
@@ -20,25 +26,42 @@ const ITEMS: AffiliateItem[] = [
     title: '弁護士・司法書士に無料相談する',
     description: '遺産分割・相続登記・遺言書など、相続問題の専門家が初回無料で対応。全国対応。',
     cta: '無料で法律相談する',
-    // A8.net: ベンナビ相続（弁護士・司法書士）— プログラムID取得後に差し替え
-    href: 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_弁護士相談_取得後に差し替え】',
+    href: process.env.NEXT_PUBLIC_A8_BENGOSHI_URL ?? 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_弁護士相談_取得後に差し替え】',
     badge: '単価¥10,000〜30,000',
+    accentColor: '#D97706',
+    badgeBg: 'bg-amber-50',
+    borderColor: 'border-amber-100',
   },
   {
     title: 'FP（ファイナンシャルプランナー）に相続税相談',
     description: '相続税の節税・生命保険活用・資産承継プランをファイナンシャルプランナーが無料でサポート。',
     cta: '無料でFP相談する',
-    // A8.net: FPカフェ 無料FP相談 — プログラムID取得後に差し替え
-    href: 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_FP相談_取得後に差し替え】',
+    href: process.env.NEXT_PUBLIC_A8_FP_URL ?? 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_FP相談_取得後に差し替え】',
     badge: '単価¥10,000〜22,880',
+    accentColor: '#D97706',
+    badgeBg: 'bg-amber-50',
+    borderColor: 'border-amber-100',
   },
   {
     title: '相続税申告の税理士に無料相談する',
     description: '相続税の申告・節税対策・小規模宅地の特例など、税務に強い税理士が無料相談に対応。',
     cta: '無料で税理士相談する',
-    // A8.net: 税理士ドットコム or 相続税専門税理士 — プログラムID取得後に差し替え
-    href: 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_税理士相談_取得後に差し替え】',
+    href: process.env.NEXT_PUBLIC_A8_ZEIRISHI_URL ?? 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_税理士相談_取得後に差し替え】',
     badge: '単価¥5,000〜20,000',
+    accentColor: '#D97706',
+    badgeBg: 'bg-amber-50',
+    borderColor: 'border-amber-100',
+  },
+  {
+    title: '相続トラブルに備えて — 弁護士費用保険',
+    description: '相続トラブルに備えて弁護士費用保険で万が一に備える。月額1,000円台から加入可能。訴訟・調停の費用を補償。',
+    cta: '保険内容を無料確認する',
+    // A8.net: 弁護士費用保険（単価¥5,000〜15,000）— 取得後に差し替え
+    href: process.env.NEXT_PUBLIC_A8_HOKEN_URL ?? 'https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_弁護士費用保険_取得後に差し替え】',
+    badge: '単価¥5,000〜15,000',
+    accentColor: '#B45309',
+    badgeBg: 'bg-yellow-50',
+    borderColor: 'border-yellow-100',
   },
 ];
 
@@ -61,7 +84,7 @@ export function AffiliateSection() {
       {/* カードリスト */}
       <ul className="px-4 pb-4 space-y-3" role="list">
         {ITEMS.map((item) => (
-          <li key={item.title} className="bg-white rounded-xl border border-amber-100 shadow-sm">
+          <li key={item.title} className={`bg-white rounded-xl border ${item.borderColor} shadow-sm`}>
             <a
               href={item.href}
               target="_blank"
@@ -74,15 +97,15 @@ export function AffiliateSection() {
                 {/* SVGアイコン: 専門家相談 */}
                 <div className="flex items-center gap-2 mb-1">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="8" r="4" stroke="#D97706" strokeWidth="2"/>
-                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#D97706" strokeWidth="2" strokeLinecap="round"/>
+                    <circle cx="12" cy="8" r="4" stroke={item.accentColor} strokeWidth="2"/>
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke={item.accentColor} strokeWidth="2" strokeLinecap="round"/>
                   </svg>
                   <p className="text-sm font-bold text-gray-800 truncate">{item.title}</p>
                 </div>
                 <p className="text-xs text-gray-500 leading-snug">{item.description}</p>
               </div>
               <div className="flex flex-col items-end gap-1 shrink-0">
-                <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full whitespace-nowrap">
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${item.badgeBg}`} style={{ color: item.accentColor }}>
                   {item.cta}
                 </span>
                 {/* 矢印アイコン */}
@@ -97,7 +120,7 @@ export function AffiliateSection() {
 
       {/* 景表法対応: 広告表記フッター */}
       <p className="text-xs text-gray-400 text-center pb-3">
-        ※ 外部サービスへのリンクです（広告）。各社公式サイトに遷移します。
+        ※ 外部サービスへのリンクです（アフィリエイト広告）。各社公式サイトに遷移します。
       </p>
     </section>
   );

@@ -5,6 +5,7 @@ import KomojuButton from "@/components/KomojuButton";
 import { GlowButton } from "@/components/GlowButton";
 import { updateStreak, loadStreak, getStreakMilestoneMessage, type StreakData } from "@/lib/streak";
 import ConfettiLaunch from "@/components/ConfettiLaunch";
+import { AffiliateSection } from "@/components/AffiliateSection";
 
 const HISTORY_KEY = "souzoku_history";
 const MAX_HISTORY = 5;
@@ -1180,50 +1181,7 @@ export default function ToolPage() {
           </ol>
         </div>
         {/* 専門家相談アフィリエイト（A8.net） */}
-        <div className="mt-6 backdrop-blur-sm bg-amber-50/80 border border-amber-200/60 shadow-lg rounded-xl p-5">
-          <div className="flex items-center justify-between mb-1">
-            <p className="text-sm font-black text-amber-900">相続の専門家に相談する</p>
-            {/* 景表法対応: PR表記 */}
-            <span className="text-xs font-bold text-gray-400 border border-gray-300 rounded px-1.5 py-0.5">PR</span>
-          </div>
-          <p className="text-xs text-amber-700 mb-4">相続税・遺産分割・相続放棄は専門家のサポートで安心して進められます。初回相談無料の事務所多数。</p>
-          <div className="grid grid-cols-1 gap-3">
-            {/* A8.net: ベンナビ相続（弁護士・司法書士）— プログラムID取得後に差し替え（単価¥10,000〜30,000） */}
-            <a href="https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_ベンナビ相続_取得後に差し替え】" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors"
-              aria-label="ベンナビ相続で弁護士・司法書士に無料相談する（PR）"
-              style={{ minHeight: '44px' }}>
-              <div>
-                <div className="text-sm font-bold text-slate-800">ベンナビ相続 — 弁護士・司法書士</div>
-                <div className="text-xs text-slate-500 mt-0.5">遺産分割・相続登記に特化 • 近くの専門家を検索</div>
-              </div>
-              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">無料相談 →</span>
-            </a>
-            {/* A8.net: 相続税専門税理士（税理士ドットコム等）— プログラムID取得後に差し替え（単価¥5,000〜20,000） */}
-            <a href="https://px.a8.net/svt/ejp?a8mat=【A8netプログラムID_税理士相談_取得後に差し替え】" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors"
-              aria-label="相続税専門の税理士に無料相談する（PR）"
-              style={{ minHeight: '44px' }}>
-              <div>
-                <div className="text-sm font-bold text-slate-800">相続税専門の税理士に相談</div>
-                <div className="text-xs text-slate-500 mt-0.5">相続税申告 • 節税対策 • 小規模宅地の特例 • 費用の目安を無料診断</div>
-              </div>
-              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">費用診断 →</span>
-            </a>
-            {/* A8.net: FPカフェ 無料FP相談（既存リンクそのまま） */}
-            <a href="https://px.a8.net/svt/ejp?a8mat=4AZIOF+2SMA0I+5ULO+5YZ75" target="_blank" rel="noopener noreferrer sponsored"
-              className="flex items-center justify-between backdrop-blur-sm bg-white/90 border border-white/20 rounded-xl px-4 py-3 hover:bg-amber-50/90 transition-colors"
-              aria-label="FPカフェで無料FP相談する（PR）"
-              style={{ minHeight: '44px' }}>
-              <div>
-                <div className="text-sm font-bold text-slate-800">FPカフェ — 無料FP相談</div>
-                <div className="text-xs text-slate-500 mt-0.5">相続・資産承継の無料ファイナンシャルプランナー相談</div>
-              </div>
-              <span className="text-amber-600 font-bold text-xs bg-amber-100 px-2 py-1 rounded-full">無料でFP相談してみる →</span>
-            </a>
-          </div>
-          <p className="text-xs text-slate-400 text-center mt-3">※ 広告・PR掲載（各社公式サイトに遷移します）</p>
-        </div>
+        <AffiliateSection />
 
         {/* LINEシェア */}
         <div className="mt-4 backdrop-blur-sm bg-green-50/80 border border-green-200/60 rounded-xl p-4 text-center">
