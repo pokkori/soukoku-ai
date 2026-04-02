@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import FeedbackButton from "@/components/FeedbackButton";
 import { GoogleAdScript } from "@/components/GoogleAdScript";
+import CookieBanner from "@/components/CookieBanner";
 import "./globals.css";
 import { InstallPrompt } from "@/components/InstallPrompt";
 
@@ -224,6 +225,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             })(window, document, "clarity", "script", "YOUR_CLARITY_PROJECT_ID");
           `}
         </Script> */}
+        <CookieBanner />
       </body>
     </html>
   );
