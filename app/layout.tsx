@@ -182,6 +182,32 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </div>
         {children}
         <InstallPrompt />
+        {/* 関連AIサービス */}
+        <section className="mt-8 pt-6 border-t border-white/10 px-4 max-w-2xl mx-auto">
+          <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            関連サービス
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <a
+              href="https://rougo-sim-ai.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-3 bg-white/5 rounded-lg hover:bg-white/10 transition text-sm"
+            >
+              <span className="block font-medium text-gray-200">老後シミュレーターAI</span>
+              <span className="block text-xs text-gray-400 mt-0.5">老後資金をAIがシミュレーション</span>
+            </a>
+            <a
+              href="https://kakuteishinkoku-ai.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-3 bg-white/5 rounded-lg hover:bg-white/10 transition text-sm"
+            >
+              <span className="block font-medium text-gray-200">確定申告AI</span>
+              <span className="block text-xs text-gray-400 mt-0.5">確定申告をAIがサポート</span>
+            </a>
+          </div>
+        </section>
         <footer className="flex justify-center py-2">
           <FeedbackButton serviceName="相続AI" />
         </footer>
