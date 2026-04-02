@@ -6,6 +6,7 @@ import { GlowButton } from "@/components/GlowButton";
 import { updateStreak, loadStreak, getStreakMilestoneMessage, type StreakData } from "@/lib/streak";
 import ConfettiLaunch from "@/components/ConfettiLaunch";
 import { AffiliateSection } from "@/components/AffiliateSection";
+import { UsageCounter } from "@/components/UsageCounter";
 
 const HISTORY_KEY = "souzoku_history";
 const MAX_HISTORY = 5;
@@ -631,6 +632,12 @@ export default function ToolPage() {
           buf += pre;
           const meta = JSON.parse(chunk.split("DONE:")[1]);
           setUseCount(meta.count);
+          // localStorageカウンターを更新（UsageCounterコンポーネントと同期）
+          try {
+            const used = parseInt(localStorage.getItem("souzoku_usage") || "0", 10);
+            localStorage.setItem("souzoku_usage", String(Math.min(used + 1, 3)));
+            window.dispatchEvent(new Event("storage"));
+          } catch { /* noop */ }
         } else { buf += chunk; }
         setDocResult(buf);
       }
@@ -892,7 +899,8 @@ export default function ToolPage() {
         {activeTab === "document" && (
           <div className="p-6" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.36)' }}>
             <h2 className="text-lg font-bold text-indigo-200 mb-1" style={{ fontFamily: 'var(--font-rounded)' }}>遺産分割協議書雛形生成</h2>
-            <div className="inline-block bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full mb-4 font-medium">プレミアム機能</div>
+            <div className="inline-block bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full mb-2 font-medium">プレミアム機能</div>
+            {!isPremium && <div className="mb-4 max-w-xs"><UsageCounter /></div>}
             {!isPremium && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-4">
                 <p className="text-amber-800 text-sm font-medium mb-2">この機能はプレミアムプランでご利用いただけます</p>
