@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 
@@ -11,19 +12,9 @@ function getClient(): Anthropic {
 const FREE_LIMIT = 3;
 const COOKIE_KEY = "soukoku_use_count";
 
-const rateLimit = new Map<string, { count: number; resetAt: number }>();
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimit.get(ip);
-  if (!entry || now > entry.resetAt) { rateLimit.set(ip, { count: 1, resetAt: now + 60000 }); return true; }
-  if (entry.count >= 5) return false;
-  entry.count++;
-  return true;
-}
-
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for") || "unknown";
-  if (!checkRateLimit(ip)) return NextResponse.json({ error: "リクエストが多すぎます。しばらく待ってから再試行してください。" }, { status: 429 });
+  const rateLimitRes = await rateLimit(req);
+  if (rateLimitRes) return rateLimitRes;
   const isPremium = req.cookies.get("premium_token")?.value === "1";
   const cookieCount = parseInt(req.cookies.get(COOKIE_KEY)?.value || "0", 10);
   if (!isPremium && cookieCount >= FREE_LIMIT) {
