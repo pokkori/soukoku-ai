@@ -384,6 +384,8 @@ export default function HomePage() {
        name: '相続AI',
        operatingSystem: 'Web',
        applicationCategory: 'FinanceApplication',
+       description: '相続税計算・法定相続人確認・相続放棄判定・遺産分割協議書雛形生成をAIが自動化。相続開始から申告まで10ヶ月の手続きをステップ別にガイドする相続手続きサポートWebサービス。',
+       url: 'https://sozoku-ai.vercel.app',
        offers: { '@type': 'Offer', price: 0, priceCurrency: 'JPY' },
      }).replace(/</g, '\\u003c'),
    }}
